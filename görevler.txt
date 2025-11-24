@@ -1,0 +1,831 @@
+
+
+## 📑 Quick Navigation
+
+
+
+---
+
+- [Differential Equations (285)](#285)
+- [Logical Design (241)](#241)
+- [Probability (283)](#283)
+- [Circuit Analysis (201)](#201)
+- [Signals and Systems (301)](#301)
+
+
+
+
+
+
+# 285
+
+- [ ]  **1. Basic Definitions** _(pages 1–2)_
+
+    - [ ]  Understand the differential equation concept
+
+    - [ ]  Review independent and dependent variables
+
+    - [ ]  Grasp the goal: finding solutions for the equation
+
+- [ ]  **2. Classification of Differential Equations** _(pages 2–3)_
+
+    - [ ]  Ordinary vs Partial Differential Equations
+
+    - [ ]  Linear vs Nonlinear Differential Equations
+
+    - [ ]  Constant vs Variable coefficients
+
+    - [ ]  Determine the order of a differential equation
+
+- [ ]  **3. Mathematical Modelling** _(pages 3–5)_
+
+    - [ ]  Newton's Law of Cooling formulation
+
+    - [ ]  Torricelli's Law of Draining
+
+    - [ ]  Population models with constant birth/death rates
+
+    - [ ]  Convert physical models into differential equation form
+
+- [ ]  **4. Solution Types & Initial Value Problems** _(pages 5–8)_
+
+    - [ ]  Distinguish between general and particular solutions
+
+    - [ ]  Study initial value problem (IVP) steps
+
+    - [ ]  Learn existence and uniqueness theorem for DEs
+
+    - [ ]  Understand solution pattern for 1st order IVP
+
+- [ ]  **5. Slope Fields and Isoclines** _(pages 8–9)_
+
+    - [ ]  Visualize solution behavior with slope fields
+
+    - [ ]  Understand isoclines concept
+
+    - [ ]  Study solution curves through slope fields
+
+- [ ]  **6. First Order Differential Equations** _(pages 9–23)_
+
+    - [ ]  **Separable equations**: structure and solution algorithm
+
+    - [ ]  **Linear equations**: integrating factor method
+
+    - [ ]  **Homogeneous equations**: substitution y=vx
+
+    - [ ]  **Bernoulli equations**: reduction process, transformation
+
+    - [ ]  **Exact equations**: test for exactness, general solution form
+
+- [ ]  **7. Substitution Methods** _(pages 15–17)_
+
+    - [ ]  Master substitution techniques for nonseparable cases
+
+    - [ ]  Practice variable changes for simplification
+
+- [ ]  **8. Numerical Methods** _(pages 24–31)_
+
+    - [ ]  **Euler Method**
+
+        - [ ]  Explore basic Euler steps for IVP approximation
+
+        - [ ]  Calculate error estimation for Euler solutions
+
+    - [ ]  **Improved Euler (Heun's) Method**
+
+        - [ ]  Learn two-slope prediction-correction formula
+
+        - [ ]  Implement stepwise table for result comparison
+
+    - [ ]  **Taylor Series Method**
+
+        - [ ]  Apply Taylor series expansion for numerical solution
+
+        - [ ]  Understand truncation error and order concept
+
+    - [ ]  **Runge-Kutta Method (4th order)**
+
+        - [ ]  Study 4th order RK formula and algorithm
+
+        - [ ]  Compare RK accuracy with Euler and Taylor methods
+
+- [ ]  **9. Second and Higher Order Equations** _(pages 32–38)_
+
+    - [ ]  Classification: Homogeneous vs Nonhomogeneous
+
+    - [ ]  **Case 1: Distinct Real Roots**
+
+        - [ ]  Solve characteristic equation with distinct roots
+
+    - [ ]  **Case 2: Repeated Real Roots**
+
+        - [ ]  Handle repeated roots and their general solutions
+
+    - [ ]  **Case 3: Complex Conjugate Roots**
+
+        - [ ]  Solve with complex roots using Euler's formula
+
+    - [ ]  Linearly independent solution construction
+
+    - [ ]  Compute the Wronskian for independence checking
+
+- [ ]  **10. Methods for Nonhomogeneous Equations** _(pages 38–52)_
+
+    - [ ]  **Method of Undetermined Coefficients**
+
+        - [ ]  Polynomial forcing terms
+
+        - [ ]  Exponential forcing terms
+
+        - [ ]  Trigonometric forcing terms
+
+    - [ ]  **Variation of Parameters**
+
+        - [ ]  General solution construction for arbitrary input function
+
+    - [ ]  **Inverse Operators**
+
+        - [ ]  Process for particular solution finding
+
+- [ ]  **11. Laplace Transform Applications** _(pages 53–62)_
+
+    - [ ]  Laplace transform definition and properties
+
+    - [ ]  Study common Laplace transform pairs
+
+    - [ ]  Usage in IVP solving
+
+    - [ ]  Convolution theorem
+
+    - [ ]  Inverse Laplace transformation steps
+
+- [ ]  **12. RLC Circuit Modeling** _(pages 70–71)_
+
+    - [ ]  Formulate RLC circuit equations with DEs
+
+    - [ ]  Voltage-current-capacitance relationships
+
+    - [ ]  Apply DE solution methods to find circuit behavior
+
+- [ ]  **13. Boundary Value Problems (BVP)** _(pages 71–72)_
+
+    - [ ]  Difference between IVP and BVP
+
+    - [ ]  Analyze solution existence and multiplicity
+
+    - [ ]  Study boundary condition types
+
+- [ ]  **14. Eigenvalues and Eigenfunctions** _(mentioned throughout)_
+
+    - [ ]  Setup and solve eigenvalue problems
+
+    - [ ]  Find corresponding eigenfunctions for BVP
+
+# 241
+
+## Unit 1: Fundamentals and Number Systems (Pages 1-47)
+- [x] Review course objectives and content.
+- [x] Learn differences between Digital and Analog systems.
+- [x] Understand Digitalization (ADC/DAC) concepts.
+- [x] Learn Binary system representation with voltage and noise effects.
+- [x] Grasp the logic of Weighted (positional) number systems.
+- [x] Learn Radix (Base), MSD, LSD and fractional number representations.
+- [x] Practice Binary (Base-2) system.
+- [x] Practice Octal (Base-8) system.
+- [x] Practice Hexadecimal (Base-16) system.
+- [x] Learn $2^n$ tables and important properties like $r^n - 1$.
+- [x] Practice conversions from different bases (2, 8, 16) to decimal (base 10).
+
+## Unit 2: Base Conversions and Binary Arithmetic (Pages 48-77)
+- [x] Learn Decimal integer conversion to other bases (2, 8, 16) using division method.
+- [x] Learn Decimal fractional number conversion to other bases (2, 8, 16) using multiplication method.
+- [x] Learn Binary → Octal conversion (3-bit grouping).
+- [x] Learn Binary → Hexadecimal conversion (4-bit grouping).
+- [x] Practice fast conversions between Hexadecimal ↔ Octal (using binary as intermediate).
+- [x] Understand general base conversion method (e.g., Base-4 to Base-6).
+- [x] Practice Binary addition operation.
+- [x] Learn Binary subtraction and borrow concept.
+- [x] Practice Binary multiplication operation.
+- [x] Practice Hexadecimal addition operation.
+- [x] Practice Octal multiplication operation.
+
+## Unit 3: Signed Numbers and Binary Codes (Pages 78-145)
+- [x] Learn Register concept and Signed/Unsigned numbers.
+- [x] Learn Sign-Magnitude representation.
+- [x] Understand the logic of Complement representation.
+- [x] Learn 1's Complement definition, representation and arithmetic (end-around carry).
+- [x] Learn 2's Complement definition, representation and arithmetic (end carry discard).
+- [x] Practice subtraction (addition) operation using 2's complement ($M-N$).
+- [x] Learn Overflow condition in signed numbers and detection methods.
+- [x] Learn Arithmetic Shift operations (left/right).
+- [x] Learn 9's and 10's complement (Decimal complement) concepts.
+- [x] Learn BCD (Binary Coded Decimal) code and 4-bit representation.
+- [x] Learn BCD addition and invalid code (+6 addition) rule.
+- [x] Understand Gray Code structure (consecutive single bit change).
+- [x] Learn ASCII Character Code for text representation.
+- [x] Learn Parity Bit (Odd/Even) error detection concept.
+
+## Unit 4: Boolean Algebra and Logic Gates (Pages 146-179)
+- [x] Learn basic logic gates (AND, OR, NOT) and truth tables.
+- [x] Review Boolean Algebra postulates and fundamental theorems.
+- [x] Learn operator precedence order (Parenthesis > NOT > AND > OR).
+- [x] Understand Duality Principle.
+- [x] Learn Absorption rule ($X + XY = X$).
+- [x] Memorize DeMorgan's Theorem ($ (X+Y)' = X'Y'$ and $(XY)' = X'+Y'$ ).
+- [x] Practice algebraic simplification of Boolean expressions.
+- [x] Learn how to find the Complement (F') of a function.
+
+## Unit 5: Combinational Logic Design (Pages 180-210)
+- [x] Learn Minterm ($m_i$) concept (product term that makes function 1).
+- [x] Learn Maxterm ($M_i$) concept (sum term that makes function 0).
+- [x] Understand relationship between Minterm and Maxterm ($m_i' = M_i$).
+- [x] Learn how to extract Minterm Sum (Sum of Minterms - SOP - $\Sigma m$) from truth table.
+- [x] Learn how to extract Maxterm Product (Product of Maxterms - POS - $\Pi M$) from truth table.
+- [x] Learn difference between Canonical and Standard forms.
+- [x] Learn algebraic transformation between SOP and POS forms.
+- [x] Learn how to draw SOP form (AND-OR) as two-level (2-Level) circuit.
+- [x] Learn how to draw POS form (OR-AND) as two-level (2-Level) circuit.
+- [x] Understand Propagation Delay concept.
+- [x] Learn Tri-State Gates (0, 1, High-Z).
+
+## Unit 6: Other Gates and Karnaugh Maps (Pages 211-274)
+- [x] Understand that NAND and NOR gates are "Universal Gates".
+- [x] Learn how to draw other gates (NOT, AND, OR) using only NAND.
+- [x] Learn how to draw other gates (NOT, AND, OR) using only NOR.
+- [x] Learn truth tables and properties of XOR (Exclusive-OR) and XNOR (Exclusive-NOR) gates.
+- [x] Understand logic of Multiple Input gates.
+- [x] Learn fundamentals of Karnaugh Map (K-Map) simplification method.
+- [x] Learn how to create and group 2-Variable K-Map.
+- [x] Learn how to create 3-Variable K-Map and wrap-around adjacency.
+- [x] Learn how to create 4-Variable K-Map and corner/edge adjacencies.
+- [x] Learn rules for grouping 1's in sizes $2^n$ (1, 2, 4, 8...) on K-Map.
+- [x] Learn how to create larger groups using Don't Cares ('x').
+- [x] Learn definitions of Implicant, Prime Implicant (PI) and Essential Prime Implicant (EPI).
+- [x] Learn method for finding minimum SOP (Take EPI's first, then cover remaining 1's with minimum PI's).
+- [x] Understand 5-Variable K-Map logic (two 4x4 maps).
+- [x] Learn how to find minimum POS by grouping 0's on K-Map.
+
+## Unit 7: Combinational Circuit Analysis and Design (Pages 321-336)
+ * [ ] Learn definition of Combinational circuits (no feedback, no memory) and analysis methods (Boolean expression and Truth table).
+ * [ ] Learn how to analyze a given logic circuit (extract function from input to output).
+ * [ ] Understand design procedure (Problem → Table → Simplification → Circuit).
+ * [ ] Study designing a converter circuit from BCD to Excess-3 code.
+ * [ ] Learn how to create truth table for Seven-Segment Decoder and extract Boolean equations (a, b, c...).
+## Unit 8: Arithmetic Circuits (Pages 337-362)
+ * [ ] Learn Half Adder circuit and equations (S = x ⊕ y, C = xy).
+ * [ ] Learn Full Adder circuit, truth table and 3-input (x, y, z) structure.
+ * [ ] Understand Parallel Adder (Ripple Carry Adder) and Carry propagation delay problem.
+ * [ ] Learn Carry Look-ahead Adder logic and P_i (Propagate), G_i (Generate) terms.
+ * [ ] Learn BCD Adder design and +6 (0110) addition rule when sum >9 or carry is generated.
+ * [ ] Learn how to design Binary Subtractor circuit using 2's complement method.
+ * [ ] Learn how to combine Adder/Subtractor circuits into single structure (with M control).
+ * [ ] Learn Overflow condition in signed and unsigned numbers and detection method (V=C_n ⊕ C_{n-1}).
+## Unit 9: MSI Components (Multiplier, Comparator, Decoder) (Pages 363-388)
+ * [ ] Understand Binary Multiplier circuit and partial products addition logic.
+ * [ ] Learn Magnitude Comparator circuit and outputs (A<B, A=B, A>B).
+ * [ ] Study how comparison logic (x_i = A_i B_i + A_i' B_i') works bit by bit.
+ * [ ] Learn Decoder structure (n-inputs, 2^n-outputs) and active-high/active-low output logic.
+ * [ ] Learn Decoder Expansion (e.g., using 2-to-4 to make 3-to-8) and Enable input usage.
+ * [ ] Learn how to implement Combinational circuits using Decoder and OR gates (each output is a minterm).
+ * [ ] Learn Encoder structure and Priority Encoder concept (when two inputs are active simultaneously).
+## Unit 10: Multiplexers (MUX) and Tri-State Gates (Pages 389-418)
+ * [ ] Learn Multiplexer (MUX) structure and function of select lines (S_0, S_1).
+ * [ ] Learn how to draw 2-to-1 and 4-to-1 MUX internal structure with logic gates.
+ * [ ] Study Quad 2-to-1 MUX structure and common select line usage.
+ * [ ] Learn how to implement Boolean functions using MUX (connect input variables to select lines, function values to data inputs).
+ * [ ] Learn how to create basic logic gates (NOT, AND, OR, NAND, NOR) using only 2-to-1 MUX.
+ * [ ] Understand DeMultiplexer structure and its relationship with Decoder.
+ * [ ] Learn Tri-State buffers, High Impedance (Hi-Z) state and their role in data bus management.
+## Unit 11: Hardware Description Languages (HDL - Verilog) (Pages 419-432)
+ * [ ] Learn HDL (Hardware Description Language) concept and module structure (module, endmodule).
+ * [ ] Learn Gate-Level modeling and how to call primitive gates (and, or, xor) instantiation.
+ * [ ] Understand design methodologies (Top-down and Bottom-up) and hierarchical module usage (e.g., Half Adder → Full Adder → 4-bit Adder).
+ * [ ] Study how tri-state gates (bufif1, bufif0) are modeled in Verilog.
+ * [ ] Learn Dataflow modeling, assign statement and operators (&, |, ~, ^).
+ * [ ] Learn Behavioral modeling, always block and reg data type.
+ * [ ] Understand how to create Test Bench, initial block and simulation timing (#10).
+
+	
+# 283
+
+## Module 1: Foundations of Probability (Lessons 1-2)
+
+### ☐ Lesson 1: Introduction and Set Theory (Pages 1-33)
+- [x] Understand applications of Probability
+- [x] **Set Theory**
+    - [ ] Fundamental concepts: Set, element ($x \in S$), empty set ($\emptyset$), subset ($S \subset T$)
+    - [ ] Universal Set definition
+- [x] **Set Operations**
+    - [ ] Union ($A \cup B$)
+    - [ ] Intersection ($A \cap B$)
+    - [ ] Complementation ($\overline{A}$)
+    - [ ] Difference ($A \setminus B$)
+    - [ ] Disjoint Sets ($A \cap B = \emptyset$)
+- [x] **Venn Diagrams**
+    - [ ] Understand visual representations for $A \cup B$, $A \cap B$, $\overline{A}$ and $A \setminus B$.
+- [x] **Set Theory Laws**
+    - [ ] De Morgan's Rules ($\overline{A \cup B} = \overline{A} \cap \overline{B}$)
+    - [ ] Distributive Laws
+- [x] **Foundations of Probability**
+    - [ ] Concepts of Random Experiment, Sample Space (S) and Event
+    - [ ] Axioms of Probability
+        - [ ] Axiom 1: $P(A) \ge 0$
+        - [ ] Axiom 2: $P(S) = 1$
+        - [ ] Axiom 3: $P(A \cup B) = P(A) + P(B)$, (if $A \cap B = \emptyset$)
+    - [x] Fundamental Properties of Probability ($P(\overline{A}) = 1 - P(A)$, $P(\emptyset) = 0$, $P(A \cup B) = P(A) + P(B) - P(A \cap B)$)
+    - [x] Classical Probability Definition ($P(A) = \frac{|A|}{|S|}$)
+    - [x] Study examples of dice rolling and double dice rolling.
+
+### ☐ Lesson 2: Conditional Probability and Independence (Pages 34-66)
+- [ ] **Conditional Probability**
+    - [x] Definition: $P(A|B) = \frac{P(A \cap B)}{P(B)}$
+    - [x] Multiplication Rule: $P(A \cap B) = P(B)P(A|B) = P(A)P(B|A)$
+    - [x] Study radar detection and semiconductor chip examples.
+- [ ] **Total Probability Theorem**
+    - [x] Formula: $P(B) = \sum_{i} P(A_i)P(B|A_i)$
+    - [x] Study number drawing problem (1-10)
+- [ ] **Bayes' Rule**
+    - [x] Formula: $P(A_i|B) = \frac{P(A_i)P(B|A_i)}{P(B)}$
+    - [x] Study defective relay example (Problem 1.60)
+- [ ] **Independent Events**
+    - [x] Definition: $P(A \cap B) = P(A)P(B)$
+    - [x] Relationship with conditional probability: $P(A|B) = P(A)$
+    - [x] Difference between Mutually Exclusive and Independent events
+    - [x] Independence for more than two events ($P(A \cap B \cap C) = P(A)P(B)P(C)$)
+    - [x] Probability calculations in series and parallel connected systems (Computer Network example)
+
+## Module 2: Random Variables and Distributions (Lessons 3-4)
+
+### ☐ Lesson 3: Problem Solving Session and Introduction to Random Variables (Pages 67-102)
+- [ ] **Problem Solutions (Schaum's)**
+    - [ ] Problem 1.35 (Telegraph)
+    - [ ] Problem 1.36 (S={a,b,c,d})
+    - [ ] Problem 1.49 (Factory Parts)
+    - [ ] Problem 1.51 (Semiconductor Chips)
+    - [ ] Problem 1.52 (Divisibility)
+    - [ ] Problem 1.60 (Defective Relay - Bayes)
+- [ ] **HOMEWORK**
+    - [ ] Solve Schaum's Chapter 1 problems
+- [ ] **Random Variables (RV)**
+    - [ ] Definition: A function that assigns a numerical value to each outcome in the sample space
+    - [ ] Defining events from RV: $(X=x)$, $(X \le x)$, $(x_1 < X \le x_2)$
+    - [ ] Example 2.2: Calculate $P(X=2)$, $P(X<2)$ for 3 coin flips experiment
+
+### ☐ Lesson 4: Distribution Functions (Pages 103-125)
+- [ ] **Random Variable Types**
+    - [ ] Discrete RV (takes countable number of values)
+    - [ ] Continuous RV (can take all values in an interval)
+- [ ] **Cumulative Distribution Function (CDF)**
+    - [ ] Definition: $F_X(x) = P(X \le x)$
+    - [ ] CDF Properties (ranges from 0 to 1, non-decreasing, right-continuous)
+    - [ ] CDF for Discrete RV's (staircase shape)
+    - [ ] CDF for Continuous RV's (continuously changing)
+    - [ ] Example: CDF diagram for 3 coin flips experiment
+    - [ ] Finding probability using CDF: $P(a < X \le b) = F_X(b) - F_X(a)$
+- [ ] **Probability Mass Function (PMF)**
+    - [ ] Definition (for Discrete RV's): $p_X(x) = P(X = x)$
+    - [ ] PMF Properties ($\sum p_X(x_k) = 1$)
+    - [ ] Transition from PMF to CDF: $F_X(x) = \sum_{x_k \le x} p_X(x_k)$
+    - [ ] Examples: Alphabet coding, First heads in coin flips (Geometric Distribution)
+
+## Module 3: Continuous RV's and Special Distributions (Lessons 5-6)
+
+### ☐ Lesson 5: Continuous RV's, Mean and Variance (Pages 126-160)
+- [ ] **Probability Density Function (PDF)**
+    - [ ] Definition (for Continuous RV's)
+    - [ ] PDF Properties: $f_X(x) \ge 0$ and $\int_{-\infty}^{\infty} f_X(x) dx = 1$
+    - [ ] Probability Calculation: $P(a < X \le b) = \int_{a}^{b} f_X(x) dx$
+    - [ ] PDF ↔ CDF relationship: $F_X(x) = \int_{-\infty}^{x} f_X(\tau) d\tau$ and $f_X(x) = \frac{dF_X(x)}{dx}$
+    - [ ] PDF and CDF problems (find constant k, draw PDF/CDF)
+- [ ] **Expected Value (Mean) and Variance**
+    - [ ] Mean (Mean) $E[X] = \mu_X$:
+        - [ ] Discrete: $\mu_X = \sum_{k} x_k p_X(x_k)$
+        - [ ] Continuous: $\mu_X = \int_{-\infty}^{\infty} x f_X(x) dx$
+    - [ ] Moment ($E[X^n]$)
+    - [ ] Variance (Variance) $\sigma_X^2 = \text{Var}(X)$:
+        - [ ] Definition: $\sigma_X^2 = E[(X - \mu_X)^2]$
+        - [ ] Calculation formula: $\sigma_X^2 = E[X^2] - (E[X])^2$
+    - [ ] Standard Deviation: $\sigma_X = \sqrt{\text{Var}(X)}$
+    - [ ] Problems 2.27 and 2.33 (Calculate mean and variance)
+- [ ] **Special Discrete Distributions**
+    - [ ] Bernoulli Distribution: PMF, Mean, Variance
+    - [ ] Binomial Distribution: PMF ($p_X(k) = \binom{n}{k} p^k (1-p)^{n-k}$), Mean, Variance
+    - [ ] Geometric Distribution: PMF, Mean, Variance
+    - [ ] Poisson Distribution: PMF ($p_X(k) = e^{-\lambda} \frac{\lambda^k}{k!}$), Mean, Variance
+- [ ] **Special Continuous Distributions**
+    - [ ] Uniform Distribution: PDF, CDF, Mean, Variance
+
+### ☐ Lesson 6: Special Distributions (Continued) (Pages 161-187)
+- [ ] **Special Continuous Distributions (Continued)**
+    - [ ] Exponential Distribution: PDF ($f_X(x) = \lambda e^{-\lambda x}$), CDF, Mean, Variance
+    - [ ] Normal (Gaussian) Distribution: PDF formula, Standard Normal Distribution ($\mu=0, \sigma^2=1$)
+- [ ] **Distribution Examples**
+    - [ ] Phone call (Exponential)
+    - [ ] Resistance production (Normal)
+    - [ ] Binary source (Binomial)
+    - [ ] Telephone exchange (Poisson)
+- [ ] **Expected Value Examples**
+    - [ ] Quiz game (Which question to solve first?)
+    - [ ] Party invitation (Binomial RV)
+    - [ ] Expected Value/Variance example for Continuous RV
+
+## Module 4: Multiple Random Variables (Lesson 8)
+
+### ☐ Lesson 8: Bivariate (Paired) Random Variables (Pages 188-254)
+- [ ] **Joint Distribution Functions**
+    - [ ] Bivariate RV (X, Y) definition
+    - [ ] Joint CDF: $F_{XY}(x, y) = P(X \le x, Y \le y)$
+    - [ ] Joint CDF Properties
+- [ ] **Marginal Distribution Functions**
+    - [ ] Marginal CDF: $F_X(x) = F_{XY}(x, \infty)$ and $F_Y(y) = F_{XY}(\infty, y)$
+- [ ] **Discrete Bivariate RV's**
+    - [ ] Joint PMF: $p_{XY}(x_i, y_j) = P(X = x_i, Y = y_j)$
+    - [ ] Marginal PMF: $p_X(x_i) = \sum_{j} p_{XY}(x_i, y_j)$
+- [ ] **Continuous Bivariate RV's**
+    - [ ] Joint PDF: $f_{XY}(x, y) = \frac{\partial^2 F_{XY}(x, y)}{\partial x \partial y}$
+    - [ ] Joint PDF Properties: $f_{XY} \ge 0$ and $\int \int f_{XY}(x, y) dx dy = 1$
+    - [ ] Probability Calculation: $P((X, Y) \in A) = \iint_{A} f_{XY}(x, y) dx dy$
+    - [ ] Marginal PDF: $f_X(x) = \int_{-\infty}^{\infty} f_{XY}(x, y) dy$
+- [ ] **Independent Random Variables**
+    - [ ] Definition: $F_{XY}(x, y) = F_X(x) F_Y(y)$
+    - [ ] For PMF: $p_{XY}(x, y) = p_X(x) p_Y(y)$
+    - [ ] For PDF: $f_{XY}(x, y) = f_X(x) f_Y(y)$
+- [ ] **Covariance and Correlation**
+    - [ ] Correlation $E[XY]$ calculation (discrete and continuous)
+    - [ ] Covariance: $\text{Cov}(X, Y) = E[XY] - E[X]E[Y]$
+    - [ ] Correlation Coefficient: $\rho_{XY} = \frac{\text{Cov}(X, Y)}{\sigma_X \sigma_Y}$
+    - [ ] Meaning of $\rho_{XY}$ (1: positive correlation, -1: negative correlation, 0: uncorrelated)
+    - [ ] "Independent" (Independent) $\implies$ "Uncorrelated" (Uncorrelated), but reverse is not true
+
+## Module 5: Functions of Random Variables (Lesson 10+)
+
+### ☐ Lesson 10: RV Functions (Pages 255-309)
+- [ ] **Single RV Function: $Y = g(X)$**
+    - [ ] Finding CDF: $F_Y(y) = P(g(X) \le y)$
+    - [ ] Finding PDF (for monotonic functions): $f_Y(y) = f_X(x) \left| \frac{dx}{dy} \right|$
+    - [ ] Example $Y = aX + b$ transformation
+    - [ ] Example $Y = X^2$ transformation
+- [ ] **Single Function of Two RV's: $Z = g(X, Y)$**
+    - [ ] Finding CDF: $F_Z(z) = \iint_{g(x, y) \le z} f_{XY}(x, y) dx dy$
+    - [ ] Example $Z = X + Y$ (Convolution for independent RV's)
+- [ ] **Two Functions of Two RV's: $Z = g(X, Y), W = h(X, Y)$**
+    - [ ] Finding Joint PDF (Jacobian Method): $f_{ZW}(z, w) = f_{XY}(x, y) |J(x, y)|^{-1}$
+    - [ ] Example $Z = XY, W = X$ and $U = X + Y, V = X - Y$
+- [ ] **Expected Value of RV Functions**
+    - [ ] $E[g(X)]$
+    - [ ] Linearity of Expected Value: $E[aX + bY] = aE[X] + bE[Y]$
+    - [ ] Variance Formula: $\text{Var}(aX + bY) = a^2\text{Var}(X) + b^2\text{Var}(Y) + 2ab\text{Cov}(X, Y)$
+
+### ☐ Lesson 11: Generating Functions (Pages 310-336)
+- [ ] **Probability Generating Function (PGF)**
+    - [ ] Definition: $G_X(z) = E[z^X] = \sum_x p_X(x) z^x$
+    - [ ] Finding PMF: $p_X(n) = \frac{1}{n!} G_X^{(n)}(0)$
+    - [ ] Finding Moment: $E[X] = G_X'(1)$
+    - [ ] Finding Variance: $\text{Var}(X) = G_X''(1) + G_X'(1) - [G_X'(1)]^2$
+    - [ ] Bernoulli example
+- [ ] **Moment Generating Function (MGF)**
+    - [ ] Definition: $M_X(t) = E[e^{tX}]$
+    - [ ] Finding Moment: $E[X^k] = M_X^{(k)}(0)$
+    - [ ] Joint MGF: $M_{XY}(t_1, t_2) = E[e^{t_1 X + t_2 Y}]$
+- [ ] **Characteristic Function**
+    - [ ] Definition: $\Psi_X(\omega) = E[e^{j\omega X}]$
+    - [ ] Finding PDF (Inverse Fourier Transform)
+    - [ ] Joint Characteristic Function
+
+
+# 201
+
+
+## Chapter 1: Fundamentals and Circuit Laws
+*Basic definitions, power calculations and resistance circuits.*
+
+- [ ] **Fundamental Concepts**
+    - [ ] Ideal Basic Circuit Elements
+    - [ ] Dependent & Independent Sources
+    - [ ] Passive Sign Convention and Power Calculation ($P = VI$)
+    - [ ] Power Balance: Total Delivered Power = Total Absorbed Power ($\sum P_{del} = \sum P_{abs}$)
+- [ ] **Fundamental Laws**
+    - [ ] **Ohm's Law:** $V = I \cdot R$ and Conductance ($G$) concept
+    - [ ] **KVL (Kirchhoff Voltage Law):** Sum of voltages in closed loop equals zero
+    - [ ] **KCL (Kirchhoff Current Law):** Sum of currents entering node equals sum of currents leaving
+- [ ] **Resistance Connections**
+    - [ ] Series Resistors and Equivalent Resistance
+    - [ ] Parallel Resistors and Equivalent Resistance
+    - [ ] **Voltage Divider:** Voltage sharing in series circuits
+    - [ ] **Current Divider:** Current sharing in parallel circuits
+- [ ] **Delta-Wye Transformations**
+    - [ ] $\Delta \to Y$ transformation formulas
+    - [ ] $Y \to \Delta$ transformation formulas
+    - [ ] Wheatstone Bridge circuit and balance condition
+
+---
+
+## Chapter 2: Systematic Analysis Methods
+*Systematic methods used in circuit solution.*
+
+- [ ] **Node-Voltage Method**
+    - [ ] Learn "Essential Node" concept
+    - [ ] Reference node selection and KCL equation writing
+    - [ ] Solve equations using matrix or Cramer's rule
+    - [ ] **Special Case:** Supernode approach when voltage source is between two nodes
+- [ ] **Mesh Current Method**
+    - [ ] Define "Mesh" currents
+    - [ ] Write KVL equations for each mesh
+    - [ ] Mesh analysis with dependent sources
+    - [ ] **Special Case:** Supermesh approach when current source is between two meshes
+
+---
+
+## Chapter 3: Circuit Theorems
+*Circuit simplification and analysis techniques.*
+
+- [ ] **Source Transformation**
+    - [ ] Transformation between Voltage Source and Current Source
+- [ ] **Thevenin and Norton Theorems**
+    - [ ] **Thevenin:** Model circuit as $V_{TH}$ and $R_{TH}$
+    - [ ] **Norton:** Model circuit as $I_{N}$ and $R_{N}$
+    - [ ] **Test Source Method:** Apply test voltage or current to find $R_{TH}$ for circuits with dependent sources
+- [ ] **Maximum Power Transfer**
+    - [ ] Load resistance ($R_L$) must equal Thevenin resistance ($R_{TH}$) for maximum power
+    - [ ] Maximum power formula: $P_{max} = \frac{V_{TH}^2}{4 R_{TH}}$
+- [ ] **Superposition Theorem**
+    - [ ] In linear circuits, find effect of each source separately and sum
+    - [ ] Set Voltage sources to "Short Circuit", Current sources to "Open Circuit"
+
+---
+
+## Chapter 4: Operational Amplifiers
+*Active circuit elements and applications.*
+
+- [ ] **Ideal Op-Amp Model**
+    - [ ] Virtual Short Circuit ($V_+ = V_-$) rule
+    - [ ] Input currents are zero ($I_+ = I_- = 0$) rule
+- [ ] **Basic Op-Amp Circuits**
+    - [ ] Inverting Amplifier
+    - [ ] Non-Inverting Amplifier
+    - [ ] Summing Amplifier
+    - [ ] Difference Amplifier
+    - [ ] Op-Amp Saturation Regions
+
+---
+
+## Chapter 5: Capacitors, Inductors and Transient Analysis
+*Analysis of time-varying circuits.*
+
+- [ ] **Energy Storage Elements**
+    - [ ] **Capacitor:** Current-Voltage relationship ($i = C \frac{dv}{dt}$) and stored energy ($W = \frac{1}{2}CV^2$)
+    - [ ] **Inductor:** Voltage-Current relationship ($v = L \frac{di}{dt}$) and stored energy ($W = \frac{1}{2}LI^2$)
+    - [ ] Under DC source, Capacitor acts as "Open Circuit", Inductor acts as "Short Circuit"
+- [ ] **First Order Circuits (RC and RL)**
+    - [ ] **Natural Response:** Energy discharge in sourceless circuit
+    - [ ] **Step Response:** Circuit response when DC source is connected
+    - [ ] **Time Constant ($\tau$):** For RC circuit $\tau = RC$, for RL circuit $\tau = L/R$
+    - [ ] **General Solution Formula:** $x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}$ formula
+- [ ] **Second Order Circuits (RLC)**
+    - [ ] Series and Parallel RLC circuit equations
+    - [ ] Damping Coefficient ($\alpha$) and Resonance Frequency ($\omega_0$) calculation
+    - [ ] **Response Types:**
+        - [ ] Overdamped: $\alpha > \omega_0$
+        - [ ] Critically Damped: $\alpha = \omega_0$
+        - [ ] Underdamped / Oscillatory: $\alpha < \omega_0$
+    - [ ] Op-Amp Integrator circuits
+
+---
+
+
+
+# 301 - Signals and Systems
+
+## SIGNALS
+
+### 1. Introduction and Classification of Signals _(pages 4–8)_
+- [ ] Define Continuous-Time vs. Discrete-Time Signals
+- [ ] Distinguish between Analog and Digital Signals
+- [ ] Understand Real vs. Complex and Deterministic vs. Random Signals
+- [ ] Identify Even and Odd Signals
+- [ ] Determine Periodic vs. Nonperiodic Signals
+- [ ] Calculate Energy and Power of Signals
+
+### 2. Basic Continuous-Time Signals _(pages 9–13)_
+- [ ] Study the Unit Step Function u(t) and its properties
+- [ ] Study the Unit Impulse Function δ(t) and delta properties
+- [ ] Review Complex Exponential e^(jωt) and Sinusoidal Signals
+
+### 3. Basic Discrete-Time Signals _(pages 14–18)_
+- [ ] Study the Unit Step Sequence u[n]
+- [ ] Study the Unit Impulse Sequence δ[n]
+- [ ] Analyze Complex Exponential and Sinusoidal Sequences
+- [ ] Understand Periodicity conditions for discrete exponentials
+
+### 4. Signal Manipulations _(pages 19–21)_
+- [ ] Perform Time Shifting x(t-t₀) transformations
+- [ ] Perform Time Reversal x(-t) transformations
+- [ ] Perform Time Scaling x(at) transformations
+- [ ] Understand Amplitude transformations (Addition, Multiplication, Scaling)
+
+### 5. Classification of Systems _(pages 22–24)_
+- [ ] Distinguish Memoryless Systems vs. Systems with Memory
+- [ ] Analyze Causal vs. Noncausal Systems
+- [ ] Check for Linearity (Additivity and Homogeneity)
+- [ ] Check for Time-Invariance vs. Time-Varying
+- [ ] Determine BIBO Stability
+- [ ] Understand Feedback structures
+
+---
+
+## LINEAR TIME-INVARIANT (LTI) SYSTEMS
+
+### 1. Continuous-Time LTI Systems _(pages 36–39)_
+- [ ] Define Impulse Response h(t)
+- [ ] Master the Convolution Integral y(t) = x(t) * h(t)
+- [ ] Review Convolution properties (Commutative, Associative, Distributive)
+- [ ] Derive Step Response from Impulse Response
+- [ ] Determine Causality and Stability from h(t)
+
+### 2. Differential Equations _(pages 40–41)_
+- [ ] Solve Linear Constant-Coefficient Differential Equations
+- [ ] Distinguish Zero-Input vs. Zero-State Response
+
+### 3. Discrete-Time LTI Systems _(pages 41–43)_
+- [ ] Define Impulse Response h[n]
+- [ ] Master the Convolution Sum y[n] = x[n] * h[n]
+- [ ] Determine Causality and Stability for discrete systems
+
+### 4. Difference Equations _(pages 44–45)_
+- [ ] Solve Linear Constant-Coefficient Difference Equations
+- [ ] Understand Recursive vs. Nonrecursive Systems (FIR vs. IIR)
+
+---
+
+## LAPLACE TRANSFORM
+
+### 1. Definition and Region of Convergence _(pages 54–57)_
+- [ ] Define Bilateral Laplace Transform
+- [ ] Determine the Region of Convergence (ROC)
+- [ ] Sketch Poles and Zeros in the s-plane
+- [ ] Master the Properties of the ROC
+
+### 2. Properties of Laplace Transform _(pages 58–61)_
+- [ ] Memorize Common Transform Pairs (Table 3-1)
+- [ ] Apply Linearity, Time Shifting, and s-Domain Shifting
+- [ ] Apply Time Scaling, Time Reversal
+- [ ] Understand Differentiation and Integration properties
+- [ ] Apply the Convolution Property
+
+### 3. Inverse Laplace Transform _(pages 61–62)_
+- [ ] Perform Partial-Fraction Expansion (Simple Poles)
+- [ ] Perform Partial-Fraction Expansion (Multiple Poles)
+
+### 4. System Function (Continuous) _(pages 63–66)_
+- [ ] Define System Function H(s) - Transfer function
+- [ ] Relate H(s) to Causality and Stability (pole locations)
+- [ ] Analyze Cascade and Parallel Interconnections
+
+### 5. Unilateral Laplace Transform _(pages 66–69)_
+- [ ] Understand differences from Bilateral Transform
+- [ ] Solve Differential Equations with Initial Conditions
+- [ ] Analyze Transform Circuits (R, L, C models)
+
+---
+
+## Z-TRANSFORM
+
+### 1. Definition and ROC _(pages 86–89)_
+- [ ] Define Bilateral z-Transform
+- [ ] Determine the Region of Convergence (ROC) in z-plane
+- [ ] Sketch Poles and Zeros in z-plane
+- [ ] Master the Properties of the ROC
+
+### 2. Properties of z-Transform _(pages 90–92)_
+- [ ] Memorize Common z-Transform Pairs (Table 4-1)
+- [ ] Apply Linearity, Time Shifting, and Scaling
+- [ ] Apply Time Reversal and Differentiation
+- [ ] Understand Convolution Property
+
+### 3. Inverse z-Transform _(pages 93–94)_
+- [ ] Use Power Series Expansion method
+- [ ] Use Partial-Fraction Expansion method
+
+### 4. System Function (Discrete) _(pages 95–96)_
+- [ ] Define System Function H(z)
+- [ ] Relate H(z) to Causality and Stability (pole analysis)
+- [ ] Analyze Cascade and Parallel Interconnections
+
+### 5. Unilateral z-Transform _(pages 97–98)_
+- [ ] Understand Time-Shifting Property for unilateral case
+- [ ] Solve Difference Equations using unilateral transform
+
+---
+
+## FOURIER ANALYSIS
+
+### 1. Fourier Series _(pages 107–109)_
+- [ ] Represent Periodic Signals with Fourier series
+- [ ] Calculate Complex Exponential Fourier Series coefficients c_n
+- [ ] Understand Trigonometric Fourier Series (a_n and b_n coefficients)
+
+### 2. Fourier Transform _(pages 109–112)_
+- [ ] Define Fourier Transform X(jω) and Inverse Fourier Transform
+- [ ] Check Convergence (Dirichlet Conditions)
+- [ ] Relate Fourier Transform to Laplace Transform (s = jω)
+
+### 3. Properties of Fourier Transform _(pages 114–117)_
+- [ ] Apply Linearity, Time Shifting, and Frequency Shifting
+- [ ] Apply Time Scaling, Time Reversal, and Duality
+- [ ] Understand Convolution and Multiplication (Modulation)
+- [ ] Apply Parseval's Relation (Energy conservation)
+
+### 4. Frequency Response and Filtering _(pages 117–120)_
+- [ ] Determine Magnitude and Phase Response
+- [ ] Analyze Ideal Filters (Low-Pass, High-Pass, Band-Pass/Stop)
+
+### 5. Bandwidth _(pages 121–122)_
+- [ ] Define Absolute Bandwidth
+- [ ] Define 3-dB (Half-Power) Bandwidth
+
+---
+
+## SAMPLING THEOREM
+
+### 6. Sampling _(pages 123–126)_
+- [ ] Understand Nyquist Sampling Theorem (fs ≥ 2f_max)
+- [ ] Study Sampling Frequency and Aliasing problems
+- [ ] Learn Ideal Sampling with impulse train
+- [ ] Master Reconstruction of signal from samples
+- [ ] Study Practical Sampling (Zero-order hold and reconstruction filters)
+
+---
+
+## ADDITIONAL TOPICS
+
+### 7. State-Space Analysis
+- [ ] Define State Variables
+- [ ] Study State Equations: ẋ = Ax + Bu, y = Cx + Du
+- [ ] Calculate State Transition Matrix e^(At)
+- [ ] Test Controllability and Observability
+
+### 8. Discrete Fourier Transform (DFT)
+- [ ] Define N-point DFT
+- [ ] Study FFT (Fast Fourier Transform) algorithm
+- [ ] Understand DFT Properties (Periodicity, Symmetry)
+- [ ] Apply Windowing Techniques (Hamming, Hanning, Blackman)
+
+### 9. Filter Design
+- [ ] Study Butterworth Filters (maximally flat passband)
+- [ ] Study Chebyshev Filters (Type I and Type II)
+- [ ] Study Elliptic (Cauer) Filters (optimum design)
+- [ ] Study Bessel Filters (linear phase response)
+- [ ] Learn FIR Filter Design (window method, frequency sampling)
+- [ ] Learn IIR Filter Design (bilinear transformation, impulse invariance)
+
+
+
+
+
+# TO DO
+
+---
+
+## 🤖 AI & Technology <a id="ai"></a>
+- [ ] Colab general fundamentals
+- [ ] n8n RSS reading
+- [ ] n8n Twitter automation
+- [ ] Microsoft Learn Azure
+- [ ] AWS fundamentals introduction
+
+---
+
+## 🌐 Web & Hosting <a id="web"></a>
+- [ ] Firebase use database
+- [ ] SupaBase use database
+- [ ] Buy domain and hosting
+- [ ] Create personal website
+
+## 🔧 System & Infrastructure <a id="sys"></a>
+- [ ] Raspberry Pi 5 full module server
+- [ ] Apache2 server installation (VDS/VPS)
+
+---
+
+## 🔥 High Priority <a id="high"></a>
+
+- [ ] Open Linktree account
+- [ ] Watch Obsidian videos
+- [ ] Cyber Sec Cisco video
+- [ ] OWASP Juice
+- [ ] Static/Dynamic Analysis
+- [ ] SSDLC
+
+---
+
+## 💡 Ideas & Brainstorm <a id="idea"></a>
+
+- [ ] Create YouTube video content
+- [ ] Write articles on Medium
+- [ ] Start podcast series
+- [ ] Create blog
+
+---
+
+
+
