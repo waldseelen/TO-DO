@@ -1,42 +1,51 @@
 export type Priority = 'low' | 'medium' | 'high';
 
 export interface Subtask {
-  id: string;
-  text: string;
-  completed: boolean;
+    id: string;
+    text: string;
+    completed: boolean;
 }
 
 export interface Task {
-  id: string;
-  text: string;
-  initialChecked?: boolean;
-  dueDate?: string;
-  notes?: string;
-  tags?: string[];
-  subtasks?: Subtask[];
-  priority?: Priority;
+    id: string;
+    text: string;
+    initialChecked?: boolean;
+    dueDate?: string;
+    notes?: string;
+    tags?: string[];
+    subtasks?: Subtask[];
+    priority?: Priority;
 }
 
 export interface Unit {
-  title: string;
-  tasks: Task[];
+    title: string;
+    tasks: Task[];
 }
 
 export interface Exam {
-  id: string;
-  title: string;
-  date: string;
+    id: string;
+    title: string;
+    date: string;
+    time?: string; // Saat bilgisi (HH:mm formatında)
 }
 
 export interface Course {
-  id: string;
-  code: string;
-  title: string;
-  color: string;
-  bgGradient: string;
-  units: Unit[];
-  examDate?: string;
-  exams: Exam[];
+    id: string;
+    code: string;
+    title: string;
+    color: string;
+    customColor?: string; // Kullanıcının seçtiği hex renk
+    bgGradient: string;
+    units: Unit[];
+    examDate?: string;
+    exams: Exam[];
+}
+
+export interface PomodoroSettings {
+    workDuration: number; // dakika
+    shortBreakDuration: number; // dakika
+    longBreakDuration: number; // dakika
+    sessionsBeforeLongBreak: number; // kaç pomodoro sonra uzun mola
 }
 
 export type CompletionHistory = Record<string, string>;
