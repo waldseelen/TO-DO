@@ -7,15 +7,15 @@ import { useStreak } from '@/hooks/useStreak';
 import { getCourseProgress, getNextTask } from '@/utils/course';
 import { getDaysLeft } from '@/utils/time';
 
-// Motivasyon mesajları
+// Motivation messages
 const MOTIVATION_MESSAGES = [
-    { threshold: 0, message: "Her büyük yolculuk tek adımla başlar! 🚀", subtext: "İlk görevi tamamla" },
-    { threshold: 10, message: "Harika başlangıç! Devam et! 💪", subtext: "Momentum kazanıyorsun" },
-    { threshold: 25, message: "Çeyrek yolda! Süpersin! ⭐", subtext: "İstikrar başarının anahtarı" },
-    { threshold: 50, message: "Yarı yoldasın! Vazgeçme! 🔥", subtext: "Zirve yaklaşıyor" },
-    { threshold: 75, message: "Son düzlüğe girdin! 🏃", subtext: "Bitiş çizgisi görünüyor" },
-    { threshold: 90, message: "Neredeyse tamam! Son hamle! 🎯", subtext: "Şampiyonlar asla bırakmaz" },
-    { threshold: 100, message: "MUHTEŞEM! Hepsini tamamladın! 🏆", subtext: "Sen bir efsanesin!" },
+    { threshold: 0, message: "Every great journey starts with a single step! 🚀", subtext: "Complete your first task" },
+    { threshold: 10, message: "Great start! Keep going! 💪", subtext: "You're building momentum" },
+    { threshold: 25, message: "Quarter way there! Amazing! ⭐", subtext: "Consistency is key" },
+    { threshold: 50, message: "Halfway there! Don't give up! 🔥", subtext: "The peak is getting closer" },
+    { threshold: 75, message: "Final stretch! 🏃", subtext: "The finish line is in sight" },
+    { threshold: 90, message: "Almost done! Final push! 🎯", subtext: "Champions never quit" },
+    { threshold: 100, message: "AMAZING! You completed everything! 🏆", subtext: "You're a legend!" },
 ];
 
 const getMotivationMessage = (progress: number) => {
@@ -85,12 +85,12 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
             <header className="mb-8">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Genel Bakış</h1>
-                        <p className="text-slate-500 dark:text-slate-400">Akademik yolculuğun ve hedeflerin tek bir yerde.</p>
+                        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Overview</h1>
+                        <p className="text-slate-500 dark:text-slate-400">Your academic journey and goals in one place.</p>
                     </div>
                     <StreakBadge streak={streak} weeklyCount={weeklyCount} hasCompletedToday={hasCompletedToday} />
                 </div>
-                
+
                 {/* Motivasyon Kartı */}
                 <div className="mt-4 p-4 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 rounded-xl border border-indigo-200/50 dark:border-indigo-500/30">
                     <div className="flex items-center gap-3">
@@ -113,7 +113,7 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                         <div className="p-2 bg-white/20 rounded-lg">
                             <GraduationCap size={24} className="text-white" />
                         </div>
-                        <h3 className="text-lg font-bold text-white">Yaklaşan Sınavlar</h3>
+                        <h3 className="text-lg font-bold text-white">Upcoming Exams</h3>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {upcomingExams.map(exam => (
@@ -133,16 +133,16 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                                 <p className="text-white font-bold text-sm truncate">{exam.title}</p>
                                 <div className="flex items-center justify-between mt-2">
                                     <span className="text-white/70 text-xs">
-                                        {new Date(exam.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}
+                                        {new Date(exam.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                         {exam.time && ` ${exam.time}`}
                                     </span>
                                     <span className={`text-xs font-bold px-2 py-0.5 rounded ${exam.daysLeft === 0
-                                            ? 'bg-red-600 text-white'
-                                            : exam.daysLeft <= 3
-                                                ? 'bg-orange-400 text-white'
-                                                : 'bg-white/20 text-white'
+                                        ? 'bg-red-600 text-white'
+                                        : exam.daysLeft <= 3
+                                            ? 'bg-orange-400 text-white'
+                                            : 'bg-white/20 text-white'
                                         }`}>
-                                        {exam.daysLeft === 0 ? 'BUGÜN!' : `${exam.daysLeft} gün`}
+                                        {exam.daysLeft === 0 ? 'TODAY!' : `${exam.daysLeft} days`}
                                     </span>
                                 </div>
                             </div>
@@ -158,14 +158,14 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                     </div>
                     <div>
                         <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{completedCount}</h3>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">Tamamlanan Görev</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">Completed Tasks</p>
                     </div>
                 </div>
 
                 <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between">
                     <div className="flex items-center gap-2 mb-4">
                         <BarChart3 size={20} className="text-indigo-500" />
-                        <span className="text-sm font-bold text-slate-500">Son 7 Günlük Aktivite</span>
+                        <span className="text-sm font-bold text-slate-500">Last 7 Days Activity</span>
                     </div>
                     <div className="flex items-end gap-2 h-12 w-full">
                         {activityData.map((d, i) => (
@@ -187,8 +187,8 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                     className="cursor-pointer bg-gradient-to-r from-indigo-500 to-purple-600 p-6 rounded-2xl shadow-md text-white flex items-center justify-between group hover:shadow-lg transition-all"
                 >
                     <div>
-                        <h3 className="text-xl font-bold mb-1">Bugünü Planla</h3>
-                        <p className="text-indigo-100 text-sm">Rastgele 5 görev seç</p>
+                        <h3 className="text-xl font-bold mb-1">Plan Today</h3>
+                        <p className="text-indigo-100 text-sm">Pick 5 random tasks</p>
                     </div>
                     <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition-transform">
                         <Sun size={24} />
@@ -197,7 +197,7 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
             </div>
 
             <div>
-                <h2 className="text-xl font-semibold text-slate-800 dark:text-white mb-6">Ders İlerlemeleri</h2>
+                <h2 className="text-xl font-semibold text-slate-800 dark:text-white mb-6">Course Progress</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses.map(course => {
                         const progress = getCourseProgress(course, completedTasks);
@@ -218,7 +218,7 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                                         className={`absolute top-2 left-2 z-20 px-2 py-1 rounded text-xs font-bold shadow-sm ${isUrgent ? 'bg-red-500 text-white' : 'bg-white/90 text-slate-700'
                                             }`}
                                     >
-                                        {daysLeft === 0 ? 'SINAV BUGÜN' : `${daysLeft} gün kaldı`}
+                                        {daysLeft === 0 ? 'EXAM TODAY' : `${daysLeft} days left`}
                                     </div>
                                 )}
 
@@ -231,7 +231,7 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                                 </div>
                                 <div className="p-5 flex-1 flex flex-col">
                                     <div className="flex justify-between items-end mb-2">
-                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-300">İlerleme</span>
+                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Progress</span>
                                         <span className={`text-lg font-bold ${isComplete ? 'text-green-500' : 'text-slate-800 dark:text-white'}`}>
                                             %{progress}
                                         </span>
@@ -243,13 +243,13 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
 
                                     {next ? (
                                         <div className="mt-6 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700/50 mt-auto">
-                                            <p className="text-xs text-slate-400 uppercase font-bold mb-1">Sıradaki Görev</p>
+                                            <p className="text-xs text-slate-400 uppercase font-bold mb-1">Next Task</p>
                                             <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-2">{next.task.text}</p>
                                         </div>
                                     ) : (
                                         <div className="mt-6 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-900/30 mt-auto flex items-center gap-2">
                                             <Trophy size={16} className="text-green-500" />
-                                            <p className="text-sm font-bold text-green-600 dark:text-green-400">Tamamlandı!</p>
+                                            <p className="text-sm font-bold text-green-600 dark:text-green-400">Completed!</p>
                                         </div>
                                     )}
                                 </div>

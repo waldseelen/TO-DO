@@ -1,6 +1,6 @@
 /**
  * Backup Reminder Hook
- * Son yedeklemeden bu yana geçen süreyi takip eder ve kullanıcıya hatırlatır.
+ * Tracks time since last backup and reminds the user.
  *
  * @author Code Audit - Production Ready
  * @version 1.0.0
@@ -16,7 +16,7 @@ interface BackupState {
     shouldRemind: boolean;
 }
 
-const BACKUP_REMINDER_DAYS = 7; // 7 günde bir hatırlat
+const BACKUP_REMINDER_DAYS = 7; // Remind every 7 days
 
 const getLastBackupDate = (): Date | null => {
     if (typeof window === 'undefined') return null;
@@ -53,7 +53,7 @@ export const useBackupReminder = () => {
         };
     });
 
-    // Yedekleme tarihini kaydet
+    // Save backup date
     const recordBackup = useCallback(() => {
         const now = new Date();
 
@@ -70,7 +70,7 @@ export const useBackupReminder = () => {
         });
     }, []);
 
-    // Hatırlatmayı kapat (erteleme)
+    // Dismiss reminder (snooze)
     const dismissReminder = useCallback(() => {
         setState(prev => ({
             ...prev,
@@ -78,7 +78,7 @@ export const useBackupReminder = () => {
         }));
     }, []);
 
-    // Her gün kontrol et (sayfa açıkken)
+    // Check every day (while page is open)
     useEffect(() => {
         const checkBackupStatus = () => {
             const lastBackupDate = getLastBackupDate();
@@ -91,25 +91,25 @@ export const useBackupReminder = () => {
             });
         };
 
-        // İlk kontrol
+        // First check
         checkBackupStatus();
 
-        // Her saat kontrol et
+        // Check every hour
         const interval = setInterval(checkBackupStatus, 60 * 60 * 1000);
 
         return () => clearInterval(interval);
     }, []);
 
-    // Formatlanmış son yedekleme tarihi
+    // Formatted last backup date
     const formattedLastBackup = state.lastBackupDate
-        ? state.lastBackupDate.toLocaleDateString('tr-TR', {
+        ? state.lastBackupDate.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit'
         })
-        : 'Hiç yedeklenmedi';
+        : 'Never backed up';
 
     return {
         lastBackupDate: state.lastBackupDate,

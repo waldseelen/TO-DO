@@ -121,13 +121,13 @@ const AppContent = () => {
             recordBackup();
 
             const event = new CustomEvent('toast', {
-                detail: { message: 'Yedekleme tamamlandı!', type: 'success' }
+                detail: { message: 'Backup completed!', type: 'success' }
             });
             window.dispatchEvent(event);
         } catch (error) {
             console.error('Export error:', error);
             const event = new CustomEvent('toast', {
-                detail: { message: 'Yedekleme başarısız oldu', type: 'error' }
+                detail: { message: 'Backup failed', type: 'error' }
             });
             window.dispatchEvent(event);
         }
@@ -139,13 +139,13 @@ const AppContent = () => {
             await navigator.clipboard.writeText(markdown);
 
             const event = new CustomEvent('toast', {
-                detail: { message: 'Günlük başarıyla kopyalandı!', type: 'success' }
+                detail: { message: 'Daily log copied successfully!', type: 'success' }
             });
             window.dispatchEvent(event);
         } catch (error) {
             console.error('Export today error:', error);
             const event = new CustomEvent('toast', {
-                detail: { message: 'Kopyalama başarısız oldu', type: 'error' }
+                detail: { message: 'Copy failed', type: 'error' }
             });
             window.dispatchEvent(event);
         }
@@ -171,14 +171,14 @@ const AppContent = () => {
                 }
 
                 const toastEvent = new CustomEvent('toast', {
-                    detail: { message: 'Veriler başarıyla içe aktarıldı!', type: 'success' }
+                    detail: { message: 'Data imported successfully!', type: 'success' }
                 });
                 window.dispatchEvent(toastEvent);
                 setIsSettingsOpen(false);
             } catch (error) {
                 console.error('Import error:', error);
                 const toastEvent = new CustomEvent('toast', {
-                    detail: { message: 'Dosya formatı hatalı!', type: 'error' }
+                    detail: { message: 'Invalid file format!', type: 'error' }
                 });
                 window.dispatchEvent(toastEvent);
             }
@@ -336,7 +336,7 @@ const AppContent = () => {
                         {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
                     <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                        %{totalProgress} tamamlandı
+                        {totalProgress}% completed
                     </div>
                 </div>
                 <div className="min-h-full pb-20 md:pb-6">{renderContent()}</div>

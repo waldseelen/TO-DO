@@ -19,10 +19,10 @@ interface DayExam {
     course: Course;
 }
 
-const DAYS_TR = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+const DAYS_TR = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const MONTHS_TR = [
-    'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-    'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
@@ -186,13 +186,13 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                     <CalendarIcon className="w-7 h-7 text-blue-500" />
-                    Aylık Takvim
+                    Monthly Calendar
                 </h1>
                 <button
                     onClick={goToToday}
                     className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                 >
-                    Bugün
+                    Today
                 </button>
             </div>
 
@@ -200,15 +200,15 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             <div className="grid grid-cols-3 gap-4 mb-6">
                 <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 text-center">
                     <div className="text-3xl font-bold text-green-600 dark:text-green-400">{monthlyStats.completed}</div>
-                    <div className="text-sm text-green-700 dark:text-green-300">Tamamlanan</div>
+                    <div className="text-sm text-green-700 dark:text-green-300">Completed</div>
                 </div>
                 <div className="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-4 text-center">
                     <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">{monthlyStats.pending}</div>
-                    <div className="text-sm text-orange-700 dark:text-orange-300">Bekleyen</div>
+                    <div className="text-sm text-orange-700 dark:text-orange-300">Pending</div>
                 </div>
                 <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 text-center">
                     <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{monthlyStats.total}</div>
-                    <div className="text-sm text-blue-700 dark:text-blue-300">Toplam</div>
+                    <div className="text-sm text-blue-700 dark:text-blue-300">Total</div>
                 </div>
             </div>
 
@@ -236,7 +236,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                     <div className="mb-6 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
                         <h3 className="text-sm font-bold text-red-700 dark:text-red-400 mb-3 flex items-center gap-2">
                             <AlertTriangle size={16} />
-                            Yaklaşan Sınavlar
+                            Upcoming Exams
                         </h3>
                         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                             {upcomingExams.map(({ exam, course, date }) => {
@@ -254,7 +254,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                                 {course.code} - {exam.title}
                                             </p>
                                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                {examDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}
+                                                {examDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                                 {exam.time && ` • ${exam.time}`}
                                             </p>
                                         </div>
@@ -262,7 +262,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                             daysLeft <= 7 ? 'bg-orange-500 text-white' :
                                                 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                                             }`}>
-                                            {daysLeft}g
+                                            {daysLeft}d
                                         </div>
                                     </div>
                                 );
@@ -393,7 +393,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             {selectedDate && (
                 <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        {new Date(selectedDate + 'T00:00:00').toLocaleDateString('tr-TR', {
+                        {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', {
                             weekday: 'long',
                             day: 'numeric',
                             month: 'long',
@@ -405,7 +405,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                     {selectedDayExams && selectedDayExams.length > 0 && (
                         <div className="mb-4">
                             <h4 className="text-sm font-bold text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
-                                <GraduationCap size={16} /> Sınavlar
+                                <GraduationCap size={16} /> Exams
                             </h4>
                             <div className="space-y-2">
                                 {selectedDayExams.map(({ exam, course }) => (
@@ -483,7 +483,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                         </div>
                     ) : !selectedDayExams?.length && (
                         <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-                            Bu tarihte etkinlik bulunmuyor
+                            No events on this date
                         </p>
                     )}
                 </div>
@@ -493,21 +493,21 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500" />
-                    <span>Tamamlanan</span>
+                    <span>Completed</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-orange-500" />
-                    <span>Bekleyen</span>
+                    <span>Pending</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <span>Sınav</span>
+                    <span>Exam</span>
                 </div>
             </div>
 
             {/* Ders Renkleri Legend */}
             <div className="mt-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Ders Renkleri</h4>
+                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Course Colors</h4>
                 <div className="flex flex-wrap gap-3">
                     {courses.filter(c => c.exams && c.exams.length > 0).map(course => (
                         <div

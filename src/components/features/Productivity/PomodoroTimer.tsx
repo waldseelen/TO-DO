@@ -15,7 +15,7 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
     const [mode, setMode] = useState<'work' | 'shortBreak' | 'longBreak'>('work');
     const [sessionCount, setSessionCount] = useState(0);
 
-    // Settings değiştiğinde timer'ı güncelle (sadece çalışmıyorsa)
+    // Update timer when settings change (only if not running)
     useEffect(() => {
         if (!isActive) {
             switch (mode) {
@@ -39,20 +39,20 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
         } else if (timeLeft === 0) {
             setIsActive(false);
 
-            // Mod geçişi
+            // Mode transition
             if (mode === 'work') {
                 const newSessionCount = sessionCount + 1;
                 setSessionCount(newSessionCount);
 
-                // Uzun mola mı kısa mola mı?
+                // Long break or short break?
                 if (newSessionCount >= settings.sessionsBeforeLongBreak) {
                     setMode('longBreak');
                     setTimeLeft(settings.longBreakDuration * 60);
                     setSessionCount(0);
 
-                    // Bildirim
+                    // Notification
                     const event = new CustomEvent('toast', {
-                        detail: { message: `🎉 ${settings.sessionsBeforeLongBreak} pomodoro tamamlandı! Uzun mola zamanı.`, type: 'success' }
+                        detail: { message: `🎉 ${settings.sessionsBeforeLongBreak} pomodoros completed! Time for a long break.`, type: 'success' }
                     });
                     window.dispatchEvent(event);
                 } else {
@@ -60,7 +60,7 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
                     setTimeLeft(settings.shortBreakDuration * 60);
 
                     const event = new CustomEvent('toast', {
-                        detail: { message: '✨ Pomodoro tamamlandı! Kısa mola zamanı.', type: 'success' }
+                        detail: { message: '✨ Pomodoro completed! Time for a short break.', type: 'success' }
                     });
                     window.dispatchEvent(event);
                 }
@@ -69,7 +69,7 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
                 setTimeLeft(settings.workDuration * 60);
 
                 const event = new CustomEvent('toast', {
-                    detail: { message: '💪 Mola bitti! Çalışmaya devam.', type: 'info' }
+                    detail: { message: '💪 Break is over! Back to work.', type: 'info' }
                 });
                 window.dispatchEvent(event);
             }
@@ -93,9 +93,9 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
 
     const getModeLabel = () => {
         switch (mode) {
-            case 'work': return 'Odaklan';
-            case 'shortBreak': return 'Kısa Mola';
-            case 'longBreak': return 'Uzun Mola';
+            case 'work': return 'Focus';
+            case 'shortBreak': return 'Short Break';
+            case 'longBreak': return 'Long Break';
         }
     };
 
@@ -118,7 +118,7 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
                     <button
                         onClick={onOpenSettings}
                         className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-                        title="Pomodoro Ayarları"
+                        title="Pomodoro Settings"
                     >
                         <Settings size={14} />
                     </button>
@@ -135,8 +135,8 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
                     <div
                         key={i}
                         className={`w-2 h-2 rounded-full transition-colors ${i < sessionCount
-                                ? 'bg-indigo-500'
-                                : 'bg-slate-200 dark:bg-slate-700'
+                            ? 'bg-indigo-500'
+                            : 'bg-slate-200 dark:bg-slate-700'
                             }`}
                     />
                 ))}
@@ -148,7 +148,7 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
                     className={`flex-1 py-1 rounded text-sm font-medium transition-colors ${isActive ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-green-100 text-green-600 hover:bg-green-200'
                         }`}
                 >
-                    {isActive ? 'Duraklat' : 'Başlat'}
+                    {isActive ? 'Pause' : 'Start'}
                 </button>
                 <button
                     onClick={resetTimer}

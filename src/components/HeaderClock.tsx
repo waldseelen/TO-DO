@@ -14,7 +14,7 @@ export const HeaderClock = () => {
                 {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </div>
             <div className="text-xs font-medium uppercase tracking-wider mt-1 opacity-80 bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm px-2 py-0.5 rounded">
-                {time.toLocaleDateString('tr-TR', { weekday: 'long', month: 'long', day: 'numeric' })}
+                {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </div>
         </div>
     );

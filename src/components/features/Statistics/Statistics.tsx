@@ -49,7 +49,7 @@ const calculateStats = (history: CompletionHistory): StatsData => {
         const count = dateCounts[dateStr] || 0;
         weekCount += count;
         weekData.push({
-            date: d.toLocaleDateString('tr-TR', { weekday: 'short' }),
+            date: d.toLocaleDateString('en-US', { weekday: 'short' }),
             count
         });
     }
@@ -68,7 +68,7 @@ const calculateStats = (history: CompletionHistory): StatsData => {
         }
         monthCount += weekTotal;
         monthlyData.push({
-            week: `Hafta ${4 - w}`,
+            week: `Week ${4 - w}`,
             count: weekTotal
         });
     }
@@ -145,8 +145,8 @@ export const Statistics = () => {
     return (
         <div className="p-6 space-y-6 animate-fade-in pt-16 md:pt-6">
             <header className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">📊 İstatistikler</h1>
-                <p className="text-slate-500 dark:text-slate-400">Üretkenlik performansın ve ilerleme verilerin</p>
+                <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">📊 Statistics</h1>
+                <p className="text-slate-500 dark:text-slate-400">Your productivity performance and progress data</p>
             </header>
 
             {/* Ana Metrikler */}
@@ -156,10 +156,10 @@ export const Statistics = () => {
                         <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                             <Zap size={20} className="text-green-500" />
                         </div>
-                        <span className="text-xs font-bold text-slate-400 uppercase">Bugün</span>
+                        <span className="text-xs font-bold text-slate-400 uppercase">Today</span>
                     </div>
                     <p className="text-3xl font-bold text-slate-800 dark:text-white">{stats.todayCount}</p>
-                    <p className="text-xs text-slate-400 mt-1">görev tamamlandı</p>
+                    <p className="text-xs text-slate-400 mt-1">tasks completed</p>
                 </div>
 
                 <div className="bg-white dark:bg-dark-surface p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
@@ -167,10 +167,10 @@ export const Statistics = () => {
                         <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                             <Calendar size={20} className="text-blue-500" />
                         </div>
-                        <span className="text-xs font-bold text-slate-400 uppercase">Bu Hafta</span>
+                        <span className="text-xs font-bold text-slate-400 uppercase">This Week</span>
                     </div>
                     <p className="text-3xl font-bold text-slate-800 dark:text-white">{stats.weekCount}</p>
-                    <p className="text-xs text-slate-400 mt-1">görev tamamlandı</p>
+                    <p className="text-xs text-slate-400 mt-1">tasks completed</p>
                 </div>
 
                 <div className="bg-white dark:bg-dark-surface p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
@@ -178,10 +178,10 @@ export const Statistics = () => {
                         <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
                             <Flame size={20} className="text-orange-500" />
                         </div>
-                        <span className="text-xs font-bold text-slate-400 uppercase">Seri</span>
+                        <span className="text-xs font-bold text-slate-400 uppercase">Streak</span>
                     </div>
                     <p className="text-3xl font-bold text-slate-800 dark:text-white">{stats.streak}</p>
-                    <p className="text-xs text-slate-400 mt-1">ardışık gün</p>
+                    <p className="text-xs text-slate-400 mt-1">consecutive days</p>
                 </div>
 
                 <div className="bg-white dark:bg-dark-surface p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
@@ -189,10 +189,10 @@ export const Statistics = () => {
                         <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                             <Award size={20} className="text-purple-500" />
                         </div>
-                        <span className="text-xs font-bold text-slate-400 uppercase">En İyi Seri</span>
+                        <span className="text-xs font-bold text-slate-400 uppercase">Best Streak</span>
                     </div>
                     <p className="text-3xl font-bold text-slate-800 dark:text-white">{stats.bestStreak}</p>
-                    <p className="text-xs text-slate-400 mt-1">gün</p>
+                    <p className="text-xs text-slate-400 mt-1">days</p>
                 </div>
             </div>
 
@@ -201,10 +201,10 @@ export const Statistics = () => {
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
                         <TrendingUp size={20} className="text-indigo-500" />
-                        Haftalık Aktivite
+                        Weekly Activity
                     </h3>
                     <span className="text-sm text-slate-400">
-                        Günlük Ort: <span className="font-bold text-slate-600 dark:text-slate-300">{stats.averagePerDay}</span>
+                        Daily Avg: <span className="font-bold text-slate-600 dark:text-slate-300">{stats.averagePerDay}</span>
                     </span>
                 </div>
 
@@ -231,9 +231,9 @@ export const Statistics = () => {
 
             {/* Genel İlerleme */}
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-2xl shadow-lg text-white">
-                <h3 className="font-bold text-lg mb-4">🎯 Genel İlerleme</h3>
+                <h3 className="font-bold text-lg mb-4">🎯 Overall Progress</h3>
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-indigo-100">Tamamlanan / Toplam</span>
+                    <span className="text-indigo-100">Completed / Total</span>
                     <span className="font-bold">{completedTasks.size} / {totalTasks}</span>
                 </div>
                 <div className="w-full bg-white/20 rounded-full h-4 mb-2">
@@ -249,9 +249,9 @@ export const Statistics = () => {
             {stats.streak >= 3 && (
                 <div className="bg-gradient-to-r from-amber-400 to-orange-500 p-6 rounded-2xl shadow-lg text-white text-center">
                     <div className="text-4xl mb-2">🔥</div>
-                    <h3 className="text-xl font-bold mb-1">Harika Gidiyorsun!</h3>
+                    <h3 className="text-xl font-bold mb-1">You're Doing Great!</h3>
                     <p className="text-amber-100">
-                        {stats.streak} günlük serini koruyorsun. Devam et!
+                        You're maintaining a {stats.streak}-day streak. Keep it up!
                     </p>
                 </div>
             )}

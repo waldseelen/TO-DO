@@ -1,6 +1,6 @@
 /**
  * Backup Reminder Banner
- * Kullanıcıya yedekleme hatırlatması gösterir.
+ * Shows backup reminder to the user.
  *
  * @author Code Audit - Production Ready
  * @version 1.0.0
@@ -26,8 +26,8 @@ export const BackupReminderBanner = ({
     return (
         <div
             className={`fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50 rounded-2xl shadow-2xl border overflow-hidden animate-slide-in-right ${isUrgent
-                    ? 'bg-gradient-to-r from-red-500 to-orange-500 border-red-400'
-                    : 'bg-gradient-to-r from-amber-500 to-yellow-500 border-amber-400'
+                ? 'bg-gradient-to-r from-red-500 to-orange-500 border-red-400'
+                : 'bg-gradient-to-r from-amber-500 to-yellow-500 border-amber-400'
                 }`}
         >
             <div className="p-4 text-white">
@@ -38,12 +38,12 @@ export const BackupReminderBanner = ({
 
                     <div className="flex-1">
                         <h4 className="font-bold text-lg mb-1">
-                            {isUrgent ? '⚠️ Acil Yedekleme!' : '💾 Yedekleme Hatırlatıcısı'}
+                            {isUrgent ? '⚠️ Urgent Backup!' : '💾 Backup Reminder'}
                         </h4>
                         <p className="text-sm opacity-90 mb-3">
                             {daysSinceBackup === Infinity
-                                ? 'Henüz hiç yedekleme yapmadın!'
-                                : `Son yedekleme: ${formattedLastBackup} (${daysSinceBackup} gün önce)`
+                                ? 'You haven\'t backed up yet!'
+                                : `Last backup: ${formattedLastBackup} (${daysSinceBackup} days ago)`
                             }
                         </p>
 
@@ -53,13 +53,13 @@ export const BackupReminderBanner = ({
                                 className="flex items-center gap-2 px-4 py-2 bg-white text-amber-700 rounded-lg font-bold text-sm hover:bg-amber-50 transition-colors shadow-md"
                             >
                                 <CloudUpload size={16} />
-                                Şimdi Yedekle
+                                Backup Now
                             </button>
                             <button
                                 onClick={onDismiss}
                                 className="px-3 py-2 bg-white/20 rounded-lg text-sm hover:bg-white/30 transition-colors"
                             >
-                                Sonra
+                                Later
                             </button>
                         </div>
                     </div>

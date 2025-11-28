@@ -25,17 +25,17 @@ import { Task, Unit } from '@/types';
 import { getCourseProgress } from '@/utils/course';
 import { generateMarkdown } from '@/utils/markdown';
 
-// Hazır renk paletleri
+// Color presets
 const COLOR_PRESETS = [
-    { name: 'Mavi', hex: '#3b82f6', bg: 'bg-blue-500', gradient: 'from-blue-500 to-cyan-400' },
-    { name: 'Mor', hex: '#6366f1', bg: 'bg-indigo-500', gradient: 'from-indigo-500 to-purple-500' },
-    { name: 'Yeşil', hex: '#10b981', bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-teal-500' },
-    { name: 'Turuncu', hex: '#f97316', bg: 'bg-orange-500', gradient: 'from-orange-500 to-amber-500' },
-    { name: 'Kırmızı', hex: '#ef4444', bg: 'bg-red-500', gradient: 'from-red-500 to-pink-600' },
-    { name: 'Pembe', hex: '#ec4899', bg: 'bg-pink-500', gradient: 'from-pink-500 to-rose-500' },
-    { name: 'Sarı', hex: '#eab308', bg: 'bg-yellow-500', gradient: 'from-yellow-500 to-amber-400' },
+    { name: 'Blue', hex: '#3b82f6', bg: 'bg-blue-500', gradient: 'from-blue-500 to-cyan-400' },
+    { name: 'Purple', hex: '#6366f1', bg: 'bg-indigo-500', gradient: 'from-indigo-500 to-purple-500' },
+    { name: 'Green', hex: '#10b981', bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-teal-500' },
+    { name: 'Orange', hex: '#f97316', bg: 'bg-orange-500', gradient: 'from-orange-500 to-amber-500' },
+    { name: 'Red', hex: '#ef4444', bg: 'bg-red-500', gradient: 'from-red-500 to-pink-600' },
+    { name: 'Pink', hex: '#ec4899', bg: 'bg-pink-500', gradient: 'from-pink-500 to-rose-500' },
+    { name: 'Yellow', hex: '#eab308', bg: 'bg-yellow-500', gradient: 'from-yellow-500 to-amber-400' },
     { name: 'Cyan', hex: '#06b6d4', bg: 'bg-cyan-500', gradient: 'from-cyan-500 to-blue-400' },
-    { name: 'Gri', hex: '#475569', bg: 'bg-slate-600', gradient: 'from-slate-600 to-slate-800' },
+    { name: 'Gray', hex: '#475569', bg: 'bg-slate-600', gradient: 'from-slate-600 to-slate-800' },
 ];
 
 interface Props {
@@ -83,7 +83,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
     if (!course) {
         return (
             <div className="p-6">
-                <p className="text-slate-500">Ders bulunamadı.</p>
+                <p className="text-slate-500">Course not found.</p>
             </div>
         );
     }
@@ -135,7 +135,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
         setTimeout(() => {
             setIsSaving(false);
             const event = new CustomEvent('toast', {
-                detail: { message: 'Değişiklikler kaydedildi', type: 'success' }
+                detail: { message: 'Changes saved', type: 'success' }
             });
             window.dispatchEvent(event);
         }, 800);
@@ -191,12 +191,12 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
             const md = generateMarkdown(course, completedTasks);
             await navigator.clipboard.writeText(md);
             const event = new CustomEvent('toast', {
-                detail: { message: 'Syllabus kopyalandı!', type: 'success' }
+                detail: { message: 'Syllabus copied!', type: 'success' }
             });
             window.dispatchEvent(event);
         } catch (error) {
             const event = new CustomEvent('toast', {
-                detail: { message: 'Kopyalama başarısız', type: 'error' }
+                detail: { message: 'Copy failed', type: 'error' }
             });
             window.dispatchEvent(event);
         }
@@ -211,7 +211,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
         });
         setShowColorPicker(false);
         const event = new CustomEvent('toast', {
-            detail: { message: 'Ders rengi güncellendi', type: 'success' }
+            detail: { message: 'Course color updated', type: 'success' }
         });
         window.dispatchEvent(event);
     };
@@ -252,8 +252,8 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                 isOpen={!!deleteModalData}
                 onClose={() => setDeleteModalData(null)}
                 onConfirm={confirmDelete}
-                title="Görevi Sil"
-                message="Bu görevi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+                title="Delete Task"
+                message="Are you sure you want to delete this task? This action cannot be undone."
             />
 
             <div className={`relative ${course.bgGradient} p-6 md:p-10 overflow-hidden`}>
@@ -276,13 +276,13 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                         >
                             {isSaving ? (
                                 <span className="flex items-center gap-1">
-                                    <Loader2 size={14} className="animate-spin" /> Kaydediliyor...
+                                    <Loader2 size={14} className="animate-spin" /> Saving...
                                 </span>
                             ) : isDirty ? (
-                                <span className="flex items-center gap-1">Kaydedilmedi</span>
+                                <span className="flex items-center gap-1">Unsaved</span>
                             ) : (
                                 <span className="flex items-center gap-1">
-                                    <Check size={14} /> Kaydedildi
+                                    <Check size={14} /> Saved
                                 </span>
                             )}
                         </div>
@@ -305,11 +305,11 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                         ? 'bg-orange-500/70'
                                         : 'bg-white/20'
                                     }`}
-                                title={`${exam.title} - ${new Date(exam.date).toLocaleDateString('tr-TR')}`}
+                                title={`${exam.title} - ${new Date(exam.date).toLocaleDateString('en-US')}`}
                             >
                                 <ClockIcon size={14} />
-                                <span>{exam.title.includes('Vize') || exam.title.includes('Midterm') ? 'Vize' : exam.title.includes('Final') ? 'Final' : exam.title}</span>
-                                <span className="bg-white/20 px-1.5 py-0.5 rounded-md font-black">{exam.daysLeft}g</span>
+                                <span>{exam.title.includes('Vize') || exam.title.includes('Midterm') ? 'Midterm' : exam.title.includes('Final') ? 'Final' : exam.title}</span>
+                                <span className="bg-white/20 px-1.5 py-0.5 rounded-md font-black">{exam.daysLeft}d</span>
                             </div>
                         ))}
 
@@ -318,7 +318,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             <button
                                 onClick={() => setShowColorPicker(prev => !prev)}
                                 className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 backdrop-blur-md transition-all shadow-sm hover:scale-105"
-                                title="Ders Rengini Değiştir"
+                                title="Change Course Color"
                             >
                                 <Palette size={14} />
                                 <div
@@ -330,7 +330,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             {/* Renk Paleti Dropdown */}
                             {showColorPicker && (
                                 <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 z-50 animate-fade-in min-w-[200px] border border-slate-100 dark:border-slate-700">
-                                    <p className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">Renk Seç</p>
+                                    <p className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">Select Color</p>
                                     <div className="grid grid-cols-3 gap-2">
                                         {COLOR_PRESETS.map(preset => (
                                             <button
@@ -352,7 +352,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             <button
                                 onClick={() => setShowExamManager(prev => !prev)}
                                 className="bg-white/10 backdrop-blur-md hover:bg-white/20 px-3 py-2 rounded-xl border border-white/20 flex items-center gap-2 text-white transition-all hover:scale-105"
-                                title="Sınav Detayları"
+                                title="Exam Details"
                             >
                                 <Calendar size={14} />
                                 <ChevronDown size={14} className={`transition-transform ${showExamManager ? 'rotate-180' : ''}`} />
@@ -362,7 +362,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
 
                         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-4 py-2 rounded-xl flex items-center gap-3 shadow-lg">
                             <div className="text-right">
-                                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase">İlerleme</p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase">Progress</p>
                                 <p className="text-xl font-bold text-slate-800 dark:text-white">%{progress}</p>
                             </div>
                             <CircularProgress percentage={progress} colorClass={course.color.split(' ')[0].replace('bg-', 'text-')} size={40} />
@@ -373,7 +373,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                     {showExamManager && upcomingExams.length > 0 && (
                         <div className="bg-white dark:bg-dark-surface rounded-xl p-4 shadow-xl border border-slate-100 dark:border-slate-700 animate-fade-in mt-2">
                             <h3 className="text-sm font-bold text-slate-700 dark:text-white mb-3 border-b border-slate-100 dark:border-slate-700 pb-2 flex items-center gap-2">
-                                <Calendar size={14} /> Yaklaşan Sınavlar
+                                <Calendar size={14} /> Upcoming Exams
                             </h3>
                             <div className="space-y-2">
                                 {upcomingExams.map(exam => {
@@ -400,7 +400,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                 <div>
                                                     <p className="text-sm font-bold text-slate-800 dark:text-white">{exam.title}</p>
                                                     <p className="text-xs text-slate-500">
-                                                        {examDate.toLocaleDateString('tr-TR', {
+                                                        {examDate.toLocaleDateString('en-US', {
                                                             weekday: 'long',
                                                             day: 'numeric',
                                                             month: 'long'
@@ -416,7 +416,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                     : 'text-slate-600 dark:text-slate-400'
                                                 }`}>
                                                 <span className="text-lg font-bold">{daysLeft}</span>
-                                                <span className="text-xs block">gün</span>
+                                                <span className="text-xs block">days</span>
                                             </div>
                                         </div>
                                     );
@@ -520,7 +520,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                                         );
                                                                     }}
                                                                     className="opacity-0 group-hover:opacity-100 p-1 text-slate-300 hover:text-blue-500 transition-all"
-                                                                    title="Google'da Hızlı Ara"
+                                                                    title="Quick Search on Google"
                                                                 >
                                                                     <Globe size={12} />
                                                                 </button>
@@ -561,14 +561,14 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                     <button
                                                         onClick={() => onOpenTaskDetails(task)}
                                                         className="p-2 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all"
-                                                        title="Detaylar & Notlar"
+                                                        title="Details & Notes"
                                                     >
                                                         <MoreVertical size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => setDeleteModalData({ unitIdx, taskIdx })}
                                                         className="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
-                                                        title="Görevi Sil"
+                                                        title="Delete Task"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
@@ -576,7 +576,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                             </div>
                                         ))}
                                         {unit.tasks.length === 0 && (
-                                            <p className="p-4 text-center text-sm text-slate-400 italic">Bu ünitede henüz görev yok.</p>
+                                            <p className="p-4 text-center text-sm text-slate-400 italic">No tasks in this unit yet.</p>
                                         )}
                                     </div>
                                 </div>
@@ -586,13 +586,13 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                 })}
 
                 <div className="bg-white dark:bg-dark-surface p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 mt-6">
-                    <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Yeni Görev Ekle (Son Üniteye)</h3>
+                    <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Add New Task (to Last Unit)</h3>
                     <div className="flex gap-2">
                         <input
                             type="text"
                             value={newTaskText}
                             onChange={e => setNewTaskText(e.target.value)}
-                            placeholder="Görev tanımı..."
+                            placeholder="Task description..."
                             className="flex-1 px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             onKeyDown={e => e.key === 'Enter' && handleAddTask()}
                         />
@@ -601,7 +601,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
                         >
                             <Plus size={18} />
-                            Ekle
+                            Add
                         </button>
                     </div>
                 </div>
@@ -615,7 +615,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                         className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 hover:scale-105 transition-all font-bold disabled:opacity-70 disabled:scale-100"
                     >
                         {isSaving ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
-                        {isSaving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
+                        {isSaving ? 'Saving...' : 'Save Changes'}
                     </button>
                 </div>
             )}

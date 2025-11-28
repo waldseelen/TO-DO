@@ -1,6 +1,6 @@
 /**
  * Quick Add Task Component
- * Global görev ekleme kısayolu (Ctrl+N ile açılır)
+ * Global task adding shortcut (opens with Ctrl+N)
  *
  * @author Code Audit - Production Ready
  * @version 1.0.0
@@ -53,7 +53,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
 
         // Toast göster
         const event = new CustomEvent('toast', {
-            detail: { message: 'Görev eklendi!', type: 'success' }
+            detail: { message: 'Task added!', type: 'success' }
         });
         window.dispatchEvent(event);
 
@@ -73,7 +73,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                 <div className="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
                     <h3 className="font-bold flex items-center gap-2">
                         <Plus size={20} />
-                        Hızlı Görev Ekle
+                        Quick Add Task
                     </h3>
                     <button
                         onClick={onClose}
@@ -88,7 +88,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                     {/* Course Selector */}
                     <div className="relative">
                         <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                            Ders Seç
+                            Select Course
                         </label>
                         <button
                             onClick={() => setShowDropdown(!showDropdown)}
@@ -100,7 +100,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                                     <span className="text-slate-700 dark:text-white">{selectedCourse.title}</span>
                                 </div>
                             ) : (
-                                <span className="text-slate-400">Ders seçin...</span>
+                                <span className="text-slate-400">Select a course...</span>
                             )}
                             <ChevronDown size={16} className={`text-slate-400 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                         </button>
@@ -128,7 +128,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                     {/* Task Input */}
                     <div>
                         <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                            Görev
+                            Task
                         </label>
                         <input
                             ref={inputRef}
@@ -136,7 +136,7 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                             value={taskText}
                             onChange={e => setTaskText(e.target.value)}
                             onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                            placeholder="Görev açıklaması..."
+                            placeholder="Task description..."
                             className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-white"
                         />
                     </div>
@@ -147,15 +147,15 @@ export const QuickAddTask = ({ isOpen, onClose }: Props) => {
                         disabled={!taskText.trim() || !selectedCourseId}
                         className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                     >
-                        Ekle
+                        Add
                     </button>
 
                     {/* Shortcut hint */}
                     <p className="text-center text-xs text-slate-400">
                         <kbd className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs">Enter</kbd>
-                        {' '}ile ekle • {' '}
+                        {' '}to add • {' '}
                         <kbd className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs">Esc</kbd>
-                        {' '}ile kapat
+                        {' '}to close
                     </p>
                 </div>
             </div>

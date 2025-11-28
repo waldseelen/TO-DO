@@ -1,89 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gelişim Planlayıcı</title>
+    <title>Study Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: '#6366f1', // Indigo 500
-              secondary: '#a855f7', // Purple 500
-              dark: '#1e1e2e',
-              'dark-surface': '#2a2a3c',
-            },
-            animation: {
-              'fade-in': 'fadeIn 0.5s ease-out',
-              'confetti': 'confetti 2s ease-out forwards',
-              'bounce-in': 'bounceIn 0.5s ease-out',
-              'wiggle': 'wiggle 0.5s ease-in-out',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              },
-              confetti: {
-                '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
-                '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' },
-              },
-              bounceIn: {
-                '0%': { transform: 'scale(0)', opacity: '0' },
-                '50%': { transform: 'scale(1.2)' },
-                '100%': { transform: 'scale(1)', opacity: '1' },
-              },
-              wiggle: {
-                '0%, 100%': { transform: 'rotate(-3deg)' },
-                '50%': { transform: 'rotate(3deg)' },
-              }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1', // Indigo 500
+                        secondary: '#a855f7', // Purple 500
+                        dark: '#1e1e2e',
+                        'dark-surface': '#2a2a3c',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'confetti': 'confetti 2s ease-out forwards',
+                        'bounce-in': 'bounceIn 0.5s ease-out',
+                        'wiggle': 'wiggle 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        confetti: {
+                            '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
+                            '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '50%': { transform: 'scale(1.2)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     </script>
     <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1; 
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8; 
-      }
-      .dark ::-webkit-scrollbar-thumb {
-        background: #475569; 
-      }
-      /* Toast Animation */
-      @keyframes slide-in-right {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        to {
-          transform: translateX(0);
-          opacity: 1;
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-      }
-      .animate-slide-in-right {
-        animation: slide-in-right 0.3s ease-out;
-      }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        /* Toast Animation */
+        @keyframes slide-in-right {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in-right {
+            animation: slide-in-right 0.3s ease-out;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
@@ -94,8 +103,10 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900 dark:bg-gray-900 dark:text-slate-100 transition-colors duration-300">
+
+<body class="bg-slate-50 text-slate-900 dark:bg-gray-900 dark:text-slate-100 transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
-  </body>
+</body>
+
 </html>

@@ -104,7 +104,7 @@ export const Sidebar = ({
                         <button
                             onClick={toggleCollapse}
                             className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white hover:shadow-lg hover:scale-105 transition-all"
-                            title="Genişlet"
+                            title="Expand"
                         >
                             <GraduationCap size={20} />
                         </button>
@@ -113,7 +113,7 @@ export const Sidebar = ({
                             <button
                                 onClick={toggleCollapse}
                                 className="p-2.5 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white hover:shadow-lg hover:scale-105 transition-all"
-                                title="Daralt"
+                                title="Collapse"
                             >
                                 <GraduationCap size={20} />
                             </button>
@@ -121,7 +121,7 @@ export const Sidebar = ({
                                 <button
                                     onClick={togglePin}
                                     className={`p-1.5 rounded-lg transition-all ${isPinned ? 'text-indigo-500 bg-indigo-50 dark:bg-indigo-900/30' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
-                                    title={isPinned ? 'Sabitliği Kaldır' : 'Sabitle'}
+                                    title={isPinned ? 'Unpin' : 'Pin'}
                                 >
                                     {isPinned ? <Pin size={14} /> : <PinOff size={14} />}
                                 </button>
@@ -138,7 +138,7 @@ export const Sidebar = ({
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                         <input
                             type="text"
-                            placeholder="Görev veya etiket ara..."
+                            placeholder="Search tasks or tags..."
                             value={searchQuery}
                             onChange={event => onSearchChange(event.target.value)}
                             className="w-full pl-9 pr-3 py-2.5 bg-slate-50/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-600 rounded-xl text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-400"
@@ -173,10 +173,10 @@ export const Sidebar = ({
                             ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400 font-semibold shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                             }`}
-                        title={isCollapsed ? 'Genel Bakış' : undefined}
+                        title={isCollapsed ? 'Overview' : undefined}
                     >
                         <LayoutDashboard size={20} />
-                        {!isCollapsed && <span className="text-sm">Genel Bakış</span>}
+                        {!isCollapsed && <span className="text-sm">Overview</span>}
                     </button>
                     <button
                         onClick={() => handleNavigate('daily')}
@@ -184,10 +184,10 @@ export const Sidebar = ({
                             ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400 font-semibold shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                             }`}
-                        title={isCollapsed ? 'Günün Planı' : undefined}
+                        title={isCollapsed ? 'Daily Plan' : undefined}
                     >
                         <SunIcon size={20} />
-                        {!isCollapsed && <span className="text-sm">Günün Planı</span>}
+                        {!isCollapsed && <span className="text-sm">Daily Plan</span>}
                     </button>
                     <button
                         onClick={() => handleNavigate('statistics')}
@@ -195,10 +195,10 @@ export const Sidebar = ({
                             ? 'bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400 font-semibold shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                             }`}
-                        title={isCollapsed ? 'İstatistikler' : undefined}
+                        title={isCollapsed ? 'Statistics' : undefined}
                     >
                         <BarChart3 size={20} />
-                        {!isCollapsed && <span className="text-sm">İstatistikler</span>}
+                        {!isCollapsed && <span className="text-sm">Statistics</span>}
                     </button>
                     <button
                         onClick={() => handleNavigate('calendar')}
@@ -206,10 +206,10 @@ export const Sidebar = ({
                             ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 font-semibold shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'
                             }`}
-                        title={isCollapsed ? 'Takvim' : undefined}
+                        title={isCollapsed ? 'Calendar' : undefined}
                     >
                         <Calendar size={20} />
-                        {!isCollapsed && <span className="text-sm">Takvim</span>}
+                        {!isCollapsed && <span className="text-sm">Calendar</span>}
                     </button>
                 </div>
 
@@ -217,9 +217,9 @@ export const Sidebar = ({
                 <div>
                     {!isCollapsed && (
                         <div className="flex items-center justify-between px-2 mb-2">
-                            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Dersler</h3>
+                            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Courses</h3>
                             <button onClick={onCreateCourse} className="text-indigo-500 hover:text-indigo-700 text-xs flex items-center gap-0.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 px-1.5 py-0.5 rounded-md transition-colors">
-                                <Plus size={12} /> Yeni
+                                <Plus size={12} /> New
                             </button>
                         </div>
                     )}
@@ -252,7 +252,7 @@ export const Sidebar = ({
                 {/* Personal */}
                 <div>
                     {!isCollapsed && (
-                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Kişisel</h3>
+                        <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Personal</h3>
                     )}
                     {personalCourses.map(course => {
                         const progress = getCourseProgress(course, completedTasks);
@@ -283,17 +283,17 @@ export const Sidebar = ({
                     <button
                         onClick={toggleDarkMode}
                         className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-                        title={darkMode ? 'Açık Tema' : 'Koyu Tema'}
+                        title={darkMode ? 'Light Theme' : 'Dark Theme'}
                     >
                         {darkMode ? <SunIcon size={18} /> : <Moon size={18} />}
                     </button>
                     {!isCollapsed && (
-                        <div className="text-[11px] text-slate-400 font-medium">%{totalProgress} Tamamlandı</div>
+                        <div className="text-[11px] text-slate-400 font-medium">{totalProgress}% Completed</div>
                     )}
                     <button
                         onClick={toggleCollapse}
                         className="hidden md:flex p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-                        title={isCollapsed ? 'Genişlet' : 'Daralt'}
+                        title={isCollapsed ? 'Expand' : 'Collapse'}
                     >
                         {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
                     </button>
