@@ -305,16 +305,6 @@ const AppContent = () => {
                 onClose={() => setIsQuickAddOpen(false)}
             />
 
-            {/* Yedekleme Hatırlatıcısı */}
-            {showBackupReminder && (
-                <BackupReminderBanner
-                    daysSinceBackup={daysSinceBackup}
-                    formattedLastBackup={formattedLastBackup}
-                    onBackup={handleExportData}
-                    onDismiss={dismissReminder}
-                />
-            )}
-
             <HeaderClock />
             <ToastContainer />
 

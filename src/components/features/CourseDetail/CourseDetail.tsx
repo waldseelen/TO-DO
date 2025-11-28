@@ -15,7 +15,7 @@ import {
     Save,
     Trash2
 } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Checkmark } from '@/components/ui/Checkmark';
 import { CircularProgress } from '@/components/ui/CircularProgress';
@@ -234,6 +234,18 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
         return { days, title: nextExam.title, time: nextExam.time };
     })();
 
+    // Sınavlara kalan gün hesaplama (midterm ve final için)
+    const examCountdowns = useMemo(() => {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        
+        return upcomingExams.map(exam => {
+            const examDate = new Date(exam.date);
+            const days = Math.ceil((examDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
+            return { ...exam, daysLeft: days };
+        });
+    }, [upcomingExams]);
+
     return (
         <div className="animate-fade-in pb-20">
             <ConfirmationModal
@@ -293,6 +305,29 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                     </div>
 
                     <div className="flex flex-wrap items-end justify-between gap-4">
+                        {/* Sınav Countdown - Her zaman görünür */}
+                        {examCountdowns.length > 0 && (
+                            <div className="flex gap-2 flex-wrap">
+                                {examCountdowns.map(exam => (
+                                    <div
+                                        key={exam.id}
+                                        className={`px-4 py-2 rounded-xl backdrop-blur-md border transition-all ${
+                                            exam.daysLeft <= 3
+                                                ? 'bg-red-500/90 border-red-400 animate-pulse'
+                                                : exam.daysLeft <= 7
+                                                    ? 'bg-orange-500/80 border-orange-400'
+                                                    : 'bg-white/20 border-white/30'
+                                        }`}
+                                    >
+                                        <div className="text-white text-center">
+                                            <p className="text-[10px] uppercase font-bold opacity-80">{exam.title}</p>
+                                            <p className="text-lg font-bold leading-tight">{exam.daysLeft} gün</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
                         <div className="flex gap-3 items-center">
                             {/* Kaydetme Durumu */}
                             <div

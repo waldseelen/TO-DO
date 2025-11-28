@@ -9,8 +9,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#3b82f6",
         bgGradient: "from-blue-500 to-cyan-400",
         exams: [
-            { id: "285-vize2", title: "2. Vize", date: "2025-12-15", time: "15:20" },
-            { id: "285-final", title: "Diff Final", date: "2026-01-06", time: "13:30" }
+            { id: "285-vize2", title: "EEE 285 (2. Vize)", date: "2025-12-15", time: "15:20-16:50" },
+            { id: "285-final", title: "Diff Final", date: "2026-01-06", time: "13:30-15:00" }
         ],
         units: [
             {
@@ -150,8 +150,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#6366f1",
         bgGradient: "from-indigo-500 to-purple-500",
         exams: [
-            { id: "241-vize2", title: "2. Vize", date: "2025-12-19", time: "15:20" },
-            { id: "241-final", title: "Final", date: "2026-01-08", time: "13:30" }
+            { id: "241-vize2", title: "EEE 241 (2. Vize)", date: "2025-12-19", time: "15:20-16:50" },
+            { id: "241-final", title: "Circuit Final", date: "2026-01-08", time: "13:30-15:00" }
         ],
         units: [
             {
@@ -318,8 +318,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#10b981",
         bgGradient: "from-emerald-500 to-teal-500",
         exams: [
-            { id: "283-vize2", title: "2. Vize", date: "2025-12-09", time: "13:30" },
-            { id: "283-final", title: "Prob Final", date: "2026-01-05", time: "10:00" }
+            { id: "283-vize2", title: "EEE 283 (2. Vize)", date: "2025-12-09", time: "13:30-15:00" },
+            { id: "283-final", title: "Prob Final", date: "2026-01-05", time: "10:00-12:00" }
         ],
         units: [
             {
@@ -404,8 +404,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#f97316",
         bgGradient: "from-orange-500 to-amber-500",
         exams: [
-            { id: "201-vize2", title: "2. Vize", date: "2025-12-11", time: "10:20" },
-            { id: "201-final", title: "Circuit Final", date: "2026-01-02", time: "13:30" }
+            { id: "201-vize2", title: "EEE 201 (2. Vize)", date: "2025-12-11", time: "10:20-11:50" },
+            { id: "201-final", title: "Circuit Final", date: "2026-01-02", time: "13:30-15:00" }
         ],
         units: [
             {
@@ -481,8 +481,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#ef4444",
         bgGradient: "from-red-500 to-pink-600",
         exams: [
-            { id: "301-vize2", title: "2. Vize", date: "2025-12-12", time: "08:30" },
-            { id: "301-final", title: "Signal Final", date: "2026-01-07", time: "08:30" }
+            { id: "301-vize2", title: "EEE 301 (2. Vize)", date: "2025-12-12", time: "08:30-10:00" },
+            { id: "301-final", title: "Signal Final", date: "2026-01-07", time: "08:30-10:00" }
         ],
         units: [
             {
@@ -653,7 +653,26 @@ export const INITIAL_DATA: Course[] = [
                 title: "AI & Technology",
                 tasks: [
                     { id: "p-ai-1", text: "Colab general fundamentals" },
-                    { id: "p-ai-2", text: "n8n RSS reading" }
+                    { id: "p-ai-2", text: "n8n RSS reading" },
+                    { id: "p-ai-3", text: "Gemini API entegrasyonu öğren" },
+                    { id: "p-ai-4", text: "LangChain temellerini araştır" }
+                ]
+            },
+            {
+                title: "EEE 285 - Differential Equations Çalışma",
+                tasks: [
+                    { id: "p-285-1", text: "Laplace Transform tablolarını ezberle" },
+                    { id: "p-285-2", text: "2nd Order DE çözüm methodlarını tekrar et" },
+                    { id: "p-285-3", text: "Numerical Methods (Euler, RK4) pratik yap" },
+                    { id: "p-285-4", text: "Geçmiş sınav sorularını çöz" },
+                    { id: "p-285-5", text: "Schaum's Outline problem çözümü" }
+                ]
+            },
+            {
+                title: "Kişisel Gelişim",
+                tasks: [
+                    { id: "p-dev-1", text: "Günlük 30 dk İngilizce pratik" },
+                    { id: "p-dev-2", text: "Haftalık özet ve planlama" }
                 ]
             }
         ]
