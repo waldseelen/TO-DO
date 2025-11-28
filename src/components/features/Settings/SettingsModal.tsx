@@ -1,5 +1,6 @@
-import { Copy, Download, Keyboard, RotateCcw, Settings as SettingsIcon, Timer, Upload, X } from 'lucide-react';
+import { Copy, Download, Keyboard, RotateCcw, Settings as SettingsIcon, Timer, Upload, Volume2, VolumeX, X } from 'lucide-react';
 
+import { usePlannerContext } from '@/context/AppContext';
 import { usePomodoroSettings } from '@/hooks/usePomodoroSettings';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export const SettingsModal = ({ isOpen, onClose, onImport, onExport, onExportToday }: Props) => {
     const { settings, updateSettings, resetSettings, DEFAULT_SETTINGS } = usePomodoroSettings();
+    const { soundEnabled, setSoundEnabled } = usePlannerContext();
 
     if (!isOpen) return null;
 
@@ -28,6 +30,29 @@ export const SettingsModal = ({ isOpen, onClose, onImport, onExport, onExportTod
                 </div>
 
                 <div className="space-y-4">
+                    {/* Ses Ayarları */}
+                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-100 dark:border-amber-900/50">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                {soundEnabled ? (
+                                    <Volume2 size={18} className="text-amber-600 dark:text-amber-400" />
+                                ) : (
+                                    <VolumeX size={18} className="text-amber-600/50 dark:text-amber-400/50" />
+                                )}
+                                <div>
+                                    <h4 className="font-bold text-amber-700 dark:text-amber-400">Tamamlama Sesi</h4>
+                                    <p className="text-xs text-amber-600/70 dark:text-amber-400/70">Görev tamamlandığında ses çal</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setSoundEnabled(!soundEnabled)}
+                                className={`w-12 h-6 rounded-full transition-colors relative ${soundEnabled ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                            >
+                                <div className={`absolute w-5 h-5 bg-white rounded-full top-0.5 transition-transform shadow-sm ${soundEnabled ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                            </button>
+                        </div>
+                    </div>
+
                     {/* Pomodoro Ayarları */}
                     <div className="p-4 bg-rose-50 dark:bg-rose-900/20 rounded-xl border border-rose-100 dark:border-rose-900/50">
                         <div className="flex items-center justify-between mb-3">

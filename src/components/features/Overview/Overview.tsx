@@ -1,9 +1,31 @@
-import { BarChart3, CheckCircle, GraduationCap, Sun, Trophy } from 'lucide-react';
+import { BarChart3, CheckCircle, GraduationCap, Sparkles, Sun, Trophy } from 'lucide-react';
 
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { StreakBadge } from '@/components/ui/StreakBadge';
 import { usePlannerContext } from '@/context/AppContext';
+import { useStreak } from '@/hooks/useStreak';
 import { getCourseProgress, getNextTask } from '@/utils/course';
 import { getDaysLeft } from '@/utils/time';
+
+// Motivasyon mesajları
+const MOTIVATION_MESSAGES = [
+    { threshold: 0, message: "Her büyük yolculuk tek adımla başlar! 🚀", subtext: "İlk görevi tamamla" },
+    { threshold: 10, message: "Harika başlangıç! Devam et! 💪", subtext: "Momentum kazanıyorsun" },
+    { threshold: 25, message: "Çeyrek yolda! Süpersin! ⭐", subtext: "İstikrar başarının anahtarı" },
+    { threshold: 50, message: "Yarı yoldasın! Vazgeçme! 🔥", subtext: "Zirve yaklaşıyor" },
+    { threshold: 75, message: "Son düzlüğe girdin! 🏃", subtext: "Bitiş çizgisi görünüyor" },
+    { threshold: 90, message: "Neredeyse tamam! Son hamle! 🎯", subtext: "Şampiyonlar asla bırakmaz" },
+    { threshold: 100, message: "MUHTEŞEM! Hepsini tamamladın! 🏆", subtext: "Sen bir efsanesin!" },
+];
+
+const getMotivationMessage = (progress: number) => {
+    for (let i = MOTIVATION_MESSAGES.length - 1; i >= 0; i--) {
+        if (progress >= MOTIVATION_MESSAGES[i].threshold) {
+            return MOTIVATION_MESSAGES[i];
+        }
+    }
+    return MOTIVATION_MESSAGES[0];
+};
 
 interface Props {
     onNavigateCourse: (courseId: string) => void;
@@ -13,6 +35,24 @@ interface Props {
 export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
     const { courses, completedTasks, completionHistory } = usePlannerContext();
     const completedCount = completedTasks.size;
+    const { streak, weeklyCount, hasCompletedToday } = useStreak(completionHistory);
+
+    // Toplam ilerleme hesapla
+    const totalProgress = (() => {
+        let total = 0;
+        let done = 0;
+        courses.forEach(course => {
+            course.units.forEach(unit => {
+                unit.tasks.forEach(task => {
+                    total += 1;
+                    if (completedTasks.has(task.id)) done += 1;
+                });
+            });
+        });
+        return total === 0 ? 0 : Math.round((done / total) * 100);
+    })();
+
+    const motivation = getMotivationMessage(totalProgress);
 
     const last7Days = Array.from({ length: 7 }, (_, i) => {
         const d = new Date();
@@ -43,8 +83,27 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
     return (
         <div className="p-6 space-y-8 animate-fade-in pt-16 md:pt-6">
             <header className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Genel Bakış</h1>
-                <p className="text-slate-500 dark:text-slate-400">Akademik yolculuğun ve hedeflerin tek bir yerde.</p>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Genel Bakış</h1>
+                        <p className="text-slate-500 dark:text-slate-400">Akademik yolculuğun ve hedeflerin tek bir yerde.</p>
+                    </div>
+                    <StreakBadge streak={streak} weeklyCount={weeklyCount} hasCompletedToday={hasCompletedToday} />
+                </div>
+                
+                {/* Motivasyon Kartı */}
+                <div className="mt-4 p-4 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 rounded-xl border border-indigo-200/50 dark:border-indigo-500/30">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-indigo-500/20 rounded-lg">
+                            <Sparkles size={20} className="text-indigo-500" />
+                        </div>
+                        <div>
+                            <p className="text-lg font-bold text-slate-800 dark:text-white">{motivation.message}</p>
+                            <p className="text-sm text-slate-500 dark:text-slate-400">{motivation.subtext}</p>
+                        </div>
+                        <div className="ml-auto text-3xl font-black text-indigo-500">%{totalProgress}</div>
+                    </div>
+                </div>
             </header>
 
             {/* Yaklaşan Sınavlar Uyarısı */}

@@ -12,6 +12,7 @@ import { SettingsModal } from '@/components/features/Settings/SettingsModal';
 import { Statistics } from '@/components/features/Statistics/Statistics';
 import { TaskDetailModal } from '@/components/features/Task/TaskDetailModal';
 import { HeaderClock } from '@/components/HeaderClock';
+import { Confetti } from '@/components/ui/Confetti';
 import { ToastContainer } from '@/components/ui/ToastContainer';
 import { PlannerProvider, usePlannerContext } from '@/context/AppContext';
 import { useBackupReminder } from '@/hooks/useBackupReminder';
@@ -28,7 +29,8 @@ const AppContent = () => {
         createNewCourse,
         setCourses,
         hydrateTasks,
-        undo
+        undo,
+        showConfetti
     } = usePlannerContext();
 
     // Tema yönetimi (artık localStorage'da saklanıyor)
@@ -280,6 +282,7 @@ const AppContent = () => {
 
     return (
         <div className="flex h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300 font-inter relative overflow-hidden selection:bg-indigo-500/30">
+            <Confetti active={showConfetti} />
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-3xl"></div>
