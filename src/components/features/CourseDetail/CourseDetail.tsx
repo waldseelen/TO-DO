@@ -21,9 +21,11 @@ import { Checkmark } from '@/components/ui/Checkmark';
 import { CircularProgress } from '@/components/ui/CircularProgress';
 import { ConfirmationModal } from '@/components/ui/ConfirmationModal';
 import { usePlannerContext } from '@/context/AppContext';
+import { useLectureNotesStorage } from '@/hooks/useLectureNotesStorage';
 import { Task, Unit } from '@/types';
 import { getCourseProgress } from '@/utils/course';
 import { generateMarkdown } from '@/utils/markdown';
+import { LastPDFButton, LectureNotesPopup, PDFManagerButton } from './LectureNotesPopup';
 
 // Color presets
 const COLOR_PRESETS = [
@@ -67,6 +69,10 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
     const [deleteModalData, setDeleteModalData] = useState<{ unitIdx: number; taskIdx: number } | null>(null);
     const [showExamManager, setShowExamManager] = useState(false);
     const [showColorPicker, setShowColorPicker] = useState(false);
+    const [showPDFManager, setShowPDFManager] = useState(false);
+
+    // IndexedDB'den ders notlarını yükle (kalıcı storage)
+    const { lectureNotes, saveLectureNotes, isLoading: notesLoading } = useLectureNotesStorage(courseId);
 
     useEffect(() => {
         if (!isDirty && course) {
@@ -347,6 +353,21 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             </div>
                         ))}
 
+                        {/* Last Uploaded PDF - Quick Access */}
+                        {lectureNotes && lectureNotes.length > 0 && (
+                            <LastPDFButton
+                                lectureNote={lectureNotes[lectureNotes.length - 1]}
+                                onClick={() => { }}
+                                courseColor={course.customColor}
+                            />
+                        )}
+
+                        {/* PDF Manager Button */}
+                        <PDFManagerButton
+                            onClick={() => setShowPDFManager(true)}
+                            noteCount={lectureNotes?.length || 0}
+                        />
+
                         {/* Exam Calendar Button - For detailed list */}
                         {upcomingExams.length > 0 && (
                             <button
@@ -619,6 +640,15 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                     </button>
                 </div>
             )}
+
+            {/* PDF Manager Popup */}
+            <LectureNotesPopup
+                isOpen={showPDFManager}
+                onClose={() => setShowPDFManager(false)}
+                lectureNotes={lectureNotes}
+                onUpdate={saveLectureNotes}
+                courseColor={course.customColor}
+            />
         </div>
     );
 };

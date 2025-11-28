@@ -49,6 +49,39 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Touch target minimum size for accessibility */
+        button, a, input[type="checkbox"], input[type="radio"] {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Allow smaller buttons in dense UIs */
+        .compact button, .compact a {
+            min-height: auto;
+            min-width: auto;
+        }
+
+        /* Prevent text selection during drag */
+        [draggable="true"] {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         /* Custom Scrollbar */
@@ -74,6 +107,12 @@
             background: #475569;
         }
 
+        /* Focus visible for keyboard navigation */
+        :focus-visible {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+
         /* Toast Animation */
         @keyframes slide-in-right {
             from {
@@ -89,6 +128,11 @@
 
         .animate-slide-in-right {
             animation: slide-in-right 0.3s ease-out;
+        }
+
+        /* Better mobile scrolling */
+        .custom-scrollbar {
+            -webkit-overflow-scrolling: touch;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">

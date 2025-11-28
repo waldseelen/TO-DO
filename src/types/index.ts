@@ -29,6 +29,15 @@ export interface Exam {
     time?: string; // Saat bilgisi (HH:mm formatında)
 }
 
+export interface LectureNote {
+    id: string;
+    name: string;
+    fileName: string;
+    fileData: string; // Base64 encoded PDF
+    uploadDate: string;
+    unitTitle?: string; // Hangi unitten olduğu
+}
+
 export interface Course {
     id: string;
     code: string;
@@ -39,6 +48,7 @@ export interface Course {
     units: Unit[];
     examDate?: string;
     exams: Exam[];
+    lectureNotes?: LectureNote[];
 }
 
 export interface PomodoroSettings {

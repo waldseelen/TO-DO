@@ -12,6 +12,7 @@ export const INITIAL_DATA: Course[] = [
             { id: "285-vize2", title: "Midterm 2", date: "2025-12-15", time: "15:20-16:50" },
             { id: "285-final", title: "Final", date: "2026-01-06", time: "13:30-15:00" }
         ],
+        lectureNotes: [],
         units: [
             {
                 title: "1. Basic Definitions (pages 1–2)",
@@ -153,6 +154,7 @@ export const INITIAL_DATA: Course[] = [
             { id: "241-vize2", title: "Midterm 2", date: "2025-12-19", time: "15:20-16:50" },
             { id: "241-final", title: "Final", date: "2026-01-02", time: "13:30-15:00" }
         ],
+        lectureNotes: [],
         units: [
             {
                 title: "Unit 1: Fundamentals and Number Systems (Pages 1-47)",
@@ -321,6 +323,7 @@ export const INITIAL_DATA: Course[] = [
             { id: "283-vize2", title: "Midterm 2", date: "2025-12-09", time: "13:30-15:00" },
             { id: "283-final", title: "Final", date: "2026-01-05", time: "10:00-12:00" }
         ],
+        lectureNotes: [],
         units: [
             {
                 title: "Module 1: Fundamentals of Probability (Lectures 1-2)",
@@ -426,6 +429,7 @@ export const INITIAL_DATA: Course[] = [
             { id: "201-vize2", title: "Midterm 2", date: "2025-12-11", time: "10:20-11:50" },
             { id: "201-final", title: "Final", date: "2026-01-02", time: "13:30-15:00" }
         ],
+        lectureNotes: [],
         units: [
             {
                 title: "Chapter 1: Fundamentals and Circuit Laws",
@@ -503,6 +507,7 @@ export const INITIAL_DATA: Course[] = [
             { id: "301-vize2", title: "Midterm 2", date: "2025-12-12", time: "08:30-10:00" },
             { id: "301-final", title: "Final", date: "2026-01-07", time: "08:30-10:00" }
         ],
+        lectureNotes: [],
         units: [
             {
                 title: "1. Introduction and Classification of Signals (pages 4–8)",
@@ -667,6 +672,7 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#475569",
         bgGradient: "from-slate-700 to-slate-900",
         exams: [],
+        lectureNotes: [],
         units: [
             {
                 title: "AI & Technology",
