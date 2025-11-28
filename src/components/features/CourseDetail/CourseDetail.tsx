@@ -269,7 +269,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-between gap-3 md:gap-4">                        <div className="flex gap-2 items-center flex-wrap">
-                        {/* Kaydetme Durumu */}
+                        {/* Save Status */}
                         <div
                             className={`px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition-colors shadow-sm ${isDirty ? 'bg-amber-500/80 text-white' : isSaving ? 'bg-indigo-500/80 text-white' : 'bg-white/20 text-white'
                                 }`}
@@ -287,7 +287,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             )}
                         </div>
 
-                        {/* Syllabus Kopyala */}
+                        {/* Syllabus Copy */}
                         <button
                             onClick={copySyllabus}
                             className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 backdrop-blur-md transition-all shadow-sm hover:scale-105"
@@ -295,25 +295,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             <Copy size={14} /> Syllabus
                         </button>
 
-                        {/* Sınav Countdown Butonları - Syllabus yanında */}
-                        {examCountdowns.slice(0, 2).map(exam => (
-                            <div
-                                key={exam.id}
-                                className={`px-3 py-2 rounded-xl backdrop-blur-md text-white text-xs font-bold flex items-center gap-2 transition-all shadow-sm cursor-default ${exam.daysLeft <= 3
-                                    ? 'bg-red-500/80 animate-pulse'
-                                    : exam.daysLeft <= 7
-                                        ? 'bg-orange-500/70'
-                                        : 'bg-white/20'
-                                    }`}
-                                title={`${exam.title} - ${new Date(exam.date).toLocaleDateString('en-US')}`}
-                            >
-                                <ClockIcon size={14} />
-                                <span>{exam.title.includes('Vize') || exam.title.includes('Midterm') ? 'Midterm' : exam.title.includes('Final') ? 'Final' : exam.title}</span>
-                                <span className="bg-white/20 px-1.5 py-0.5 rounded-md font-black">{exam.daysLeft}d</span>
-                            </div>
-                        ))}
-
-                        {/* Renk Seçici Butonu */}
+                        {/* Color Picker Button */}
                         <div className="relative">
                             <button
                                 onClick={() => setShowColorPicker(prev => !prev)}
@@ -327,7 +309,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                 />
                             </button>
 
-                            {/* Renk Paleti Dropdown */}
+                            {/* Color Palette Dropdown */}
                             {showColorPicker && (
                                 <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 z-50 animate-fade-in min-w-[200px] border border-slate-100 dark:border-slate-700">
                                     <p className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">Select Color</p>
@@ -347,7 +329,25 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                             )}
                         </div>
 
-                        {/* Sınav Takvimi Butonu - Detaylı liste için */}
+                        {/* Exam Countdown Buttons - Midterm then Final */}
+                        {examCountdowns.slice(0, 2).map(exam => (
+                            <div
+                                key={exam.id}
+                                className={`px-3 py-2 rounded-xl backdrop-blur-md text-white text-xs font-bold flex items-center gap-2 transition-all shadow-sm cursor-default ${exam.daysLeft <= 3
+                                    ? 'bg-red-500/80 animate-pulse'
+                                    : exam.daysLeft <= 7
+                                        ? 'bg-orange-500/70'
+                                        : 'bg-white/20'
+                                    }`}
+                                title={`${exam.title} - ${new Date(exam.date).toLocaleDateString('en-US')}`}
+                            >
+                                <ClockIcon size={14} />
+                                <span>{exam.title.includes('Vize') || exam.title.includes('Midterm') ? 'Midterm' : exam.title.includes('Final') ? 'Final' : exam.title}</span>
+                                <span className="bg-white/20 px-1.5 py-0.5 rounded-md font-black">{exam.daysLeft}d</span>
+                            </div>
+                        ))}
+
+                        {/* Exam Calendar Button - For detailed list */}
                         {upcomingExams.length > 0 && (
                             <button
                                 onClick={() => setShowExamManager(prev => !prev)}

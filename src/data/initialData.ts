@@ -700,11 +700,16 @@ export const INITIAL_DATA: Course[] = [
                 title: "High Priority",
                 tasks: [
                     { id: "p-high-1", text: "Open Linktree account" },
-                    { id: "p-high-2", text: "Watch Obsidian videos" },
-                    { id: "p-high-3", text: "Cyber Sec Cisco video" },
-                    { id: "p-high-4", text: "OWASP Juice" },
-                    { id: "p-high-5", text: "Static/Dynamic Analysis" },
-                    { id: "p-high-6", text: "SSDLC" }
+                    { id: "p-high-2", text: "Watch Obsidian videos" }
+                ]
+            },
+            {
+                title: "Cybersecurity",
+                tasks: [
+                    { id: "p-sec-1", text: "Cyber Sec Cisco video" },
+                    { id: "p-sec-2", text: "OWASP Juice" },
+                    { id: "p-sec-3", text: "Static/Dynamic Analysis" },
+                    { id: "p-sec-4", text: "SSDLC" }
                 ]
             },
             {

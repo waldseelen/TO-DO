@@ -343,19 +343,16 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                             {day}
                                         </span>
 
-                                        {/* Sınav göstergeleri - ders renginde ve belirgin */}
+                                        {/* Sınav göstergeleri - dot formatında */}
                                         {hasExam && (
-                                            <div className="absolute top-1 right-1 flex flex-col gap-0.5">
+                                            <div className="absolute top-1 right-1 flex gap-0.5">
                                                 {dayExams.map(({ exam, course }) => (
                                                     <div
                                                         key={exam.id}
-                                                        className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-white text-[9px] font-bold shadow-sm"
+                                                        className="w-2.5 h-2.5 rounded-full shadow-sm ring-1 ring-white dark:ring-gray-800"
                                                         style={{ backgroundColor: course.customColor || '#ef4444' }}
-                                                        title={`${course.title}: ${exam.title}`}
-                                                    >
-                                                        <GraduationCap size={10} />
-                                                        <span className="hidden sm:inline">{course.code}</span>
-                                                    </div>
+                                                        title={`${course.code}: ${exam.title}`}
+                                                    />
                                                 ))}
                                             </div>
                                         )}
