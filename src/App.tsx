@@ -12,7 +12,6 @@ import { SettingsModal } from '@/components/features/Settings/SettingsModal';
 import { Statistics } from '@/components/features/Statistics/Statistics';
 import { TaskDetailModal } from '@/components/features/Task/TaskDetailModal';
 import { HeaderClock } from '@/components/HeaderClock';
-import { BackupReminderBanner } from '@/components/ui/BackupReminderBanner';
 import { ToastContainer } from '@/components/ui/ToastContainer';
 import { PlannerProvider, usePlannerContext } from '@/context/AppContext';
 import { useBackupReminder } from '@/hooks/useBackupReminder';

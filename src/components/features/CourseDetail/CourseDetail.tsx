@@ -238,7 +238,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
     const examCountdowns = useMemo(() => {
         const now = new Date();
         now.setHours(0, 0, 0, 0);
-        
+
         return upcomingExams.map(exam => {
             const examDate = new Date(exam.date);
             const days = Math.ceil((examDate.getTime() - now.getTime()) / (1000 * 3600 * 24));
@@ -311,13 +311,12 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                 {examCountdowns.map(exam => (
                                     <div
                                         key={exam.id}
-                                        className={`px-4 py-2 rounded-xl backdrop-blur-md border transition-all ${
-                                            exam.daysLeft <= 3
+                                        className={`px-4 py-2 rounded-xl backdrop-blur-md border transition-all ${exam.daysLeft <= 3
                                                 ? 'bg-red-500/90 border-red-400 animate-pulse'
                                                 : exam.daysLeft <= 7
                                                     ? 'bg-orange-500/80 border-orange-400'
                                                     : 'bg-white/20 border-white/30'
-                                        }`}
+                                            }`}
                                     >
                                         <div className="text-white text-center">
                                             <p className="text-[10px] uppercase font-bold opacity-80">{exam.title}</p>
@@ -405,10 +404,10 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                         <div
                                             key={exam.id}
                                             className={`flex items-center justify-between p-3 rounded-lg ${daysLeft <= 3
-                                                    ? 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-                                                    : daysLeft <= 7
-                                                        ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800'
-                                                        : 'bg-slate-50 dark:bg-slate-800'
+                                                ? 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+                                                : daysLeft <= 7
+                                                    ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800'
+                                                    : 'bg-slate-50 dark:bg-slate-800'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3">
@@ -429,10 +428,10 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                 </div>
                                             </div>
                                             <div className={`text-right ${daysLeft <= 3
-                                                    ? 'text-red-600 dark:text-red-400'
-                                                    : daysLeft <= 7
-                                                        ? 'text-orange-600 dark:text-orange-400'
-                                                        : 'text-slate-600 dark:text-slate-400'
+                                                ? 'text-red-600 dark:text-red-400'
+                                                : daysLeft <= 7
+                                                    ? 'text-orange-600 dark:text-orange-400'
+                                                    : 'text-slate-600 dark:text-slate-400'
                                                 }`}>
                                                 <span className="text-lg font-bold">{daysLeft}</span>
                                                 <span className="text-xs block">gün</span>
