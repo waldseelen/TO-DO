@@ -259,8 +259,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                             </p>
                                         </div>
                                         <div className={`text-xs font-bold px-2 py-1 rounded-full ${daysLeft <= 3 ? 'bg-red-500 text-white' :
-                                                daysLeft <= 7 ? 'bg-orange-500 text-white' :
-                                                    'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                                            daysLeft <= 7 ? 'bg-orange-500 text-white' :
+                                                'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                                             }`}>
                                             {daysLeft}g
                                         </div>

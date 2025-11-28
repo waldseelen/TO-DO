@@ -391,7 +391,26 @@ export const INITIAL_DATA: Course[] = [
                     { id: "283-4-5", text: "Marginal PMF: p_X(x_i) = sum of p_XY(x_i, y_j)" },
                     { id: "283-4-6", text: "Joint PDF: f_XY(x, y) = ∂²F_XY(x, y)/∂x∂y" },
                     { id: "283-4-7", text: "Marginal PDF: f_X(x) = integral of f_XY(x, y) dy" },
-                    { id: "283-4-8", text: "Independent Random Variables: F_XY(x, y) = F_X(x) F_Y(y)" }
+                    { id: "283-4-8", text: "Independent Random Variables: F_XY(x, y) = F_X(x) F_Y(y)" },
+                    { id: "283-4-9", text: "Covariance: Cov(X,Y) = E[XY] - E[X]E[Y]" },
+                    { id: "283-4-10", text: "Correlation Coefficient: ρ_XY = Cov(X,Y)/(σ_X σ_Y)" }
+                ]
+            },
+            {
+                title: "Module 5: Functions of Random Variables (Lectures 10-11)",
+                tasks: [
+                    { id: "283-5-1", text: "Single RV Function Y = g(X): Finding CDF and PDF" },
+                    { id: "283-5-2", text: "PDF for monotonic functions: f_Y(y) = f_X(x)|dx/dy|" },
+                    { id: "283-5-3", text: "Example: Y = aX + b transformation" },
+                    { id: "283-5-4", text: "Example: Y = X² transformation" },
+                    { id: "283-5-5", text: "Function of Two RV's: Z = g(X,Y)" },
+                    { id: "283-5-6", text: "Z = X + Y (Convolution for independent RV's)" },
+                    { id: "283-5-7", text: "Jacobian Method for joint PDF transformation" },
+                    { id: "283-5-8", text: "Linearity of Expected Value: E[aX + bY] = aE[X] + bE[Y]" },
+                    { id: "283-5-9", text: "Variance Formula: Var(aX + bY)" },
+                    { id: "283-5-10", text: "Probability Generating Function (PGF)" },
+                    { id: "283-5-11", text: "Moment Generating Function (MGF)" },
+                    { id: "283-5-12", text: "Characteristic Function" }
                 ]
             }
         ]
@@ -423,7 +442,7 @@ export const INITIAL_DATA: Course[] = [
                 title: "Chapter 2: Circuit Analysis Methods",
                 tasks: [
                     { id: "201-2-1", text: "Node-Voltage Method (KCL at each node)" },
-                    { id: "201-2-2", text: "Supern ode concept (voltage source between two nodes)" },
+                    { id: "201-2-2", text: "Supernode concept (voltage source between two nodes)" },
                     { id: "201-2-3", text: "Mesh-Current Method (KVL at each mesh)" },
                     { id: "201-2-4", text: "Supermesh concept (current source in a mesh)" },
                     { id: "201-2-5", text: "Circuit Analysis with Dependent Sources" }
