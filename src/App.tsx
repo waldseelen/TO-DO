@@ -279,7 +279,11 @@ const AppContent = () => {
     };
 
     return (
-        <div className="flex h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300 font-inter relative overflow-hidden">
+        <div className="flex h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300 font-inter relative overflow-hidden selection:bg-indigo-500/30">
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-3xl"></div>
+            </div>
             <TaskDetailModal
                 isOpen={detailsModalOpen}
                 onClose={() => {
@@ -321,16 +325,18 @@ const AppContent = () => {
             />
 
             <main className="flex-1 overflow-y-auto relative h-full w-full custom-scrollbar">
-                <div className="md:hidden flex items-center justify-between p-4 bg-white dark:bg-dark-surface border-b border-slate-100 dark:border-slate-700 sticky top-0 z-40">
-                    <h1 className="font-bold text-indigo-600 dark:text-indigo-400">Gelişim Asistanı</h1>
+                <div className="md:hidden flex items-center justify-between p-3 bg-white/95 dark:bg-dark-surface/95 backdrop-blur-xl border-b border-slate-100 dark:border-slate-700 sticky top-0 z-40 shadow-sm">
                     <button
+                        className="p-2 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-sm"
                         onClick={() => setMobileMenuOpen(prev => !prev)}
-                        className="p-2 text-slate-600 dark:text-slate-300"
                     >
-                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
+                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                        %{totalProgress} tamamlandı
+                    </div>
                 </div>
-                <div className="min-h-full pb-20">{renderContent()}</div>
+                <div className="min-h-full pb-20 md:pb-6">{renderContent()}</div>
             </main>
 
             {mobileMenuOpen && (

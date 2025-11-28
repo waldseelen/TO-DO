@@ -261,122 +261,104 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                 <div className="relative z-10 w-full flex flex-col gap-6">
                     <div className="flex justify-between items-start">
                         <div>
-                            <span className="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-bold mb-3 inline-block">
+                            <span className="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-bold mb-3 inline-block shadow-sm">
                                 {course.code}
                             </span>
                             <h1 className="text-3xl md:text-4xl font-bold text-white shadow-black drop-shadow-lg">{course.title}</h1>
                         </div>
-
-                        <div className="flex flex-col items-end gap-2">
-                            {/* Renk Seçici Butonu */}
-                            <div className="relative">
-                                <button
-                                    onClick={() => setShowColorPicker(prev => !prev)}
-                                    className="bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 backdrop-blur-md transition-colors"
-                                    title="Ders Rengini Değiştir"
-                                >
-                                    <Palette size={12} />
-                                    <div
-                                        className="w-3 h-3 rounded-full border border-white/50"
-                                        style={{ backgroundColor: course.customColor || '#3b82f6' }}
-                                    />
-                                </button>
-
-                                {/* Renk Paleti Dropdown */}
-                                {showColorPicker && (
-                                    <div className="absolute top-full right-0 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 z-50 animate-fade-in min-w-[200px]">
-                                        <p className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">Renk Seç</p>
-                                        <div className="grid grid-cols-3 gap-2">
-                                            {COLOR_PRESETS.map(preset => (
-                                                <button
-                                                    key={preset.hex}
-                                                    onClick={() => handleColorChange(preset)}
-                                                    className={`w-full aspect-square rounded-lg transition-transform hover:scale-110 ${course.customColor === preset.hex ? 'ring-2 ring-white ring-offset-2 ring-offset-gray-800' : ''
-                                                        }`}
-                                                    style={{ backgroundColor: preset.hex }}
-                                                    title={preset.name}
-                                                />
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
                     </div>
 
-                    <div className="flex flex-wrap items-end justify-between gap-4">
-                        {/* Sınav Countdown - Her zaman görünür */}
-                        {examCountdowns.length > 0 && (
-                            <div className="flex gap-2 flex-wrap">
-                                {examCountdowns.map(exam => (
-                                    <div
-                                        key={exam.id}
-                                        className={`px-4 py-2 rounded-xl backdrop-blur-md border transition-all ${exam.daysLeft <= 3
-                                                ? 'bg-red-500/90 border-red-400 animate-pulse'
-                                                : exam.daysLeft <= 7
-                                                    ? 'bg-orange-500/80 border-orange-400'
-                                                    : 'bg-white/20 border-white/30'
-                                            }`}
-                                    >
-                                        <div className="text-white text-center">
-                                            <p className="text-[10px] uppercase font-bold opacity-80">{exam.title}</p>
-                                            <p className="text-lg font-bold leading-tight">{exam.daysLeft} gün</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                    <div className="flex flex-wrap items-center justify-between gap-3 md:gap-4">                        <div className="flex gap-2 items-center flex-wrap">
+                        {/* Kaydetme Durumu */}
+                        <div
+                            className={`px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition-colors shadow-sm ${isDirty ? 'bg-amber-500/80 text-white' : isSaving ? 'bg-indigo-500/80 text-white' : 'bg-white/20 text-white'
+                                }`}
+                        >
+                            {isSaving ? (
+                                <span className="flex items-center gap-1">
+                                    <Loader2 size={14} className="animate-spin" /> Kaydediliyor...
+                                </span>
+                            ) : isDirty ? (
+                                <span className="flex items-center gap-1">Kaydedilmedi</span>
+                            ) : (
+                                <span className="flex items-center gap-1">
+                                    <Check size={14} /> Kaydedildi
+                                </span>
+                            )}
+                        </div>
 
-                        <div className="flex gap-3 items-center">
-                            {/* Kaydetme Durumu */}
+                        {/* Syllabus Kopyala */}
+                        <button
+                            onClick={copySyllabus}
+                            className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 backdrop-blur-md transition-all shadow-sm hover:scale-105"
+                        >
+                            <Copy size={14} /> Syllabus
+                        </button>
+
+                        {/* Sınav Countdown Butonları - Syllabus yanında */}
+                        {examCountdowns.slice(0, 2).map(exam => (
                             <div
-                                className={`px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition-colors ${isDirty ? 'bg-amber-500/80 text-white' : isSaving ? 'bg-indigo-500/80 text-white' : 'bg-white/20 text-white'
+                                key={exam.id}
+                                className={`px-3 py-2 rounded-xl backdrop-blur-md text-white text-xs font-bold flex items-center gap-2 transition-all shadow-sm cursor-default ${exam.daysLeft <= 3
+                                    ? 'bg-red-500/80 animate-pulse'
+                                    : exam.daysLeft <= 7
+                                        ? 'bg-orange-500/70'
+                                        : 'bg-white/20'
                                     }`}
+                                title={`${exam.title} - ${new Date(exam.date).toLocaleDateString('tr-TR')}`}
                             >
-                                {isSaving ? (
-                                    <span className="flex items-center gap-1">
-                                        <Loader2 size={12} className="animate-spin" /> Kaydediliyor...
-                                    </span>
-                                ) : isDirty ? (
-                                    <span className="flex items-center gap-1">Kaydedilmedi</span>
-                                ) : (
-                                    <span className="flex items-center gap-1">
-                                        <Check size={12} /> Kaydedildi
-                                    </span>
-                                )}
+                                <ClockIcon size={14} />
+                                <span>{exam.title.includes('Vize') || exam.title.includes('Midterm') ? 'Vize' : exam.title.includes('Final') ? 'Final' : exam.title}</span>
+                                <span className="bg-white/20 px-1.5 py-0.5 rounded-md font-black">{exam.daysLeft}g</span>
                             </div>
+                        ))}
 
-                            {/* Syllabus Kopyala */}
+                        {/* Renk Seçici Butonu */}
+                        <div className="relative">
                             <button
-                                onClick={copySyllabus}
-                                className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1 backdrop-blur-md transition-colors"
+                                onClick={() => setShowColorPicker(prev => !prev)}
+                                className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 backdrop-blur-md transition-all shadow-sm hover:scale-105"
+                                title="Ders Rengini Değiştir"
                             >
-                                <Copy size={12} /> Syllabus
+                                <Palette size={14} />
+                                <div
+                                    className="w-3 h-3 rounded-full border border-white/50 shadow-sm"
+                                    style={{ backgroundColor: course.customColor || '#3b82f6' }}
+                                />
                             </button>
 
-                            {/* Sınav Takvimi Butonu */}
-                            {upcomingExams.length > 0 && (
-                                <button
-                                    onClick={() => setShowExamManager(prev => !prev)}
-                                    className="bg-white/10 backdrop-blur-md hover:bg-white/20 px-3 py-2 rounded-xl border border-white/20 flex items-center gap-2 text-white transition-colors"
-                                >
-                                    <ClockIcon size={16} />
-                                    <div className="text-left">
-                                        <p className="font-bold text-xs">
-                                            {nextExamInfo ? `${nextExamInfo.days} Gün` : 'Sınavlar'}
-                                        </p>
+                            {/* Renk Paleti Dropdown */}
+                            {showColorPicker && (
+                                <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl p-3 z-50 animate-fade-in min-w-[200px] border border-slate-100 dark:border-slate-700">
+                                    <p className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">Renk Seç</p>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        {COLOR_PRESETS.map(preset => (
+                                            <button
+                                                key={preset.hex}
+                                                onClick={() => handleColorChange(preset)}
+                                                className={`w-full aspect-square rounded-lg transition-transform hover:scale-110 shadow-sm ${course.customColor === preset.hex ? 'ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-800' : ''
+                                                    }`}
+                                                style={{ backgroundColor: preset.hex }}
+                                                title={preset.name}
+                                            />
+                                        ))}
                                     </div>
-                                    <ChevronDown size={14} className={`transition-transform ${showExamManager ? 'rotate-180' : ''}`} />
-                                </button>
-                            )}
-
-                            {nextExamInfo && nextExamInfo.days <= 3 && (
-                                <div className="px-3 py-1 rounded-lg bg-red-500 text-white animate-pulse flex flex-col items-center justify-center shadow-lg">
-                                    <span className="text-[10px] uppercase font-bold text-red-100">Acil</span>
-                                    <span className="text-sm font-bold leading-none">{nextExamInfo.title}</span>
                                 </div>
                             )}
                         </div>
+
+                        {/* Sınav Takvimi Butonu - Detaylı liste için */}
+                        {upcomingExams.length > 0 && (
+                            <button
+                                onClick={() => setShowExamManager(prev => !prev)}
+                                className="bg-white/10 backdrop-blur-md hover:bg-white/20 px-3 py-2 rounded-xl border border-white/20 flex items-center gap-2 text-white transition-all hover:scale-105"
+                                title="Sınav Detayları"
+                            >
+                                <Calendar size={14} />
+                                <ChevronDown size={14} className={`transition-transform ${showExamManager ? 'rotate-180' : ''}`} />
+                            </button>
+                        )}
+                    </div>
 
                         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur px-4 py-2 rounded-xl flex items-center gap-3 shadow-lg">
                             <div className="text-right">
@@ -454,9 +436,9 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                     return (
                         <div
                             key={unitIdx}
-                            className="bg-white dark:bg-dark-surface rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-colors"
+                            className="bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-all hover:shadow-md"
                         >
-                            <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors" onClick={() => toggleUnit(unitIdx)}>
+                            <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors" onClick={() => toggleUnit(unitIdx)}>
                                 <div className="flex items-center gap-3 flex-1">
                                     <div className={`p-2 rounded-lg ${isAllDone ? 'bg-green-100 text-green-600 dark:bg-green-900/20' : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300'
                                         }`}>
@@ -492,7 +474,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                                     handleDrop(unitIdx, taskIdx);
                                                 }}
                                                 onDragEnd={handleDragEnd}
-                                                className={`flex items-center gap-3 p-4 pl-6 border-b border-slate-100 dark:border-slate-700 last:border-0 hover:bg-white dark:hover:bg-slate-800 transition-colors group relative ${dragTarget?.taskIdx === taskIdx && dragTarget.unitIdx === unitIdx ? 'border-t-2 border-t-indigo-500' : ''
+                                                className={`flex items-center gap-3 p-4 pl-6 border-b border-slate-100 dark:border-slate-700 last:border-0 hover:bg-indigo-50/30 dark:hover:bg-indigo-900/10 transition-colors group relative ${dragTarget?.taskIdx === taskIdx && dragTarget.unitIdx === unitIdx ? 'border-t-2 border-t-indigo-500' : ''
                                                     } ${dragSource?.taskIdx === taskIdx && dragSource.unitIdx === unitIdx ? 'opacity-50 bg-slate-100 dark:bg-slate-800' : ''}`}
                                             >
                                                 <div className="text-slate-300 dark:text-slate-600 cursor-grab hover:text-slate-500 active:cursor-grabbing">

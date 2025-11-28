@@ -212,6 +212,66 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                 </div>
             </div>
 
+            {/* Yaklaşan Sınavlar */}
+            {(() => {
+                const today = new Date();
+                const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                const upcomingExams: Array<{ exam: Exam; course: Course; date: string }> = [];
+
+                const sortedDates = Object.keys(examsByDate)
+                    .filter(date => date >= todayKey)
+                    .sort((a, b) => a.localeCompare(b))
+                    .slice(0, 5);
+
+                sortedDates.forEach(date => {
+                    const exams = examsByDate[date];
+                    if (exams) {
+                        exams.forEach(e => upcomingExams.push({ ...e, date }));
+                    }
+                });
+
+                if (upcomingExams.length === 0) return null;
+
+                return (
+                    <div className="mb-6 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
+                        <h3 className="text-sm font-bold text-red-700 dark:text-red-400 mb-3 flex items-center gap-2">
+                            <AlertTriangle size={16} />
+                            Yaklaşan Sınavlar
+                        </h3>
+                        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                            {upcomingExams.map(({ exam, course, date }) => {
+                                const examDate = new Date(date + 'T00:00:00');
+                                const daysLeft = Math.ceil((examDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                                return (
+                                    <div
+                                        key={exam.id}
+                                        onClick={() => onSelectCourse?.(course.id)}
+                                        className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg cursor-pointer hover:shadow-md transition-all border-l-4"
+                                        style={{ borderLeftColor: course.customColor || '#ef4444' }}
+                                    >
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
+                                                {course.code} - {exam.title}
+                                            </p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                {examDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}
+                                                {exam.time && ` • ${exam.time}`}
+                                            </p>
+                                        </div>
+                                        <div className={`text-xs font-bold px-2 py-1 rounded-full ${daysLeft <= 3 ? 'bg-red-500 text-white' :
+                                                daysLeft <= 7 ? 'bg-orange-500 text-white' :
+                                                    'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                                            }`}>
+                                            {daysLeft}g
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                );
+            })()}
+
             {/* Ay Navigasyonu */}
             <div className="flex items-center justify-between mb-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
                 <button
@@ -283,16 +343,19 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                             {day}
                                         </span>
 
-                                        {/* Sınav göstergeleri - ders renginde */}
+                                        {/* Sınav göstergeleri - ders renginde ve belirgin */}
                                         {hasExam && (
                                             <div className="absolute top-1 right-1 flex flex-col gap-0.5">
                                                 {dayExams.map(({ exam, course }) => (
                                                     <div
                                                         key={exam.id}
-                                                        className="w-2.5 h-2.5 rounded-full ring-1 ring-white dark:ring-gray-800"
+                                                        className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-white text-[9px] font-bold shadow-sm"
                                                         style={{ backgroundColor: course.customColor || '#ef4444' }}
                                                         title={`${course.title}: ${exam.title}`}
-                                                    />
+                                                    >
+                                                        <GraduationCap size={10} />
+                                                        <span className="hidden sm:inline">{course.code}</span>
+                                                    </div>
                                                 ))}
                                             </div>
                                         )}

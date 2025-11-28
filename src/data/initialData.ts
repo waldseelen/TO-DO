@@ -9,8 +9,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#3b82f6",
         bgGradient: "from-blue-500 to-cyan-400",
         exams: [
-            { id: "285-vize2", title: "EEE 285 (2. Vize)", date: "2025-12-15", time: "15:20-16:50" },
-            { id: "285-final", title: "Diff Final", date: "2026-01-06", time: "13:30-15:00" }
+            { id: "285-vize2", title: "Midterm 2", date: "2025-12-15", time: "15:20-16:50" },
+            { id: "285-final", title: "Final", date: "2026-01-06", time: "13:30-15:00" }
         ],
         units: [
             {
@@ -150,162 +150,162 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#6366f1",
         bgGradient: "from-indigo-500 to-purple-500",
         exams: [
-            { id: "241-vize2", title: "EEE 241 (2. Vize)", date: "2025-12-19", time: "15:20-16:50" },
-            { id: "241-final", title: "Circuit Final", date: "2026-01-08", time: "13:30-15:00" }
+            { id: "241-vize2", title: "Midterm 2", date: "2025-12-19", time: "15:20-16:50" },
+            { id: "241-final", title: "Final", date: "2026-01-02", time: "13:30-15:00" }
         ],
         units: [
             {
-                title: "1. Birim: Temel Kavramlar ve Sayı Sistemleri (Syf 1-47)",
+                title: "Unit 1: Fundamentals and Number Systems (Pages 1-47)",
                 tasks: [
-                    { id: "241-1-1", text: "Dersin hedeflerini ve içeriğini gözden geçir.", initialChecked: true },
-                    { id: "241-1-2", text: "Dijital ve Analog sistemler arasındaki farkları öğren.", initialChecked: true },
-                    { id: "241-1-3", text: "Dijitalleştirme (ADC/DAC) kavramlarını anla.", initialChecked: true },
-                    { id: "241-1-4", text: "İkili (binary) sistemin voltajla temsilini öğren.", initialChecked: true },
-                    { id: "241-1-5", text: "Ağırlıklı (konumsal) sayı sistemlerinin mantığını kavra.", initialChecked: true },
-                    { id: "241-1-6", text: "Radix, MSD, LSD ve kesirli sayı gösterimlerini öğren.", initialChecked: true },
-                    { id: "241-1-7", text: "İkili (Binary - Taban-2) sistemi çalış.", initialChecked: true },
-                    { id: "241-1-8", text: "Sekizli (Octal - Taban-8) sistemi çalış.", initialChecked: true },
-                    { id: "241-1-9", text: "Onaltılı (Hexadecimal - Taban-16) sistemi çalış.", initialChecked: true },
-                    { id: "241-1-10", text: "2^n tablosu ve r^n - 1 gibi özellikleri öğren.", initialChecked: true },
-                    { id: "241-1-11", text: "Farklı tabanlardan onluk tabana dönüşüm yap.", initialChecked: true }
+                    { id: "241-1-1", text: "Review course objectives and content", initialChecked: true },
+                    { id: "241-1-2", text: "Learn differences between Digital and Analog systems", initialChecked: true },
+                    { id: "241-1-3", text: "Understand Digitalization (ADC/DAC) concepts", initialChecked: true },
+                    { id: "241-1-4", text: "Learn Binary system representation with voltage and noise effects", initialChecked: true },
+                    { id: "241-1-5", text: "Grasp the logic of Weighted (positional) number systems", initialChecked: true },
+                    { id: "241-1-6", text: "Learn Radix (Base), MSD, LSD and fractional number representations", initialChecked: true },
+                    { id: "241-1-7", text: "Practice Binary (Base-2) system", initialChecked: true },
+                    { id: "241-1-8", text: "Practice Octal (Base-8) system", initialChecked: true },
+                    { id: "241-1-9", text: "Practice Hexadecimal (Base-16) system", initialChecked: true },
+                    { id: "241-1-10", text: "Learn 2^n tables and important properties like r^n - 1", initialChecked: true },
+                    { id: "241-1-11", text: "Practice conversions from different bases (2, 8, 16) to decimal (base 10)", initialChecked: true }
                 ]
             },
             {
-                title: "2. Birim: Taban Dönüşümleri ve İkili Aritmetik (Syf 48-77)",
+                title: "Unit 2: Base Conversions and Binary Arithmetic (Pages 48-77)",
                 tasks: [
-                    { id: "241-2-1", text: "Ondalık tamsayıların diğer tabanlara dönüşümü (bölme)", initialChecked: true },
-                    { id: "241-2-2", text: "Ondalık kesirli sayıların diğer tabanlara dönüşümü (çarpma)", initialChecked: true },
-                    { id: "241-2-3", text: "İkili -> Sekizli (3-bit gruplama)", initialChecked: true },
-                    { id: "241-2-4", text: "İkili -> Onaltılı (4-bit gruplama)", initialChecked: true },
-                    { id: "241-2-5", text: "Onaltılı <-> Sekizli arası dönüşümler", initialChecked: true },
-                    { id: "241-2-6", text: "Genel taban dönüşüm metodu", initialChecked: true },
-                    { id: "241-2-7", text: "İkili (Binary) toplama işlemi", initialChecked: true },
-                    { id: "241-2-8", text: "İkili (Binary) çıkarma ve borç kavramı", initialChecked: true },
-                    { id: "241-2-9", text: "İkili (Binary) çarpma işlemi", initialChecked: true },
-                    { id: "241-2-10", text: "Onaltılı (Hex) toplama işlemi", initialChecked: true },
-                    { id: "241-2-11", text: "Sekizli (Octal) çarpma işlemi", initialChecked: true }
+                    { id: "241-2-1", text: "Learn Decimal integer conversion to other bases using division method", initialChecked: true },
+                    { id: "241-2-2", text: "Learn Decimal fractional number conversion using multiplication method", initialChecked: true },
+                    { id: "241-2-3", text: "Learn Binary → Octal conversion (3-bit grouping)", initialChecked: true },
+                    { id: "241-2-4", text: "Learn Binary → Hexadecimal conversion (4-bit grouping)", initialChecked: true },
+                    { id: "241-2-5", text: "Practice fast conversions between Hexadecimal ↔ Octal", initialChecked: true },
+                    { id: "241-2-6", text: "Understand general base conversion method", initialChecked: true },
+                    { id: "241-2-7", text: "Practice Binary addition operation", initialChecked: true },
+                    { id: "241-2-8", text: "Learn Binary subtraction and borrow concept", initialChecked: true },
+                    { id: "241-2-9", text: "Practice Binary multiplication operation", initialChecked: true },
+                    { id: "241-2-10", text: "Practice Hexadecimal addition operation", initialChecked: true },
+                    { id: "241-2-11", text: "Practice Octal multiplication operation", initialChecked: true }
                 ]
             },
             {
-                title: "3. Birim: İşaretli Sayılar ve İkili Kodlar (Syf 78-145)",
+                title: "Unit 3: Signed Numbers and Binary Codes (Pages 78-145)",
                 tasks: [
-                    { id: "241-3-1", text: "Register ve İşaretli/İşaretsiz sayıları öğren", initialChecked: true },
-                    { id: "241-3-2", text: "İşaret-Büyüklük (Signed-Magnitude) gösterimi", initialChecked: true },
-                    { id: "241-3-3", text: "Tümleyen (Complement) mantığı", initialChecked: true },
-                    { id: "241-3-4", text: "1'e Tümleyen (1's Complement) aritmetiği", initialChecked: true },
-                    { id: "241-3-5", text: "2'ye Tümleyen (2's Complement) aritmetiği", initialChecked: true },
-                    { id: "241-3-6", text: "2'ye tümleyen kullanarak çıkarma işlemi", initialChecked: true },
-                    { id: "241-3-7", text: "İşaretli sayılarda Taşma (Overflow) tespiti", initialChecked: true },
-                    { id: "241-3-8", text: "Aritmetik Kaydırma (Arithmetic Shift)", initialChecked: true },
-                    { id: "241-3-9", text: "9'a ve 10'a tümleyen kavramları", initialChecked: true },
-                    { id: "241-3-10", text: "BCD (Binary Coded Decimal) kodu", initialChecked: true },
-                    { id: "241-3-11", text: "BCD Toplaması ve geçersiz kod düzeltme", initialChecked: true },
-                    { id: "241-3-12", text: "Gray Kodu yapısı", initialChecked: true },
-                    { id: "241-3-13", text: "ASCII Karakter Kodu", initialChecked: true },
-                    { id: "241-3-14", text: "Hata Tespit Kodu (Parity Bit)", initialChecked: true }
+                    { id: "241-3-1", text: "Learn Register concept and Signed/Unsigned numbers", initialChecked: true },
+                    { id: "241-3-2", text: "Learn Sign-Magnitude representation", initialChecked: true },
+                    { id: "241-3-3", text: "Understand the logic of Complement representation", initialChecked: true },
+                    { id: "241-3-4", text: "Learn 1's Complement definition and arithmetic (end-around carry)", initialChecked: true },
+                    { id: "241-3-5", text: "Learn 2's Complement definition and arithmetic (end carry discard)", initialChecked: true },
+                    { id: "241-3-6", text: "Practice subtraction using 2's complement (M-N)", initialChecked: true },
+                    { id: "241-3-7", text: "Learn Overflow condition in signed numbers and detection methods", initialChecked: true },
+                    { id: "241-3-8", text: "Learn Arithmetic Shift operations (left/right)", initialChecked: true },
+                    { id: "241-3-9", text: "Learn 9's and 10's complement (Decimal complement) concepts", initialChecked: true },
+                    { id: "241-3-10", text: "Learn BCD (Binary Coded Decimal) code and 4-bit representation", initialChecked: true },
+                    { id: "241-3-11", text: "Learn BCD addition and invalid code (+6 addition) rule", initialChecked: true },
+                    { id: "241-3-12", text: "Understand Gray Code structure (consecutive single bit change)", initialChecked: true },
+                    { id: "241-3-13", text: "Learn ASCII Character Code for text representation", initialChecked: true },
+                    { id: "241-3-14", text: "Learn Parity Bit (Odd/Even) error detection concept", initialChecked: true }
                 ]
             },
             {
-                title: "4. Birim: Boolean Cebiri ve Mantık Kapıları (Syf 146-179)",
+                title: "Unit 4: Boolean Algebra and Logic Gates (Pages 146-179)",
                 tasks: [
-                    { id: "241-4-1", text: "Temel mantık kapıları (AND, OR, NOT)", initialChecked: true },
-                    { id: "241-4-2", text: "Boolean Cebiri postulatları", initialChecked: true },
-                    { id: "241-4-3", text: "Operatör öncelik sırası", initialChecked: true },
-                    { id: "241-4-4", text: "İkilik (Duality) Prensibi", initialChecked: true },
-                    { id: "241-4-5", text: "Yutma (Absorption) kuralı", initialChecked: true },
-                    { id: "241-4-6", text: "DeMorgan Teoremi", initialChecked: true },
-                    { id: "241-4-7", text: "Boolean ifadelerini sadeleştirme", initialChecked: true },
-                    { id: "241-4-8", text: "Bir fonksiyonun Tümleyenini alma", initialChecked: true }
+                    { id: "241-4-1", text: "Learn basic logic gates (AND, OR, NOT) and truth tables", initialChecked: true },
+                    { id: "241-4-2", text: "Review Boolean Algebra postulates and fundamental theorems", initialChecked: true },
+                    { id: "241-4-3", text: "Learn operator precedence order (Parenthesis > NOT > AND > OR)", initialChecked: true },
+                    { id: "241-4-4", text: "Understand Duality Principle", initialChecked: true },
+                    { id: "241-4-5", text: "Learn Absorption rule (X + XY = X)", initialChecked: true },
+                    { id: "241-4-6", text: "Memorize DeMorgan's Theorem", initialChecked: true },
+                    { id: "241-4-7", text: "Practice algebraic simplification of Boolean expressions", initialChecked: true },
+                    { id: "241-4-8", text: "Learn how to find the Complement (F') of a function", initialChecked: true }
                 ]
             },
             {
-                title: "5. Birim: Kombinasyonel Mantık Tasarımı (Syf 180-210)",
+                title: "Unit 5: Combinational Logic Design (Pages 180-210)",
                 tasks: [
-                    { id: "241-5-1", text: "Minterm ve Maxterm kavramları", initialChecked: true },
-                    { id: "241-5-2", text: "Minterm ve Maxterm arası ilişki", initialChecked: true },
-                    { id: "241-5-3", text: "Doğruluk tablosundan Minterm Toplamı (SOP)", initialChecked: true },
-                    { id: "241-5-4", text: "Doğruluk tablosundan Maxterm Çarpımı (POS)", initialChecked: true },
-                    { id: "241-5-5", text: "Kanonik ve Standart formlar", initialChecked: true },
-                    { id: "241-5-6", text: "SOP ve POS formları arasında dönüşüm", initialChecked: true },
-                    { id: "241-5-7", text: "SOP formunu iki seviyeli devre olarak çizme", initialChecked: true },
-                    { id: "241-5-8", text: "POS formunu iki seviyeli devre olarak çizme", initialChecked: true },
-                    { id: "241-5-9", text: "Yayılma Gecikmesi kavramı", initialChecked: true },
-                    { id: "241-5-10", text: "Üç Durumlu (Tri-State) Kapılar", initialChecked: true }
+                    { id: "241-5-1", text: "Learn Minterm (m_i) concept (product term that makes function 1)", initialChecked: true },
+                    { id: "241-5-2", text: "Learn Maxterm (M_i) concept (sum term that makes function 0)", initialChecked: true },
+                    { id: "241-5-3", text: "Understand relationship between Minterm and Maxterm (m_i' = M_i)", initialChecked: true },
+                    { id: "241-5-4", text: "Learn how to extract Minterm Sum (SOP - Σm) from truth table", initialChecked: true },
+                    { id: "241-5-5", text: "Learn how to extract Maxterm Product (POS - ΠM) from truth table", initialChecked: true },
+                    { id: "241-5-6", text: "Learn difference between Canonical and Standard forms", initialChecked: true },
+                    { id: "241-5-7", text: "Learn algebraic transformation between SOP and POS forms", initialChecked: true },
+                    { id: "241-5-8", text: "Learn how to draw SOP form (AND-OR) as two-level circuit", initialChecked: true },
+                    { id: "241-5-9", text: "Understand Propagation Delay concept", initialChecked: true },
+                    { id: "241-5-10", text: "Learn Tri-State Gates (0, 1, High-Z)", initialChecked: true }
                 ]
             },
             {
-                title: "6. Birim: Diğer Kapılar ve Karnaugh Haritaları (Syf 211-274)",
+                title: "Unit 6: Other Gates and Karnaugh Maps (Pages 211-274)",
                 tasks: [
-                    { id: "241-6-1", text: "NAND ve NOR Evrensel Kapıları", initialChecked: true },
-                    { id: "241-6-2", text: "Diğer kapıları sadece NAND ile çizme", initialChecked: true },
-                    { id: "241-6-3", text: "Diğer kapıları sadece NOR ile çizme", initialChecked: true },
-                    { id: "241-6-4", text: "XOR ve XNOR kapıları", initialChecked: true },
-                    { id: "241-6-5", text: "Çoklu girişli kapıların mantığı", initialChecked: true },
-                    { id: "241-6-6", text: "Karnaugh Haritası temelleri", initialChecked: true },
-                    { id: "241-6-7", text: "2 ve 3 Değişkenli K-Map", initialChecked: true },
-                    { id: "241-6-8", text: "4 Değişkenli K-Map ve komşuluklar", initialChecked: true },
-                    { id: "241-6-9", text: "1'leri gruplama kuralları", initialChecked: true },
-                    { id: "241-6-10", text: "Don't Cares (Umursanmayan) durumlar", initialChecked: true },
-                    { id: "241-6-11", text: "PI ve EPI tanımları ve Minimum SOP bulma", initialChecked: true },
-                    { id: "241-6-12", text: "5-Değişkenli K-Map", initialChecked: true },
-                    { id: "241-6-13", text: "Minimum POS bulma (0'ları gruplama)", initialChecked: true }
+                    { id: "241-6-1", text: "Understand that NAND and NOR gates are Universal Gates", initialChecked: true },
+                    { id: "241-6-2", text: "Learn how to draw other gates using only NAND", initialChecked: true },
+                    { id: "241-6-3", text: "Learn how to draw other gates using only NOR", initialChecked: true },
+                    { id: "241-6-4", text: "Learn truth tables and properties of XOR and XNOR gates", initialChecked: true },
+                    { id: "241-6-5", text: "Understand logic of Multiple Input gates", initialChecked: true },
+                    { id: "241-6-6", text: "Learn fundamentals of Karnaugh Map (K-Map) simplification method", initialChecked: true },
+                    { id: "241-6-7", text: "Learn how to create 2-Variable and 3-Variable K-Map", initialChecked: true },
+                    { id: "241-6-8", text: "Learn how to create 4-Variable K-Map and corner/edge adjacencies", initialChecked: true },
+                    { id: "241-6-9", text: "Learn rules for grouping 1's in sizes 2^n (1, 2, 4, 8...)", initialChecked: true },
+                    { id: "241-6-10", text: "Learn how to create larger groups using Don't Cares ('x')", initialChecked: true },
+                    { id: "241-6-11", text: "Learn definitions of Implicant, Prime Implicant (PI) and Essential PI (EPI)", initialChecked: true },
+                    { id: "241-6-12", text: "Understand 5-Variable K-Map logic (two 4x4 maps)", initialChecked: true },
+                    { id: "241-6-13", text: "Learn how to find minimum POS by grouping 0's on K-Map", initialChecked: true }
                 ]
             },
             {
-                title: "7. Birim: Kombinasyonel Devre Analizi ve Tasarımı (Syf 321-336)",
+                title: "Unit 7: Combinational Circuit Analysis and Design (Pages 321-336)",
                 tasks: [
-                    { id: "241-7-1", text: "Kombinasyonel devrelerin tanımını ve analiz yöntemlerini öğren." },
-                    { id: "241-7-2", text: "Verilen bir lojik devrenin analizini yapmayı öğren." },
-                    { id: "241-7-3", text: "Tasarım prosedürünü (Problem -> Tablo -> Sadeleştirme -> Devre) kavra." },
-                    { id: "241-7-4", text: "BCD'den 3-Fazlalık koduna dönüştürücü devresini incele." },
-                    { id: "241-7-5", text: "Yedi Segmentli Gösterge için doğruluk tablosu oluşturmayı öğren." }
+                    { id: "241-7-1", text: "Learn definition of Combinational circuits (no feedback, no memory)" },
+                    { id: "241-7-2", text: "Learn analysis methods (Boolean expression and Truth table)" },
+                    { id: "241-7-3", text: "Understand Design procedure (Problem → Table → Simplify → Circuit)" },
+                    { id: "241-7-4", text: "Study BCD to Excess-3 code converter circuit" },
+                    { id: "241-7-5", text: "Learn how to create truth table for Seven-Segment Decoder" }
                 ]
             },
             {
-                title: "8. Birim: Aritmetik Devreler (Syf 337-362)",
+                title: "Unit 8: Arithmetic Circuits (Pages 337-362)",
                 tasks: [
-                    { id: "241-8-1", text: "Yarım Toplayıcı (Half Adder) devresi ve denklemleri" },
-                    { id: "241-8-2", text: "Tam Toplayıcı (Full Adder) devresi ve yapısı" },
-                    { id: "241-8-3", text: "Paralel Toplayıcı ve elde yayılma gecikmesi" },
-                    { id: "241-8-4", text: "Elde Öngörülü Toplayıcı (Carry Look-ahead)" },
-                    { id: "241-8-5", text: "BCD Toplayıcı tasarımı" },
-                    { id: "241-8-6", text: "İkili Çıkarıcı devresi (2'ye tümleyen ile)" },
-                    { id: "241-8-7", text: "Toplayıcı/Çıkarıcı Birleşik Devre" },
-                    { id: "241-8-8", text: "Taşma (Overflow) tespiti" }
+                    { id: "241-8-1", text: "Learn Half Adder circuit and equations (S = x ⊕ y, C = xy)" },
+                    { id: "241-8-2", text: "Learn Full Adder circuit structure and equations" },
+                    { id: "241-8-3", text: "Study Parallel Adder and carry propagation delay" },
+                    { id: "241-8-4", text: "Learn Carry Look-ahead Adder concept" },
+                    { id: "241-8-5", text: "Study BCD Adder design" },
+                    { id: "241-8-6", text: "Learn Binary Subtractor circuit (using 2's complement)" },
+                    { id: "241-8-7", text: "Study Combined Adder/Subtractor circuit" },
+                    { id: "241-8-8", text: "Learn Overflow detection method (V = C_n ⊕ C_{n-1})" }
                 ]
             },
             {
-                title: "9. Birim: MSI Bileşenleri (Syf 363-388)",
+                title: "Unit 9: MSI Components (Pages 363-388)",
                 tasks: [
-                    { id: "241-9-1", text: "İkili Çarpıcı (Binary Multiplier) mantığı" },
-                    { id: "241-9-2", text: "Büyüklük Karşılaştırıcı (Comparator) devresi" },
-                    { id: "241-9-3", text: "Kod Çözücü (Decoder) yapısı" },
-                    { id: "241-9-4", text: "Kod Çözücü Genişletme ve Enable girişi" },
-                    { id: "241-9-5", text: "Decoder ve OR kapıları ile devre tasarımı" },
-                    { id: "241-9-6", text: "Kodlayıcı (Encoder) ve Öncelikli Kodlayıcı" }
+                    { id: "241-9-1", text: "Understand Binary Multiplier circuit and partial products" },
+                    { id: "241-9-2", text: "Study Magnitude Comparator circuit design" },
+                    { id: "241-9-3", text: "Learn Decoder structure and operation" },
+                    { id: "241-9-4", text: "Study Decoder Expansion and Enable input" },
+                    { id: "241-9-5", text: "Learn circuit design using Decoder and OR gates" },
+                    { id: "241-9-6", text: "Learn Encoder structure and Priority Encoder concept" }
                 ]
             },
             {
-                title: "10. Birim: Çoklayıcılar (MUX) (Syf 389-418)",
+                title: "Unit 10: Multiplexers (MUX) and Tri-State Gates (Pages 389-418)",
                 tasks: [
-                    { id: "241-10-1", text: "Çoklayıcı (MUX) yapısı ve seçme hatları" },
-                    { id: "241-10-2", text: "MUX iç yapısını çizmeyi öğren" },
-                    { id: "241-10-3", text: "Dörtlü (Quad) 2-to-1 MUX" },
-                    { id: "241-10-4", text: "Boolean fonksiyonlarını MUX ile gerçekleme" },
-                    { id: "241-10-5", text: "Azlayıcı (DeMultiplexer) yapısı" },
-                    { id: "241-10-6", text: "Üç Durumlu tamponlar ve Yüksek Empedans" }
+                    { id: "241-10-1", text: "Learn Multiplexer (MUX) structure and function of select lines" },
+                    { id: "241-10-2", text: "Learn how to draw MUX internal structure" },
+                    { id: "241-10-3", text: "Study Quad 2-to-1 MUX design" },
+                    { id: "241-10-4", text: "Learn Boolean function implementation using MUX" },
+                    { id: "241-10-5", text: "Study DeMultiplexer (DeMUX) structure" },
+                    { id: "241-10-6", text: "Learn Tri-State buffers and High Impedance (Hi-Z) state" }
                 ]
             },
             {
-                title: "11. Birim: HDL - Verilog (Syf 419-432)",
+                title: "Unit 11: Hardware Description Languages (HDL - Verilog) (Pages 419-432)",
                 tasks: [
-                    { id: "241-11-1", text: "HDL kavramı ve modül yapısı" },
-                    { id: "241-11-2", text: "Kapı Seviyesi (Gate-Level) modelleme" },
-                    { id: "241-11-3", text: "Tasarım metodolojileri (Top-down, Bottom-up)" },
-                    { id: "241-11-4", text: "Üç durumlu kapıların Verilog modellemesi" },
-                    { id: "241-11-5", text: "Veri Akışı (Dataflow) modellemesi (assign)" },
-                    { id: "241-11-6", text: "Davranışsal (Behavioral) modelleme (always)" },
-                    { id: "241-11-7", text: "Test Bench oluşturma" }
+                    { id: "241-11-1", text: "Learn HDL concept and module structure (module, endmodule)" },
+                    { id: "241-11-2", text: "Study Gate-Level modeling in Verilog" },
+                    { id: "241-11-3", text: "Understand Design methodologies (Top-down, Bottom-up)" },
+                    { id: "241-11-4", text: "Learn Tri-State gates Verilog modeling" },
+                    { id: "241-11-5", text: "Study Dataflow modeling (assign statement)" },
+                    { id: "241-11-6", text: "Study Behavioral modeling (always block)" },
+                    { id: "241-11-7", text: "Understand Test Bench creation and simulation timing (#10)" }
                 ]
             }
         ]
@@ -318,39 +318,39 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#10b981",
         bgGradient: "from-emerald-500 to-teal-500",
         exams: [
-            { id: "283-vize2", title: "EEE 283 (2. Vize)", date: "2025-12-09", time: "13:30-15:00" },
-            { id: "283-final", title: "Prob Final", date: "2026-01-05", time: "10:00-12:00" }
+            { id: "283-vize2", title: "Midterm 2", date: "2025-12-09", time: "13:30-15:00" },
+            { id: "283-final", title: "Final", date: "2026-01-05", time: "10:00-12:00" }
         ],
         units: [
             {
-                title: "Modül 1: Olasılığın Temelleri (Ders 1-2)",
+                title: "Module 1: Fundamentals of Probability (Lectures 1-2)",
                 tasks: [
-                    { id: "283-1-1", text: "Olasılığın kullanım alanlarını anlama", initialChecked: true },
-                    { id: "283-1-2", text: "Küme Teorisi: Temel kavramlar", initialChecked: true },
-                    { id: "283-1-3", text: "Küme Operasyonları (Birleşim, Kesişim...)", initialChecked: true },
-                    { id: "283-1-4", text: "Venn Diyagramları", initialChecked: true },
-                    { id: "283-1-5", text: "De Morgan ve Dağılma Yasaları", initialChecked: true },
-                    { id: "283-1-6", text: "Rastgele Deney ve Olay kavramları", initialChecked: true },
-                    { id: "283-1-7", text: "Olasılığın Aksiyomları", initialChecked: true },
-                    { id: "283-1-8", text: "Olasılığın Temel Özellikleri", initialChecked: true },
-                    { id: "283-1-9", text: "Klasik Olasılık Tanımı", initialChecked: true },
-                    { id: "283-1-10", text: "Koşullu Olasılık Tanımı", initialChecked: true },
-                    { id: "283-1-11", text: "Çarpma Kuralı", initialChecked: true },
-                    { id: "283-1-12", text: "Toplam Olasılık Teoremi", initialChecked: true },
-                    { id: "283-1-13", text: "Bayes Kuralı", initialChecked: true },
-                    { id: "283-1-14", text: "Bağımsız Olaylar", initialChecked: true }
+                    { id: "283-1-1", text: "Understand applications of probability", initialChecked: true },
+                    { id: "283-1-2", text: "Set Theory: Basic concepts", initialChecked: true },
+                    { id: "283-1-3", text: "Set Operations (Union, Intersection...)", initialChecked: true },
+                    { id: "283-1-4", text: "Venn Diagrams", initialChecked: true },
+                    { id: "283-1-5", text: "De Morgan's and Distributive Laws", initialChecked: true },
+                    { id: "283-1-6", text: "Random Experiment and Event concepts", initialChecked: true },
+                    { id: "283-1-7", text: "Axioms of Probability", initialChecked: true },
+                    { id: "283-1-8", text: "Basic Properties of Probability", initialChecked: true },
+                    { id: "283-1-9", text: "Classical Definition of Probability", initialChecked: true },
+                    { id: "283-1-10", text: "Conditional Probability Definition", initialChecked: true },
+                    { id: "283-1-11", text: "Multiplication Rule", initialChecked: true },
+                    { id: "283-1-12", text: "Total Probability Theorem", initialChecked: true },
+                    { id: "283-1-13", text: "Bayes' Rule", initialChecked: true },
+                    { id: "283-1-14", text: "Independent Events", initialChecked: true }
                 ]
             },
             {
-                title: "Modül 2: Rastgele Değişkenler ve Dağılımlar (Ders 3-4)",
+                title: "Module 2: Random Variables and Distributions (Lectures 3-4)",
                 tasks: [
-                    { id: "283-2-1", text: "Problem Saati: Schaum's Problemleri" },
-                    { id: "283-2-2", text: "ÖDEV: Schaum's Chapter 1 çözümleri" },
-                    { id: "283-2-3", text: "Rastgele Değişkenler (RV) Tanımı" },
-                    { id: "283-2-4", text: "Ayrık vs Sürekli RV" },
-                    { id: "283-2-5", text: "Kümülatif Dağılım Fonksiyonu (CDF)" },
-                    { id: "283-2-6", text: "Olasılık Kütle Fonksiyonu (PMF)" },
-                    { id: "283-2-7", text: "PMF ve CDF ilişkisi" },
+                    { id: "283-2-1", text: "Problem Session: Schaum's Problems" },
+                    { id: "283-2-2", text: "HOMEWORK: Schaum's Chapter 1 solutions" },
+                    { id: "283-2-3", text: "Random Variables (RV) Definition" },
+                    { id: "283-2-4", text: "Discrete vs Continuous RV" },
+                    { id: "283-2-5", text: "Cumulative Distribution Function (CDF)" },
+                    { id: "283-2-6", text: "Probability Mass Function (PMF)" },
+                    { id: "283-2-7", text: "PMF and CDF relationship" },
                     { id: "283-2-8", text: "Definition: A function that assigns numerical value to each outcome" },
                     { id: "283-2-9", text: "Defining events from RV: (X=x), (X ≤ x), (x1 < X ≤ x2)" },
                     { id: "283-2-10", text: "CDF Properties (ranges from 0 to 1, non-decreasing, right-continuous)" },
@@ -361,7 +361,7 @@ export const INITIAL_DATA: Course[] = [
                 ]
             },
             {
-                title: "Modül 3: Sürekli RV'ler ve Özel Dağılımlar (Ders 5-6)",
+                title: "Module 3: Continuous RV's and Special Distributions (Lectures 5-6)",
                 tasks: [
                     { id: "283-3-1", text: "Probability Density Function (PDF) definition" },
                     { id: "283-3-2", text: "PDF Properties: f_X(x) ≥ 0 and integral of f_X(x) dx = 1" },
@@ -382,7 +382,7 @@ export const INITIAL_DATA: Course[] = [
                 ]
             },
             {
-                title: "Modül 4: Çoklu Rastgele Değişkenler (Ders 8)",
+                title: "Module 4: Multiple Random Variables (Lecture 8)",
                 tasks: [
                     { id: "283-4-1", text: "Bivariate RV (X, Y) definition" },
                     { id: "283-4-2", text: "Joint CDF: F_XY(x, y) = P(X ≤ x, Y ≤ y)" },
@@ -404,8 +404,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#f97316",
         bgGradient: "from-orange-500 to-amber-500",
         exams: [
-            { id: "201-vize2", title: "EEE 201 (2. Vize)", date: "2025-12-11", time: "10:20-11:50" },
-            { id: "201-final", title: "Circuit Final", date: "2026-01-02", time: "13:30-15:00" }
+            { id: "201-vize2", title: "Midterm 2", date: "2025-12-11", time: "10:20-11:50" },
+            { id: "201-final", title: "Final", date: "2026-01-02", time: "13:30-15:00" }
         ],
         units: [
             {
@@ -481,8 +481,8 @@ export const INITIAL_DATA: Course[] = [
         customColor: "#ef4444",
         bgGradient: "from-red-500 to-pink-600",
         exams: [
-            { id: "301-vize2", title: "EEE 301 (2. Vize)", date: "2025-12-12", time: "08:30-10:00" },
-            { id: "301-final", title: "Signal Final", date: "2026-01-07", time: "08:30-10:00" }
+            { id: "301-vize2", title: "Midterm 2", date: "2025-12-12", time: "08:30-10:00" },
+            { id: "301-final", title: "Final", date: "2026-01-07", time: "08:30-10:00" }
         ],
         units: [
             {
@@ -642,8 +642,8 @@ export const INITIAL_DATA: Course[] = [
     },
     {
         id: "personal",
-        code: "KŞSL",
-        title: "Kişisel & Teknoloji",
+        code: "PRSNL",
+        title: "Personal & Technology",
         color: "bg-gray-800 dark:bg-gray-600",
         customColor: "#475569",
         bgGradient: "from-slate-700 to-slate-900",
@@ -654,25 +654,64 @@ export const INITIAL_DATA: Course[] = [
                 tasks: [
                     { id: "p-ai-1", text: "Colab general fundamentals" },
                     { id: "p-ai-2", text: "n8n RSS reading" },
-                    { id: "p-ai-3", text: "Gemini API entegrasyonu öğren" },
-                    { id: "p-ai-4", text: "LangChain temellerini araştır" }
+                    { id: "p-ai-3", text: "n8n Twitter automation" },
+                    { id: "p-ai-4", text: "Learn Gemini API integration" },
+                    { id: "p-ai-5", text: "Research LangChain fundamentals" },
+                    { id: "p-ai-6", text: "Microsoft Learn Azure" },
+                    { id: "p-ai-7", text: "AWS fundamentals introduction" }
                 ]
             },
             {
-                title: "EEE 285 - Differential Equations Çalışma",
+                title: "Web & Hosting",
                 tasks: [
-                    { id: "p-285-1", text: "Laplace Transform tablolarını ezberle" },
-                    { id: "p-285-2", text: "2nd Order DE çözüm methodlarını tekrar et" },
-                    { id: "p-285-3", text: "Numerical Methods (Euler, RK4) pratik yap" },
-                    { id: "p-285-4", text: "Geçmiş sınav sorularını çöz" },
-                    { id: "p-285-5", text: "Schaum's Outline problem çözümü" }
+                    { id: "p-web-1", text: "Firebase use database" },
+                    { id: "p-web-2", text: "SupaBase use database" },
+                    { id: "p-web-3", text: "Buy domain and hosting" },
+                    { id: "p-web-4", text: "Create personal website" }
                 ]
             },
             {
-                title: "Kişisel Gelişim",
+                title: "System & Infrastructure",
                 tasks: [
-                    { id: "p-dev-1", text: "Günlük 30 dk İngilizce pratik" },
-                    { id: "p-dev-2", text: "Haftalık özet ve planlama" }
+                    { id: "p-sys-1", text: "Raspberry Pi 5 full module server" },
+                    { id: "p-sys-2", text: "Apache2 server installation (VDS/VPS)" }
+                ]
+            },
+            {
+                title: "High Priority",
+                tasks: [
+                    { id: "p-high-1", text: "Open Linktree account" },
+                    { id: "p-high-2", text: "Watch Obsidian videos" },
+                    { id: "p-high-3", text: "Cyber Sec Cisco video" },
+                    { id: "p-high-4", text: "OWASP Juice" },
+                    { id: "p-high-5", text: "Static/Dynamic Analysis" },
+                    { id: "p-high-6", text: "SSDLC" }
+                ]
+            },
+            {
+                title: "Ideas & Brainstorm",
+                tasks: [
+                    { id: "p-idea-1", text: "Create YouTube video content" },
+                    { id: "p-idea-2", text: "Write articles on Medium" },
+                    { id: "p-idea-3", text: "Start podcast series" },
+                    { id: "p-idea-4", text: "Create blog" }
+                ]
+            },
+            {
+                title: "EEE 285 - Differential Equations Study",
+                tasks: [
+                    { id: "p-285-1", text: "Memorize Laplace Transform tables" },
+                    { id: "p-285-2", text: "Review 2nd Order DE solution methods" },
+                    { id: "p-285-3", text: "Practice Numerical Methods (Euler, RK4)" },
+                    { id: "p-285-4", text: "Solve past exam questions" },
+                    { id: "p-285-5", text: "Schaum's Outline problem solving" }
+                ]
+            },
+            {
+                title: "Personal Development",
+                tasks: [
+                    { id: "p-dev-1", text: "Daily 30 min English practice" },
+                    { id: "p-dev-2", text: "Weekly summary and planning" }
                 ]
             }
         ]
