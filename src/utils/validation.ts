@@ -17,5 +17,9 @@ export const validateCourseCode = (code: string): boolean => {
 };
 
 export const sanitizeInput = (input: string): string => {
-  return input.trim().replace(/<[^>]*>/g, '');
+  // First remove script tags and their content
+  let sanitized = input.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
+  // Then remove all other HTML tags
+  sanitized = sanitized.replace(/<[^>]*>/g, '');
+  return sanitized.trim();
 };
