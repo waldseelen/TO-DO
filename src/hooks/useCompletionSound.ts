@@ -10,7 +10,7 @@ export const useCompletionSound = () => {
         if (!soundEnabled) return;
 
         try {
-            // Web Audio API ile basit bir "ding" sesi oluştur
+            // Create a simple "ding" sound with Web Audio API
             if (!audioContextRef.current) {
                 audioContextRef.current = new AudioContext();
             }
@@ -46,7 +46,7 @@ export const useCompletionSound = () => {
 
             const ctx = audioContextRef.current;
 
-            // İki nota çal - daha kutlamalı his
+            // Play two notes - more celebratory feel
             [0, 0.15].forEach((delay, i) => {
                 const oscillator = ctx.createOscillator();
                 const gainNode = ctx.createGain();

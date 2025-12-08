@@ -1,6 +1,6 @@
 /**
  * Enhanced Keyboard Shortcuts Hook
- * Global klavye kısayolları yönetimi
+ * Global keyboard shortcuts management
  *
  * @author Code Audit - Production Ready
  * @version 2.0.0
@@ -9,36 +9,36 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 export interface ShortcutConfig {
-    /** Tuş (küçük harf) */
+    /** Key (lowercase) */
     key: string;
-    /** Ctrl/Cmd tuşu gerekli mi */
+    /** Is Ctrl/Cmd key required */
     ctrl?: boolean;
-    /** Shift tuşu gerekli mi */
+    /** Is Shift key required */
     shift?: boolean;
-    /** Alt tuşu gerekli mi */
+    /** Is Alt key required */
     alt?: boolean;
-    /** Kısayol açıklaması (UI'da göstermek için) */
+    /** Shortcut description (for UI display) */
     description?: string;
-    /** Çalıştırılacak fonksiyon */
+    /** Function to execute */
     callback: () => void;
-    /** Input/textarea içindeyken de çalışsın mı */
+    /** Should work inside Input/textarea too */
     allowInInput?: boolean;
 }
 
-// Varsayılan global kısayollar
+// Default global shortcuts
 export const DEFAULT_SHORTCUTS = {
-    SAVE: { key: 's', ctrl: true, description: 'Kaydet' },
-    UNDO: { key: 'z', ctrl: true, description: 'Geri Al' },
-    SEARCH: { key: 'k', ctrl: true, description: 'Ara' },
-    SETTINGS: { key: ',', ctrl: true, description: 'Ayarlar' },
-    TOGGLE_THEME: { key: 'd', ctrl: true, shift: true, description: 'Tema Değiştir' },
-    NEW_TASK: { key: 'n', ctrl: true, description: 'Yeni Görev' },
-    ESCAPE: { key: 'Escape', description: 'Kapat/İptal' },
+    SAVE: { key: 's', ctrl: true, description: 'Save' },
+    UNDO: { key: 'z', ctrl: true, description: 'Undo' },
+    SEARCH: { key: 'k', ctrl: true, description: 'Search' },
+    SETTINGS: { key: ',', ctrl: true, description: 'Settings' },
+    TOGGLE_THEME: { key: 'd', ctrl: true, shift: true, description: 'Toggle Theme' },
+    NEW_TASK: { key: 'n', ctrl: true, description: 'New Task' },
+    ESCAPE: { key: 'Escape', description: 'Close/Cancel' },
 } as const;
 
 /**
- * Kısayol tuş kombinasyonunu string'e dönüştürür
- * Örn: { ctrl: true, key: 's' } -> "Ctrl+S"
+ * Converts shortcut key combination to string
+ * Example: { ctrl: true, key: 's' } -> "Ctrl+S"
  */
 export const formatShortcut = (shortcut: Omit<ShortcutConfig, 'callback'>): string => {
     const parts: string[] = [];
@@ -47,7 +47,7 @@ export const formatShortcut = (shortcut: Omit<ShortcutConfig, 'callback'>): stri
     if (shortcut.alt) parts.push('Alt');
     if (shortcut.shift) parts.push('Shift');
 
-    // Özel tuş isimleri
+    // Special key names
     const keyName = shortcut.key === ' ' ? 'Space' :
         shortcut.key === 'Escape' ? 'Esc' :
             shortcut.key.length === 1 ? shortcut.key.toUpperCase() :
@@ -59,21 +59,21 @@ export const formatShortcut = (shortcut: Omit<ShortcutConfig, 'callback'>): stri
 };
 
 export const useKeyboardShortcuts = (shortcuts: ShortcutConfig[], enabled = true) => {
-    // Ref kullanarak her render'da yeni listener eklemeyi önle
+    // Use ref to prevent adding new listener on every render
     const shortcutsRef = useRef(shortcuts);
     shortcutsRef.current = shortcuts;
 
     const handleKeyDown = useCallback((event: KeyboardEvent) => {
-        // Input/textarea içindeyken varsayılan olarak devre dışı
+        // Disabled by default when inside Input/textarea
         const target = event.target as HTMLElement;
         const isInInput = target.tagName === 'INPUT' ||
             target.tagName === 'TEXTAREA' ||
             target.isContentEditable;
 
         for (const shortcut of shortcutsRef.current) {
-            // Input kontrolü
+            // Input check
             if (isInInput && !shortcut.allowInInput) {
-                // Sadece Escape gibi özel tuşlara izin ver
+                // Only allow special keys like Escape
                 if (shortcut.key !== 'Escape') continue;
             }
 
@@ -82,7 +82,7 @@ export const useKeyboardShortcuts = (shortcuts: ShortcutConfig[], enabled = true
             const altMatch = shortcut.alt ? event.altKey : !event.altKey;
             const keyMatch = event.key.toLowerCase() === shortcut.key.toLowerCase();
 
-            // Eğer modifier belirtilmemişse, herhangi bir durumda çalış
+            // If modifier is not specified, work in any state
             const finalCtrlMatch = shortcut.ctrl === undefined ? true : ctrlMatch;
             const finalShiftMatch = shortcut.shift === undefined ? true : shiftMatch;
             const finalAltMatch = shortcut.alt === undefined ? true : altMatch;
@@ -91,7 +91,7 @@ export const useKeyboardShortcuts = (shortcuts: ShortcutConfig[], enabled = true
                 event.preventDefault();
                 event.stopPropagation();
                 shortcut.callback();
-                break; // İlk eşleşen kısayolu çalıştır ve dur
+                break; // Run first matching shortcut and stop
             }
         }
     }, []);

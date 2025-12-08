@@ -18,7 +18,9 @@ export const SearchResults = ({ query }: Props) => {
                 unit.tasks.forEach(task => {
                     if (
                         task.text.toLowerCase().includes(lowerQuery) ||
-                        task.tags?.some(tag => tag.toLowerCase().includes(lowerQuery))
+                        task.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+                        course.title.toLowerCase().includes(lowerQuery) ||
+                        course.code.toLowerCase().includes(lowerQuery)
                     ) {
                         matchingTasks.push({ taskId: task.id, text: task.text, unit: unit.title, tags: task.tags });
                     }

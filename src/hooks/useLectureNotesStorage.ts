@@ -18,7 +18,7 @@ const openDB = (): Promise<IDBDatabase> => {
         }
     }
 
-    // Eğer zaten bir bağlantı açma işlemi varsa, onu bekle
+    // If a connection opening is already in progress, wait for it
     if (dbPromise) {
         return dbPromise;
     }
@@ -30,16 +30,16 @@ const openDB = (): Promise<IDBDatabase> => {
             dbPromise = null;
             reject(request.error);
         };
-        
+
         request.onsuccess = () => {
             dbInstance = request.result;
-            
+
             // Bağlantı kapandığında referansı temizle
             dbInstance.onclose = () => {
                 dbInstance = null;
                 dbPromise = null;
             };
-            
+
             dbPromise = null;
             resolve(dbInstance);
         };
@@ -68,7 +68,7 @@ const saveToIndexedDB = async (courseId: string, notes: LectureNote[]): Promise<
         });
         // db.close() kaldırıldı - bağlantı havuzlaması kullanılıyor
     } catch (error) {
-        console.error('IndexedDB kayıt hatası:', error);
+        console.error('IndexedDB save error:', error);
         throw error;
     }
 };
@@ -88,7 +88,7 @@ const loadFromIndexedDB = async (courseId: string): Promise<LectureNote[]> => {
         // db.close() kaldırıldı - bağlantı havuzlaması kullanılıyor
         return result?.notes || [];
     } catch (error) {
-        console.error('IndexedDB okuma hatası:', error);
+        console.error('IndexedDB read error:', error);
         return [];
     }
 };
@@ -107,7 +107,7 @@ const deleteFromIndexedDB = async (courseId: string): Promise<void> => {
 
         // db.close() kaldırıldı - bağlantı havuzlaması kullanılıyor
     } catch (error) {
-        console.error('IndexedDB silme hatası:', error);
+        console.error('IndexedDB delete error:', error);
     }
 };
 
@@ -137,7 +137,7 @@ export const useLectureNotesStorage = (courseId: string) => {
         }
     }, [courseId]);
 
-    // Notları kaydet
+    // Save notes
     const saveLectureNotes = useCallback(async (notes: LectureNote[]) => {
         try {
             await saveToIndexedDB(courseId, notes);
@@ -145,25 +145,25 @@ export const useLectureNotesStorage = (courseId: string) => {
             setError(null);
             return true;
         } catch (err) {
-            console.error('Ders notları kaydedilemedi:', err);
-            setError('Ders notları kaydedilemedi. Depolama alanı dolu olabilir.');
+            console.error('Could not save lecture notes:', err);
+            setError('Could not save lecture notes. Storage may be full.');
             return false;
         }
     }, [courseId]);
 
-    // Not ekle
+    // Add note
     const addNote = useCallback(async (note: LectureNote) => {
         const updatedNotes = [...lectureNotes, note];
         return await saveLectureNotes(updatedNotes);
     }, [lectureNotes, saveLectureNotes]);
 
-    // Not sil
+    // Delete note
     const deleteNote = useCallback(async (noteId: string) => {
         const updatedNotes = lectureNotes.filter(n => n.id !== noteId);
         return await saveLectureNotes(updatedNotes);
     }, [lectureNotes, saveLectureNotes]);
 
-    // Tüm notları sil
+    // Clear all notes
     const clearAllNotes = useCallback(async () => {
         await deleteFromIndexedDB(courseId);
         setLectureNotes([]);

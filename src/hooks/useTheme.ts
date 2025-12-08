@@ -63,7 +63,7 @@ export const useTheme = () => {
             root.classList.remove('dark');
         }
 
-        // Meta theme-color güncelle (mobil browser'lar için)
+        // Update meta theme-color (for mobile browsers)
         const metaThemeColor = document.querySelector('meta[name="theme-color"]');
         if (metaThemeColor) {
             metaThemeColor.setAttribute('content', state.isDark ? '#1e1e2e' : '#f8fafc');

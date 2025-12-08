@@ -4,138 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Study Planner</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1', // Indigo 500
-                        secondary: '#a855f7', // Purple 500
-                        dark: '#1e1e2e',
-                        'dark-surface': '#2a2a3c',
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.5s ease-out',
-                        'confetti': 'confetti 2s ease-out forwards',
-                        'bounce-in': 'bounceIn 0.5s ease-out',
-                        'wiggle': 'wiggle 0.5s ease-in-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        confetti: {
-                            '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
-                            '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' },
-                        },
-                        bounceIn: {
-                            '0%': { transform: 'scale(0)', opacity: '0' },
-                            '50%': { transform: 'scale(1.2)' },
-                            '100%': { transform: 'scale(1)', opacity: '1' },
-                        },
-                        wiggle: {
-                            '0%, 100%': { transform: 'rotate(-3deg)' },
-                            '50%': { transform: 'rotate(3deg)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Touch target minimum size for accessibility */
-        button, a, input[type="checkbox"], input[type="radio"] {
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        /* Allow smaller buttons in dense UIs */
-        .compact button, .compact a {
-            min-height: auto;
-            min-width: auto;
-        }
-
-        /* Prevent text selection during drag */
-        [draggable="true"] {
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Reduce motion for users who prefer it */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        .dark ::-webkit-scrollbar-thumb {
-            background: #475569;
-        }
-
-        /* Focus visible for keyboard navigation */
-        :focus-visible {
-            outline: 2px solid #6366f1;
-            outline-offset: 2px;
-        }
-
-        /* Toast Animation */
-        @keyframes slide-in-right {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .animate-slide-in-right {
-            animation: slide-in-right 0.3s ease-out;
-        }
-
-        /* Better mobile scrolling */
-        .custom-scrollbar {
-            -webkit-overflow-scrolling: touch;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/logo.ico" />
+    <title>Plan.Ex | Plan. Execute. Be Expert</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <script type="importmap">
 {
   "imports": {
@@ -148,7 +20,7 @@
 </script>
 </head>
 
-<body class="bg-slate-50 text-slate-900 dark:bg-gray-900 dark:text-slate-100 transition-colors duration-300">
+<body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>

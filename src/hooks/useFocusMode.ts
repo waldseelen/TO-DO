@@ -1,6 +1,6 @@
 /**
  * Focus Mode Hook
- * Dikkat dağıtıcı öğeleri gizleyerek odaklanmayı artırır.
+ * Increases focus by hiding distracting elements.
  *
  * @author Code Audit - Production Ready
  * @version 1.0.0
@@ -21,11 +21,11 @@ export const useFocusMode = () => {
         sessionMinutes: 0
     });
 
-    // Focus mode'u aktifle/deaktifle
+    // Toggle focus mode on/off
     const toggleFocusMode = useCallback(() => {
         setState(prev => {
             if (prev.isActive) {
-                // Deaktifle ve oturum süresini hesapla
+                // Deactivate and calculate session duration
                 const sessionMinutes = prev.startTime
                     ? Math.round((Date.now() - prev.startTime.getTime()) / 60000)
                     : 0;
@@ -36,7 +36,7 @@ export const useFocusMode = () => {
                     sessionMinutes
                 };
             } else {
-                // Aktifle
+                // Activate
                 return {
                     isActive: true,
                     startTime: new Date(),
@@ -46,12 +46,12 @@ export const useFocusMode = () => {
         });
     }, []);
 
-    // Focus mode aktifken body'ye class ekle
+    // Add class to body when focus mode is active
     useEffect(() => {
         if (state.isActive) {
             document.body.classList.add('focus-mode');
 
-            // Browser notification izni iste
+            // Request browser notification permission
             if ('Notification' in window && Notification.permission === 'default') {
                 Notification.requestPermission();
             }
