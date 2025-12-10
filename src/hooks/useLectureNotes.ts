@@ -7,16 +7,16 @@ export const useLectureNotes = () => {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64String = reader.result as string;
-                resolve(base64String.split(',')[1]); // Base64 kısmını al
+                resolve(base64String.split(',')[1]); // Extract Base64 part
             };
-            reader.onerror = () => reject(new Error('Dosya okunamadı'));
+            reader.onerror = () => reject(new Error('Could not read file'));
             reader.onprogress = (event) => {
                 if (event.lengthComputable && onProgress) {
                     const progress = Math.round((event.loaded / event.total) * 100);
                     onProgress(progress);
                 }
             };
-            reader.readAsDataURL(file); // BU SATIR EKSİKTİ!
+            reader.readAsDataURL(file);
         });
     }, []);
 
@@ -33,8 +33,8 @@ export const useLectureNotes = () => {
                 };
                 return [...currentNotes, newNote];
             } catch (error) {
-                console.error('PDF eklenirken hata:', error);
-                throw new Error('PDF eklenirken bir hata oluştu');
+                console.error('Error adding PDF:', error);
+                throw new Error('An error occurred while adding PDF');
             }
         },
         [convertFileToBase64]

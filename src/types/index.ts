@@ -9,15 +9,26 @@ export interface Subtask {
 export interface Task {
     id: string;
     text: string;
+    title?: string; // Phase 3: Display title
+    status?: 'todo' | 'in-progress' | 'review' | 'done'; // Phase 3: Kanban Status
     initialChecked?: boolean;
     dueDate?: string;
     notes?: string;
     tags?: string[];
     subtasks?: Subtask[];
     priority?: Priority;
+
+    // New fields for dashboard
+    pomodoros?: number; // Estimated pomodoros
+    completedPomodoros?: number;
+    isPriority?: boolean;
+    hasPDF?: boolean;
+    pdfData?: string; // Base64 encoded PDF
+    isFavorite?: boolean;
 }
 
 export interface Unit {
+    id?: string;
     title: string;
     tasks: Task[];
 }

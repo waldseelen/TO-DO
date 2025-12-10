@@ -1,17 +1,17 @@
-import { Menu, X } from 'lucide-react';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
 import { Calendar } from '@/components/features/Calendar/Calendar';
 import { CourseDetail } from '@/components/features/CourseDetail/CourseDetail';
+import { CoursesPage } from '@/components/features/Courses/CoursesPage';
 import { DailyPlan } from '@/components/features/DailyPlan/DailyPlan';
-import { Sidebar } from '@/components/features/Layout/Sidebar';
 import { Overview } from '@/components/features/Overview/Overview';
+import { PersonalTasks } from '@/components/features/PersonalTasks/PersonalTasks';
 import { QuickAddTask } from '@/components/features/QuickAdd/QuickAddTask';
 import { SearchResults } from '@/components/features/Search/SearchResults';
 import { SettingsModal } from '@/components/features/Settings/SettingsModal';
 import { Statistics } from '@/components/features/Statistics/Statistics';
 import { TaskDetailModal } from '@/components/features/Task/TaskDetailModal';
-import { HeaderClock } from '@/components/HeaderClock';
+import AppLayout from '@/components/layout/AppLayout';
 import { Confetti } from '@/components/ui/Confetti';
 import { ToastContainer } from '@/components/ui/ToastContainer';
 import { PlannerProvider, usePlannerContext } from '@/context/AppContext';
@@ -30,30 +30,28 @@ const AppContent = () => {
         setCourses,
         hydrateTasks,
         undo,
-        showConfetti
+        showConfetti,
+        updateTaskStatus
     } = usePlannerContext();
 
-    // Tema yönetimi (artık localStorage'da saklanıyor)
+    // Theme management (now stored in localStorage)
     const { isDark, toggleDarkMode, mode: themeMode } = useTheme();
 
-    // Yedekleme hatırlatıcısı
+    // Backup reminder
     const {
         shouldRemind: showBackupReminder,
-        daysSinceBackup,
-        formattedLastBackup,
         recordBackup,
-        dismissReminder
     } = useBackupReminder();
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [activeView, setActiveView] = useState<'overview' | 'daily' | 'statistics' | 'calendar' | string>('overview');
+    const [activeView, setActiveView] = useState<'overview' | 'tasks' | 'statistics' | 'calendar' | string>('tasks');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [detailsModalOpen, setDetailsModalOpen] = useState(false);
     const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
 
-    // Toplam ilerleme hesaplama
+    // Calculate total progress
     const totalProgress = useMemo(() => {
         let total = 0;
         let done = 0;
@@ -117,7 +115,7 @@ const AppContent = () => {
             anchor.click();
             URL.revokeObjectURL(url);
 
-            // Yedekleme tarihini kaydet
+            // Record backup date
             recordBackup();
 
             const event = new CustomEvent('toast', {
@@ -187,48 +185,48 @@ const AppContent = () => {
         reader.readAsText(file);
     }, [setCourses, hydrateTasks]);
 
-    // Klavye kısayolları
+    // Keyboard shortcuts
     useKeyboardShortcuts([
         {
             key: 's',
             ctrl: true,
-            description: 'Yedekle',
+            description: 'Backup',
             callback: handleExportData
         },
         {
             key: 'z',
             ctrl: true,
-            description: 'Geri Al',
+            description: 'Undo',
             callback: undo
         },
         {
             key: 'k',
             ctrl: true,
-            description: 'Arama',
-            callback: () => document.querySelector<HTMLInputElement>('input[placeholder*="ara"]')?.focus()
+            description: 'Search',
+            callback: () => document.querySelector<HTMLInputElement>('input[placeholder*="Search"]')?.focus()
         },
         {
             key: ',',
             ctrl: true,
-            description: 'Ayarlar',
+            description: 'Settings',
             callback: () => setIsSettingsOpen(true)
         },
         {
             key: 'd',
             ctrl: true,
             shift: true,
-            description: 'Tema Değiştir',
+            description: 'Toggle Theme',
             callback: toggleDarkMode
         },
         {
             key: 'n',
             ctrl: true,
-            description: 'Yeni Görev',
+            description: 'New Task',
             callback: () => setIsQuickAddOpen(true)
         },
         {
             key: 'Escape',
-            description: 'Kapat',
+            description: 'Close',
             callback: () => {
                 if (isQuickAddOpen) {
                     setIsQuickAddOpen(false);
@@ -248,45 +246,67 @@ const AppContent = () => {
     const currentCourse = courses.find(course => course.id === activeView);
 
     const renderContent = () => {
-        if (searchQuery) {
-            return <SearchResults query={searchQuery} />;
-        }
+        const content = (() => {
+            if (searchQuery) {
+                return <SearchResults query={searchQuery} />;
+            }
 
-        if (activeView === 'overview') {
-            return (
-                <Overview
-                    onNavigateCourse={courseId => handleNavigate(courseId)}
-                    onNavigateDaily={() => handleNavigate('daily')}
-                />
-            );
-        }
+            if (activeView === 'overview') {
+                return (
+                    <Overview
+                        onNavigateCourse={courseId => handleNavigate(courseId)}
+                        onNavigateDaily={() => handleNavigate('daily')}
+                    />
+                );
+            }
 
-        if (activeView === 'daily') {
-            return <DailyPlan />;
-        }
+            if (activeView === 'courses') {
+                return (
+                    <CoursesPage
+                        onNavigateCourse={courseId => handleNavigate(courseId)}
+                        onCreateCourse={handleCreateCourse}
+                    />
+                );
+            }
 
-        if (activeView === 'statistics') {
-            return <Statistics />;
-        }
+            if (activeView === 'tasks') {
+                return (
+                    <PersonalTasks
+                        onOpenQuickAdd={() => setIsQuickAddOpen(true)}
+                    />
+                );
+            }
 
-        if (activeView === 'calendar') {
-            return <Calendar onSelectCourse={handleNavigate} />;
-        }
+            if (activeView === 'daily') {
+                return <DailyPlan />;
+            }
 
-        if (currentCourse) {
-            return <CourseDetail courseId={currentCourse.id} onOpenTaskDetails={handleOpenTaskDetails} />;
-        }
+            if (activeView === 'statistics') {
+                return <Statistics />;
+            }
 
-        return <Overview onNavigateCourse={courseId => handleNavigate(courseId)} onNavigateDaily={() => handleNavigate('daily')} />;
+            if (activeView === 'calendar') {
+                return <Calendar onSelectCourse={handleNavigate} />;
+            }
+
+            if (currentCourse) {
+                return <CourseDetail courseId={currentCourse.id} onOpenTaskDetails={handleOpenTaskDetails} />;
+            }
+
+            return <Overview onNavigateCourse={courseId => handleNavigate(courseId)} onNavigateDaily={() => handleNavigate('daily')} />;
+        })();
+
+        return (
+            <div className="animate-fade-in">
+                {content}
+            </div>
+        );
     };
 
     return (
-        <div className="flex h-screen bg-slate-50 dark:bg-gray-900 transition-colors duration-300 font-inter relative overflow-hidden selection:bg-indigo-500/30">
+        <div className="h-screen bg-[#0f0f0f] text-white font-inter bg-circuit">
             <Confetti active={showConfetti} />
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 rounded-full blur-3xl"></div>
-            </div>
+
             <TaskDetailModal
                 isOpen={detailsModalOpen}
                 onClose={() => {
@@ -305,49 +325,28 @@ const AppContent = () => {
                 onExportToday={handleExportToday}
             />
 
-            {/* Hızlı Görev Ekleme */}
+            {/* Quick Task Add */}
             <QuickAddTask
                 isOpen={isQuickAddOpen}
                 onClose={() => setIsQuickAddOpen(false)}
             />
 
-            <HeaderClock />
             <ToastContainer />
 
-            <Sidebar
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
+            <AppLayout
                 activeView={activeView}
                 onNavigate={handleNavigate}
-                onOpenSettings={() => setIsSettingsOpen(true)}
-                onCreateCourse={handleCreateCourse}
-                darkMode={isDark}
-                toggleDarkMode={toggleDarkMode}
-                totalProgress={totalProgress}
-                isOpen={mobileMenuOpen}
-            />
-
-            <main className="flex-1 overflow-y-auto relative h-full w-full custom-scrollbar">
-                <div className="md:hidden flex items-center justify-between p-3 bg-white/95 dark:bg-dark-surface/95 backdrop-blur-xl border-b border-slate-100 dark:border-slate-700 sticky top-0 z-40 shadow-sm">
-                    <button
-                        className="p-2 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-sm"
-                        onClick={() => setMobileMenuOpen(prev => !prev)}
-                    >
-                        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                    </button>
-                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                        {totalProgress}% completed
-                    </div>
-                </div>
-                <div className="min-h-full pb-20 md:pb-6">{renderContent()}</div>
-            </main>
-
-            {mobileMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm"
-                    onClick={() => setMobileMenuOpen(false)}
-                ></div>
-            )}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onNewTask={() => setIsQuickAddOpen(true)}
+                onSettingsClick={() => setIsSettingsOpen(true)}
+                onCalendarClick={() => handleNavigate('calendar')}
+                showBackupReminder={showBackupReminder}
+                isDarkMode={isDark}
+                onToggleTheme={toggleDarkMode}
+            >
+                {renderContent()}
+            </AppLayout>
         </div>
     );
 };

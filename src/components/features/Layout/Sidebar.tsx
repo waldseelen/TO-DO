@@ -5,7 +5,6 @@ import {
     ChevronRight,
     GraduationCap,
     LayoutDashboard,
-    Moon,
     Pin,
     PinOff,
     Plus,
@@ -91,7 +90,8 @@ export const Sidebar = ({
     };
 
     // Collapsed width: 72px, Expanded width: 288px (w-72)
-    const sidebarWidth = isCollapsed ? 'w-[72px]' : 'w-72';
+    // Mobile: Always w-72, Desktop: Responsive
+    const sidebarWidth = isCollapsed ? 'w-72 md:w-[72px]' : 'w-72';
 
     return (
         <aside
@@ -280,13 +280,6 @@ export const Sidebar = ({
             {/* Footer */}
             <div className={`border-t border-slate-100 dark:border-slate-700 ${isCollapsed ? 'p-2' : 'p-3'}`}>
                 <div className={`flex items-center ${isCollapsed ? 'flex-col gap-2' : 'justify-between'}`}>
-                    <button
-                        onClick={toggleDarkMode}
-                        className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
-                        title={darkMode ? 'Light Theme' : 'Dark Theme'}
-                    >
-                        {darkMode ? <SunIcon size={18} /> : <Moon size={18} />}
-                    </button>
                     {!isCollapsed && (
                         <div className="text-[11px] text-slate-400 font-medium">{totalProgress}% Completed</div>
                     )}

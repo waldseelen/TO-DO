@@ -14,14 +14,14 @@ export const useStreak = (completionHistory: CompletionHistory) => {
         let streak = 0;
         let checkDate = new Date(today);
 
-        // Bugün görev tamamlandı mı kontrol et
+        // Check if task was completed today
         const todayStr = today.toISOString().split('T')[0];
         if (!dates.has(todayStr)) {
-            // Bugün tamamlanmadıysa dünden başla
+            // If not completed today, start from yesterday
             checkDate.setDate(checkDate.getDate() - 1);
         }
 
-        // Geriye doğru ardışık günleri say
+        // Count consecutive days backwards
         while (true) {
             const dateStr = checkDate.toISOString().split('T')[0];
             if (dates.has(dateStr)) {
@@ -32,7 +32,7 @@ export const useStreak = (completionHistory: CompletionHistory) => {
             }
         }
 
-        // Bu hafta tamamlanan görev sayısı
+        // Number of tasks completed this week
         const weekStart = new Date(today);
         weekStart.setDate(weekStart.getDate() - weekStart.getDay());
         const weeklyCount = Object.values(completionHistory).filter(date => {

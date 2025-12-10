@@ -1,5 +1,6 @@
 import {
     AlertCircle,
+    Bot,
     Calendar,
     Check,
     Code,
@@ -7,6 +8,7 @@ import {
     FileText,
     Globe,
     ListTodo,
+    Paperclip,
     Plus,
     Sigma,
     Tag,
@@ -14,6 +16,10 @@ import {
     Youtube
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+// import ReactMarkdown from 'react-markdown';
+// import remarkMath from 'remark-math';
+// import rehypeKatex from 'rehype-katex';
+// import 'katex/dist/katex.min.css';
 
 import { Task } from '@/types';
 
@@ -89,6 +95,7 @@ export const TaskDetailModal = ({ task, isOpen, onClose, onUpdate }: Props) => {
         );
     };
 
+
     const renderRichText = (text: string) => {
         if (!text) return <p className="text-slate-400 italic">No notes...</p>;
 
@@ -120,11 +127,11 @@ export const TaskDetailModal = ({ task, isOpen, onClose, onUpdate }: Props) => {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in p-4">
-            <div className="bg-white dark:bg-dark-surface w-full max-w-lg rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-700 flex flex-col max-h-[90vh]">
-                <div className="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50 rounded-t-2xl">
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <Edit2 size={18} className="text-indigo-500" />
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in p-4">
+            <div className="bg-[#1a1625] w-full max-w-lg rounded-2xl shadow-2xl border border-white/10 flex flex-col max-h-[90vh]">
+                <div className="p-4 border-b border-white/10 flex justify-between items-center bg-[#2a2438]/50 rounded-t-2xl">
+                    <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                        <Edit2 size={18} className="text-purple-400" />
                         Task Details
                     </h2>
                     <div className="flex gap-2">
@@ -133,6 +140,9 @@ export const TaskDetailModal = ({ task, isOpen, onClose, onUpdate }: Props) => {
                         </button>
                         <button onClick={searchYoutube} className="p-1.5 bg-red-100 text-red-600 rounded-lg hover:bg-red-200" title="Search on YouTube">
                             <Youtube size={18} />
+                        </button>
+                        <button onClick={() => window.open(`https://chatgpt.com/?q=${encodeURIComponent(editedTask.text)}`, '_blank')} className="p-1.5 bg-emerald-100 text-emerald-600 rounded-lg hover:bg-emerald-200" title="Ask ChatGPT">
+                            <Bot size={18} />
                         </button>
                         <button onClick={onClose} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-500">
                             <X size={20} />
@@ -306,18 +316,76 @@ export const TaskDetailModal = ({ task, isOpen, onClose, onUpdate }: Props) => {
                             </button>
                         </div>
                     </div>
+
+                    <div>
+                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <Paperclip size={14} /> Attachments (PDF)
+                        </label>
+
+                        {editedTask.pdfData ? (
+                            <div className="flex items-center justify-between p-3 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-900/30 rounded-xl">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-red-100 text-red-500 rounded-lg flex items-center justify-center">
+                                        <FileText size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-medium text-slate-700 dark:text-slate-200">Attached Document</p>
+                                        <button
+                                            onClick={() => {
+                                                const win = window.open();
+                                                win?.document.write(`<iframe src="${editedTask.pdfData}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                                            }}
+                                            className="text-xs text-indigo-500 hover:underline"
+                                        >
+                                            View PDF
+                                        </button>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setEditedTask({ ...editedTask, pdfData: undefined, hasPDF: false })}
+                                    className="p-2 hover:bg-white/50 rounded-lg text-slate-500 hover:text-red-500 transition-colors"
+                                >
+                                    <X size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-6 text-center hover:border-indigo-400 transition-colors relative">
+                                <input
+                                    type="file"
+                                    accept="application/pdf"
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = (evt) => {
+                                                setEditedTask({
+                                                    ...editedTask,
+                                                    pdfData: evt.target?.result as string,
+                                                    hasPDF: true
+                                                });
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                />
+                                <Paperclip size={24} className="mx-auto text-slate-400 mb-2" />
+                                <p className="text-sm text-slate-500">Click to upload PDF</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 rounded-b-2xl flex justify-end gap-3">
+                <div className="p-4 border-t border-white/10 bg-[#2a2438]/50 rounded-b-2xl flex justify-end gap-3">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 text-slate-500 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="px-4 py-2 text-slate-400 font-medium hover:bg-white/5 rounded-lg transition-colors"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleSave}
-                        className="px-6 py-2 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 dark:shadow-none"
+                        className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg hover:from-purple-600 hover:to-pink-600 transition-colors shadow-lg shadow-purple-500/20"
                     >
                         Save
                     </button>

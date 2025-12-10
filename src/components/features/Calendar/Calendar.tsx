@@ -184,13 +184,13 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
         <div className="p-6 max-w-4xl mx-auto">
             {/* Başlık */}
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-                    <CalendarIcon className="w-7 h-7 text-blue-500" />
+                <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+                    <CalendarIcon className="w-7 h-7 text-purple-500" />
                     Monthly Calendar
                 </h1>
                 <button
                     onClick={goToToday}
-                    className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                    className="px-4 py-2 text-sm bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-colors shadow-lg shadow-purple-500/20"
                 >
                     Today
                 </button>
@@ -198,17 +198,17 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
 
             {/* Aylık İstatistikler */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 text-center">
-                    <div className="text-3xl font-bold text-green-600 dark:text-green-400">{monthlyStats.completed}</div>
-                    <div className="text-sm text-green-700 dark:text-green-300">Completed</div>
+                <div className="bg-green-500/10 rounded-xl p-4 text-center border border-green-500/20">
+                    <div className="text-3xl font-bold text-green-400">{monthlyStats.completed}</div>
+                    <div className="text-sm text-green-300">Completed</div>
                 </div>
-                <div className="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-4 text-center">
-                    <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">{monthlyStats.pending}</div>
-                    <div className="text-sm text-orange-700 dark:text-orange-300">Pending</div>
+                <div className="bg-orange-500/10 rounded-xl p-4 text-center border border-orange-500/20">
+                    <div className="text-3xl font-bold text-orange-400">{monthlyStats.pending}</div>
+                    <div className="text-sm text-orange-300">Pending</div>
                 </div>
-                <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 text-center">
-                    <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{monthlyStats.total}</div>
-                    <div className="text-sm text-blue-700 dark:text-blue-300">Total</div>
+                <div className="bg-purple-500/10 rounded-xl p-4 text-center border border-purple-500/20">
+                    <div className="text-3xl font-bold text-purple-400">{monthlyStats.total}</div>
+                    <div className="text-sm text-purple-300">Total</div>
                 </div>
             </div>
 
@@ -233,8 +233,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                 if (upcomingExams.length === 0) return null;
 
                 return (
-                    <div className="mb-6 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
-                        <h3 className="text-sm font-bold text-red-700 dark:text-red-400 mb-3 flex items-center gap-2">
+                    <div className="mb-6 bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-xl p-4 border border-red-500/30">
+                        <h3 className="text-sm font-bold text-red-400 mb-3 flex items-center gap-2">
                             <AlertTriangle size={16} />
                             Upcoming Exams
                         </h3>
@@ -246,21 +246,21 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                     <div
                                         key={exam.id}
                                         onClick={() => onSelectCourse?.(course.id)}
-                                        className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg cursor-pointer hover:shadow-md transition-all border-l-4"
+                                        className="flex items-center gap-3 p-3 bg-[#1e1a28] rounded-lg cursor-pointer hover:bg-[#2a2438] transition-all border-l-4"
                                         style={{ borderLeftColor: course.customColor || '#ef4444' }}
                                     >
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
+                                            <p className="text-sm font-bold text-white truncate">
                                                 {course.code} - {exam.title}
                                             </p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            <p className="text-xs text-slate-400">
                                                 {examDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
                                                 {exam.time && ` • ${exam.time}`}
                                             </p>
                                         </div>
                                         <div className={`text-xs font-bold px-2 py-1 rounded-full ${daysLeft <= 3 ? 'bg-red-500 text-white' :
                                             daysLeft <= 7 ? 'bg-orange-500 text-white' :
-                                                'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                                                'bg-[#2a2438] text-slate-300'
                                             }`}>
                                             {daysLeft}d
                                         </div>
@@ -273,32 +273,32 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             })()}
 
             {/* Ay Navigasyonu */}
-            <div className="flex items-center justify-between mb-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-4 bg-[#1a1625] rounded-xl p-4 border border-white/5">
                 <button
                     onClick={() => changeMonth(-1)}
-                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 rounded-lg hover:bg-[#2a2438] transition-colors"
                 >
-                    <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    <ChevronLeft className="w-5 h-5 text-slate-300" />
                 </button>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-semibold text-white">
                     {MONTHS_TR[month]} {year}
                 </h2>
                 <button
                     onClick={() => changeMonth(1)}
-                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className="p-2 rounded-lg hover:bg-[#2a2438] transition-colors"
                 >
-                    <ChevronRight className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    <ChevronRight className="w-5 h-5 text-slate-300" />
                 </button>
             </div>
 
             {/* Takvim Grid */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-[#1a1625] rounded-xl shadow-sm overflow-hidden border border-white/5">
                 {/* Gün başlıkları */}
-                <div className="grid grid-cols-7 border-b border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-7 border-b border-white/5">
                     {DAYS_TR.map(day => (
                         <div
                             key={day}
-                            className="py-3 text-center text-sm font-medium text-gray-500 dark:text-gray-400"
+                            className="py-3 text-center text-sm font-medium text-slate-400"
                         >
                             {day}
                         </div>
@@ -322,12 +322,12 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                 onClick={() => dateKey && setSelectedDate(isSelected ? null : dateKey)}
                                 disabled={!day}
                                 className={`
-                  relative min-h-[80px] p-2 border-b border-r border-gray-100 dark:border-gray-700
+                  relative min-h-[80px] p-2 border-b border-r border-white/5
                   transition-all duration-200
-                  ${!day ? 'bg-gray-50 dark:bg-gray-900/50 cursor-default' : 'hover:bg-blue-50 dark:hover:bg-blue-900/20 cursor-pointer'}
-                  ${isToday ? 'bg-blue-50 dark:bg-blue-900/30' : ''}
-                  ${isSelected ? 'ring-2 ring-blue-500 ring-inset bg-blue-100 dark:bg-blue-900/50' : ''}
-                  ${hasExam && !isPast ? 'bg-red-50 dark:bg-red-900/20' : ''}
+                  ${!day ? 'bg-[#13111a] cursor-default' : 'hover:bg-[#2a2438] cursor-pointer'}
+                  ${isToday ? 'bg-purple-500/20' : ''}
+                  ${isSelected ? 'ring-2 ring-purple-500 ring-inset bg-[#2a2438]' : ''}
+                  ${hasExam && !isPast ? 'bg-red-500/10' : ''}
                   ${isPast && !isToday ? 'opacity-60' : ''}
                 `}
                             >
@@ -336,8 +336,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                         <span
                                             className={`
                         text-sm font-medium
-                        ${isToday ? 'bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center' : ''}
-                        ${!isToday && isPast ? 'text-gray-400 dark:text-gray-500' : 'text-gray-700 dark:text-gray-200'}
+                        ${isToday ? 'bg-purple-500 text-white w-7 h-7 rounded-full flex items-center justify-center' : ''}
+                        ${!isToday && isPast ? 'text-slate-500' : 'text-slate-200'}
                       `}
                                         >
                                             {day}
@@ -349,7 +349,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                                 {dayExams.map(({ exam, course }) => (
                                                     <div
                                                         key={exam.id}
-                                                        className="w-2.5 h-2.5 rounded-full shadow-sm ring-1 ring-white dark:ring-gray-800"
+                                                        className="w-2.5 h-2.5 rounded-full shadow-sm ring-1 ring-white dark:ring-[#1a1625]"
                                                         style={{ backgroundColor: course.customColor || '#ef4444' }}
                                                         title={`${course.code}: ${exam.title}`}
                                                     />
@@ -371,7 +371,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                                 {hasPending && (
                                                     <div className="flex items-center gap-0.5">
                                                         <div className="w-2 h-2 rounded-full bg-orange-500" />
-                                                        <span className="text-xs text-orange-600 dark:text-orange-400">
+                                                        <span className="text-xs text-orange-600 dark:text-orange-400 mb-0.5">
                                                             {dayTasks.pending.length}
                                                         </span>
                                                     </div>
@@ -388,8 +388,8 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
 
             {/* Seçili Günün Görevleri ve Sınavları */}
             {selectedDate && (
-                <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <div className="mt-6 bg-[#1a1625] rounded-xl shadow-sm p-4 border border-white/5">
+                    <h3 className="text-lg font-semibold text-white mb-4">
                         {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', {
                             weekday: 'long',
                             day: 'numeric',
@@ -401,7 +401,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                     {/* Sınavlar */}
                     {selectedDayExams && selectedDayExams.length > 0 && (
                         <div className="mb-4">
-                            <h4 className="text-sm font-bold text-red-600 dark:text-red-400 mb-2 flex items-center gap-2">
+                            <h4 className="text-sm font-bold text-red-400 mb-2 flex items-center gap-2">
                                 <GraduationCap size={16} /> Exams
                             </h4>
                             <div className="space-y-2">
@@ -409,19 +409,19 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                     <div
                                         key={exam.id}
                                         onClick={() => onSelectCourse?.(course.id)}
-                                        className="flex items-center gap-3 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors border border-red-200 dark:border-red-800"
+                                        className="flex items-center gap-3 p-3 rounded-lg bg-red-500/10 cursor-pointer hover:bg-red-500/20 transition-colors border border-red-500/20"
                                     >
                                         <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0" />
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-bold text-gray-900 dark:text-white">
+                                            <p className="text-sm font-bold text-white">
                                                 {exam.title}
                                             </p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            <p className="text-xs text-slate-400">
                                                 {course.title} {exam.time && `• ${exam.time}`}
                                             </p>
                                         </div>
                                         <div
-                                            className="w-4 h-4 rounded-full flex-shrink-0 ring-2 ring-white dark:ring-gray-800"
+                                            className="w-4 h-4 rounded-full flex-shrink-0 ring-2 ring-[#1a1625]"
                                             style={{ backgroundColor: course.customColor || '#ef4444' }}
                                         />
                                     </div>
@@ -437,14 +437,14 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                 <div
                                     key={task.id}
                                     onClick={() => onSelectCourse?.(course.id)}
-                                    className="flex items-center gap-3 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 cursor-pointer hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors"
+                                    className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 cursor-pointer hover:bg-green-500/20 transition-colors border border-green-500/20"
                                 >
                                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium text-gray-900 dark:text-white line-through">
+                                        <p className="text-sm font-medium text-white line-through">
                                             {task.text}
                                         </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        <p className="text-xs text-slate-400">
                                             {course.title}
                                         </p>
                                     </div>
@@ -460,14 +460,14 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                                 <div
                                     key={task.id}
                                     onClick={() => onSelectCourse?.(course.id)}
-                                    className="flex items-center gap-3 p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20 cursor-pointer hover:bg-orange-100 dark:hover:bg-orange-900/30 transition-colors"
+                                    className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 cursor-pointer hover:bg-orange-500/20 transition-colors border border-orange-500/20"
                                 >
                                     <Circle className="w-5 h-5 text-orange-500 flex-shrink-0" />
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                        <p className="text-sm font-medium text-white">
                                             {task.text}
                                         </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        <p className="text-xs text-slate-400">
                                             {course.title}
                                         </p>
                                     </div>
@@ -479,7 +479,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
                             ))}
                         </div>
                     ) : !selectedDayExams?.length && (
-                        <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+                        <p className="text-slate-400 text-center py-4">
                             No events on this date
                         </p>
                     )}
@@ -487,7 +487,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             )}
 
             {/* Renk Açıklaması */}
-            <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
+            <div className="mt-4 flex items-center justify-center gap-6 text-sm text-slate-400 flex-wrap">
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500" />
                     <span>Completed</span>
@@ -503,20 +503,20 @@ export const Calendar: React.FC<CalendarProps> = ({ onSelectCourse }) => {
             </div>
 
             {/* Ders Renkleri Legend */}
-            <div className="mt-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Course Colors</h4>
+            <div className="mt-4 bg-[#1a1625] rounded-xl p-4 border border-white/5">
+                <h4 className="text-sm font-semibold text-slate-300 mb-3">Course Colors</h4>
                 <div className="flex flex-wrap gap-3">
                     {courses.filter(c => c.exams && c.exams.length > 0).map(course => (
                         <div
                             key={course.id}
                             onClick={() => onSelectCourse?.(course.id)}
-                            className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                            className="flex items-center gap-2 px-3 py-1.5 bg-[#2a2438] rounded-lg cursor-pointer hover:bg-[#352f42] transition-colors"
                         >
                             <div
-                                className="w-3 h-3 rounded-full ring-1 ring-gray-200 dark:ring-gray-600"
+                                className="w-3 h-3 rounded-full ring-1 ring-slate-600"
                                 style={{ backgroundColor: course.customColor || '#3b82f6' }}
                             />
-                            <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
+                            <span className="text-xs font-medium text-slate-300">
                                 {course.code}
                             </span>
                         </div>

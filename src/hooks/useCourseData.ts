@@ -23,24 +23,34 @@ export const useCourseData = () => {
   );
 
   const addTaskToCourse = useCallback(
-    (courseId: string, text: string) => {
+    (courseId: string, text: string, options?: { dueDate?: string; isPriority?: boolean; status?: Task['status']; unitId?: string }) => {
       setCourses(prev =>
         prev.map(course => {
           if (course.id !== courseId) return course;
           if (course.units.length === 0) return course;
 
           const newUnits = [...course.units];
-          const lastUnitIndex = newUnits.length - 1;
-          const lastUnit = newUnits[lastUnitIndex];
+
+          // Find target unit: specified unitId, or last unit
+          let targetUnitIndex = newUnits.length - 1;
+          if (options?.unitId) {
+            const foundIndex = newUnits.findIndex(u => u.id === options.unitId);
+            if (foundIndex !== -1) targetUnitIndex = foundIndex;
+          }
+
+          const targetUnit = newUnits[targetUnitIndex];
 
           const newTask: Task = {
             id: `${courseId}-custom-${Date.now()}`,
-            text
+            text,
+            dueDate: options?.dueDate,
+            isPriority: options?.isPriority || false,
+            status: options?.status || 'todo'
           };
 
-          newUnits[lastUnitIndex] = {
-            ...lastUnit,
-            tasks: [...lastUnit.tasks, newTask]
+          newUnits[targetUnitIndex] = {
+            ...targetUnit,
+            tasks: [...targetUnit.tasks, newTask]
           };
 
           return { ...course, units: newUnits };
@@ -65,12 +75,35 @@ export const useCourseData = () => {
     return newCourse;
   }, [setCourses]);
 
+  const updateTaskStatus = useCallback((taskId: string, status: Task['status']) => {
+    setCourses(prev => prev.map(course => {
+      let courseModified = false;
+      const newUnits = course.units.map(unit => {
+        const taskIndex = unit.tasks.findIndex(t => t.id === taskId);
+        if (taskIndex !== -1) {
+          courseModified = true;
+          const newTasks = [...unit.tasks];
+          newTasks[taskIndex] = { ...newTasks[taskIndex], status };
+          return { ...unit, tasks: newTasks };
+        }
+        return unit;
+      });
+      return courseModified ? { ...course, units: newUnits } : course;
+    }));
+  }, [setCourses]);
+
+  const deleteCourse = useCallback((courseId: string) => {
+    setCourses(prev => prev.filter(c => c.id !== courseId));
+  }, [setCourses]);
+
   return {
     courses,
     updateCourse,
     updateCourseMeta,
     addTaskToCourse,
     createNewCourse,
+    deleteCourse,
+    updateTaskStatus,
     setCourses
   };
 };

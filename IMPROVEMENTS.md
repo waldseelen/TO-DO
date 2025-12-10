@@ -149,3 +149,11 @@ const streak = getDailyStreak(history);
 3. **Import Validation**: Daha sıkı import kontrolü
 4. **Settings Panel**: Constants'ları UI'dan düzenle
 5. **Keyboard Shortcuts Menu**: Kısayolları göster
+
+## 11. ✅ Kanban Board & Task Status Synchronization
+**Dosyalar:** src/context/AppContext.tsx, src/components/features/CourseDetail/CourseDetail.tsx
+- Kanban Board (Board View) ile List View arasında tam senkronizasyon
+- Task 'Done' sütununa sürüklendiğinde otomatik olarak tamamlandı işaretlenir
+- Task tamamlandı işaretlendiğinde (List View) otomatik olarak 'Done' statüsüne geçer
+- Ses efektleri ve confetti animasyonları drag-and-drop ile tetiklenir
+- 'Todo', 'In Progress', 'Review', 'Done' statüleri arasında tam geçiş desteği

@@ -26,7 +26,7 @@ export const openPDFInNewTab = (lectureNote: LectureNote): void => {
             document.body.removeChild(link);
         }
 
-        // 1 dakika sonra blob URL'i temizle (yeni sekme yüklenmiş olur)
+        // Clean up blob URL after 1 minute (new tab will have loaded)
         setTimeout(() => {
             URL.revokeObjectURL(blobUrl);
         }, 60000);

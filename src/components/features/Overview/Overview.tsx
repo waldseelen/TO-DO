@@ -1,4 +1,4 @@
-import { BarChart3, CheckCircle, GraduationCap, Sparkles, Sun, Trophy } from 'lucide-react';
+import { CheckCircle, Clock, Flame, Sparkles, Star, Target, TrendingUp, Trophy, Zap } from 'lucide-react';
 
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { StreakBadge } from '@/components/ui/StreakBadge';
@@ -6,6 +6,7 @@ import { usePlannerContext } from '@/context/AppContext';
 import { useStreak } from '@/hooks/useStreak';
 import { getCourseProgress, getNextTask } from '@/utils/course';
 import { getDaysLeft } from '@/utils/time';
+import { DailyPlan } from '../DailyPlan/DailyPlan';
 
 // Motivation messages
 const MOTIVATION_MESSAGES = [
@@ -37,19 +38,40 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
     const completedCount = completedTasks.size;
     const { streak, weeklyCount, hasCompletedToday } = useStreak(completionHistory);
 
-    // Toplam ilerleme hesapla
-    const totalProgress = (() => {
+    // Calculate total progress
+    // Calculate total progress and detailed statistics
+    const { totalTasks, activeTasks, totalProgress, kanbanStats } = (() => {
         let total = 0;
         let done = 0;
+        let todo = 0;
+        let inProgress = 0;
+        let review = 0;
+
         courses.forEach(course => {
             course.units.forEach(unit => {
                 unit.tasks.forEach(task => {
                     total += 1;
-                    if (completedTasks.has(task.id)) done += 1;
+                    if (completedTasks.has(task.id)) {
+                        done += 1;
+                    } else {
+                        // Check kanban status
+                        const status = task.status || 'todo';
+                        if (status === 'todo') todo++;
+                        else if (status === 'in-progress') inProgress++;
+                        else if (status === 'review') review++;
+                    }
                 });
             });
         });
-        return total === 0 ? 0 : Math.round((done / total) * 100);
+
+        const active = total - done;
+
+        return {
+            totalTasks: total,
+            activeTasks: active,
+            totalProgress: total === 0 ? 0 : Math.round((done / total) * 100),
+            kanbanStats: { todo, inProgress, review }
+        };
     })();
 
     const motivation = getMotivationMessage(totalProgress);
@@ -61,13 +83,13 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
     }).reverse();
 
     const activityData = last7Days.map(date => {
-        const count = Object.values(completionHistory).filter(d => d.startsWith(date)).length;
+        const count = Object.values(completionHistory).filter(d => typeof d === 'string' && d.startsWith(date)).length;
         return { date, count };
     });
 
     const maxCount = Math.max(...activityData.map(d => d.count), 1);
 
-    // Yaklaşan sınavları hesapla (sadece gelecekteki)
+    // Calculate upcoming exams (future only)
     const upcomingExams = courses
         .flatMap(course =>
             (course.exams || []).map(exam => ({
@@ -77,128 +99,332 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
             }))
         )
         .filter(exam => exam.daysLeft >= 0)
-        .sort((a, b) => a.daysLeft - b.daysLeft)
-        .slice(0, 5); // İlk 5 sınav
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .slice(0, 5); // First 5 exams
 
     return (
-        <div className="p-6 space-y-8 animate-fade-in pt-16 md:pt-6">
-            <header className="mb-8">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-                    <div>
-                        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">Overview</h1>
-                        <p className="text-slate-500 dark:text-slate-400">Your academic journey and goals in one place.</p>
-                    </div>
-                    <StreakBadge streak={streak} weeklyCount={weeklyCount} hasCompletedToday={hasCompletedToday} />
-                </div>
+        <div className="space-y-6 animate-fade-in">
+            <header className="mb-6">
+                <div className="card-tech bg-circuit rounded-2xl p-5 md:p-6 border border-white/10 relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(0,174,239,0.35),transparent_35%),radial-gradient(circle_at_80%_10%,rgba(255,210,0,0.22),transparent_26%)]" />
+                    <div className="relative flex flex-col lg:flex-row gap-6 lg:items-center">
+                        <div className="flex-1 space-y-3">
+                            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-[var(--color-accent)] font-semibold">
+                                <Sparkles size={14} />
+                                Plan. Execute. Be Expert.
+                            </div>
+                            <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+                                <span className="brand-gradient">Plan</span>
+                                <span className="text-[var(--color-accent)]">.Ex</span> Productivity OS
+                            </h1>
+                            <p className="text-slate-300 max-w-2xl">
+                                Manage your tasks, courses, and daily plan in a single dark-mode experience with aviation panel discipline and cybersecurity refinement.
+                            </p>
+                            <div className="flex flex-wrap items-center gap-3">
+                                <button
+                                    className="btn-primary"
+                                    onClick={() => {
+                                        document.getElementById('daily-plan-section')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                >
+                                    Hemen Başla
+                                </button>
+                                <button className="btn-cta-outline" onClick={() => onNavigateCourse('courses')}>
+                                    Derslere Git
+                                </button>
+                                <StreakBadge streak={streak} weeklyCount={weeklyCount} hasCompletedToday={hasCompletedToday} />
+                            </div>
+                        </div>
 
-                {/* Motivasyon Kartı */}
-                <div className="mt-4 p-4 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 rounded-xl border border-indigo-200/50 dark:border-indigo-500/30">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-indigo-500/20 rounded-lg">
-                            <Sparkles size={20} className="text-indigo-500" />
+                        <div className="grid grid-cols-2 gap-3 w-full lg:w-auto">
+                            <div className="p-3 rounded-xl bg-[#181c24] border border-white/10 shadow-glow-sm">
+                                <div className="flex items-center gap-2 text-sm text-slate-200">
+                                    <Clock size={16} className="text-cyan-300" />
+                                    Yaklaşan İşler
+                                </div>
+                                <p className="text-2xl font-bold text-white mt-1">{activeTasks}</p>
+                                <p className="text-[11px] text-slate-500">Aktif görev</p>
+                            </div>
+                            <div className="p-3 rounded-xl bg-[#181c24] border border-white/10 shadow-glow-sm">
+                                <div className="flex items-center gap-2 text-sm text-slate-200">
+                                    <Trophy size={16} className="text-[var(--color-accent)]" />
+                                    Tamamlanan
+                                </div>
+                                <p className="text-2xl font-bold text-white mt-1">{completedCount}</p>
+                                <p className="text-[11px] text-slate-500">Görev bitti</p>
+                            </div>
+                            <div className="p-3 rounded-xl bg-[#181c24] border border-white/10 shadow-glow-sm">
+                                <div className="flex items-center gap-2 text-sm text-slate-200">
+                                    <Zap size={16} className="text-cyan-300" />
+                                    Odak Skoru
+                                </div>
+                                <p className="text-2xl font-bold text-white mt-1">%{totalProgress}</p>
+                                <p className="text-[11px] text-slate-500">Completion rate</p>
+                            </div>
+                            <div className="p-3 rounded-xl bg-[#181c24] border border-white/10 shadow-glow-sm">
+                                <div className="flex items-center gap-2 text-sm text-slate-200">
+                                    <Sparkles size={16} className="text-cyan-300" />
+                                    Motivasyon
+                                </div>
+                                <p className="text-sm font-semibold text-white mt-1">{motivation.message}</p>
+                                <p className="text-[11px] text-slate-500">{motivation.subtext}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="text-lg font-bold text-slate-800 dark:text-white">{motivation.message}</p>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">{motivation.subtext}</p>
-                        </div>
-                        <div className="ml-auto text-3xl font-black text-indigo-500">%{totalProgress}</div>
                     </div>
                 </div>
             </header>
 
-            {/* Yaklaşan Sınavlar Uyarısı */}
-            {upcomingExams.length > 0 && (
-                <div className="bg-gradient-to-r from-red-500 to-orange-500 p-4 rounded-2xl shadow-lg">
-                    <div className="flex items-center gap-3 mb-3">
-                        <div className="p-2 bg-white/20 rounded-lg">
-                            <GraduationCap size={24} className="text-white" />
+            {/* Upcoming Exams Alert */}
+            {/* Dashboard Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="card-tech bg-[#13131a] p-4 rounded-xl border border-white/8 relative overflow-hidden group hover:border-cyan-400/40">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-[rgba(0,174,239,0.14)] rounded-lg text-cyan-300">
+                            <Target size={20} />
                         </div>
-                        <h3 className="text-lg font-bold text-white">Upcoming Exams</h3>
+                        <span className="text-xs text-slate-500">Total</span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
-                        {upcomingExams.map(exam => (
-                            <div
-                                key={exam.id}
-                                onClick={() => onNavigateCourse(exam.course.id)}
-                                className={`bg-white/10 backdrop-blur-sm p-3 rounded-xl cursor-pointer hover:bg-white/20 transition-colors ${exam.daysLeft <= 3 ? 'ring-2 ring-white/50 animate-pulse' : ''
-                                    }`}
-                            >
-                                <div className="flex items-center gap-2 mb-1">
-                                    <div
-                                        className="w-3 h-3 rounded-full"
-                                        style={{ backgroundColor: exam.course.customColor || '#fff' }}
-                                    />
-                                    <span className="text-white/80 text-xs font-medium truncate">{exam.course.code}</span>
-                                </div>
-                                <p className="text-white font-bold text-sm truncate">{exam.title}</p>
-                                <div className="flex items-center justify-between mt-2">
-                                    <span className="text-white/70 text-xs">
-                                        {new Date(exam.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
-                                        {exam.time && ` ${exam.time}`}
-                                    </span>
-                                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${exam.daysLeft === 0
-                                        ? 'bg-red-600 text-white'
-                                        : exam.daysLeft <= 3
-                                            ? 'bg-orange-400 text-white'
-                                            : 'bg-white/20 text-white'
-                                        }`}>
-                                        {exam.daysLeft === 0 ? 'TODAY!' : `${exam.daysLeft} days`}
-                                    </span>
-                                </div>
+                    <h3 className="text-2xl font-bold text-white">{totalTasks}</h3>
+                    <p className="text-xs text-slate-400">All tasks</p>
+                </div>
+
+                <div className="card-tech bg-[#13131a] p-4 rounded-xl border border-white/8 relative overflow-hidden group hover:border-cyan-400/40">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-[rgba(0,174,239,0.14)] rounded-lg text-cyan-300">
+                            <Zap size={20} />
+                        </div>
+                        <span className="text-xs text-slate-500">Active</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">{activeTasks}</h3>
+                    <p className="text-xs text-slate-400">In progress</p>
+                </div>
+
+                <div className="card-tech bg-[#13131a] p-4 rounded-xl border border-white/8 relative overflow-hidden group hover:border-[rgba(0,174,239,0.5)]">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-[rgba(0,174,239,0.14)] rounded-lg text-[var(--color-accent)]">
+                            <CheckCircle size={20} />
+                        </div>
+                        <span className="text-xs text-slate-500">Done</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">{completedCount}</h3>
+                    <p className="text-xs text-slate-400">Completed</p>
+                </div>
+
+                <div className="card-tech bg-[#13131a] p-4 rounded-xl border border-white/8 relative overflow-hidden group hover:border-[rgba(255,210,0,0.5)]">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-[rgba(255,210,0,0.12)] rounded-lg text-[var(--color-accent)]">
+                            <TrendingUp size={20} />
+                        </div>
+                        <span className="text-xs text-slate-500">Rate</span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">%{totalProgress}</h3>
+                    <p className="text-xs text-slate-400">Completion rate</p>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Completed Tasks Stats */}
+                <div className="lg:col-span-2 card-tech bg-[#13131a] p-6 rounded-xl border border-white/8">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">Completed Tasks</h3>
+                        <div className="flex gap-2">
+                            <button className="px-3 py-1 text-xs rounded-lg border border-white/10 text-slate-200">Year</button>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div className="bg-[#181c24] p-4 rounded-xl border border-cyan-500/10">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Trophy size={16} className="text-[var(--color-accent)]" />
+                                <span className="text-xs text-slate-400">Tasks Done</span>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center gap-4">
-                    <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl text-green-600 dark:text-green-400">
-                        <CheckCircle size={32} />
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{completedCount}</h3>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">Completed Tasks</p>
-                    </div>
-                </div>
-
-                <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between">
-                    <div className="flex items-center gap-2 mb-4">
-                        <BarChart3 size={20} className="text-indigo-500" />
-                        <span className="text-sm font-bold text-slate-500">Last 7 Days Activity</span>
-                    </div>
-                    <div className="flex items-end gap-2 h-12 w-full">
-                        {activityData.map((d, i) => (
-                            <div key={d.date} className="flex-1 flex flex-col items-center gap-1 group relative">
-                                <div
-                                    className="w-full bg-indigo-500/20 dark:bg-indigo-400/20 rounded-t-sm hover:bg-indigo-500 transition-colors"
-                                    style={{ height: `${(d.count / maxCount) * 100}%` }}
-                                ></div>
-                                <div className="absolute -bottom-6 text-[10px] text-slate-400 opacity-0 group-hover:opacity-100">
-                                    {d.date.slice(5)}
-                                </div>
+                            <p className="text-2xl font-bold text-white">{completedCount}</p>
+                        </div>
+                        <div className="bg-[#181c24] p-4 rounded-xl border border-cyan-500/10">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Zap size={16} className="text-cyan-300" />
+                                <span className="text-xs text-slate-400">Efficiency</span>
                             </div>
-                        ))}
+                            <p className="text-2xl font-bold text-white">%{totalProgress}</p>
+                        </div>
+                        <div className="bg-[#181c24] p-4 rounded-xl border border-cyan-500/10">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Flame size={16} className="text-[var(--color-accent)]" />
+                                <span className="text-xs text-slate-400">Streak</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">{streak} Days</p>
+                        </div>
+                        <div className="bg-[#181c24] p-4 rounded-xl border border-cyan-500/10">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Star size={16} className="text-[var(--color-accent)]" />
+                                <span className="text-xs text-slate-400">Points</span>
+                            </div>
+                            <p className="text-2xl font-bold text-white">{completedCount * 35}</p>
+                        </div>
                     </div>
                 </div>
 
-                <div
-                    onClick={onNavigateDaily}
-                    className="cursor-pointer bg-gradient-to-r from-indigo-500 to-purple-600 p-6 rounded-2xl shadow-md text-white flex items-center justify-between group hover:shadow-lg transition-all"
-                >
-                    <div>
-                        <h3 className="text-xl font-bold mb-1">Plan Today</h3>
-                        <p className="text-indigo-100 text-sm">Pick 5 random tasks</p>
-                    </div>
-                    <div className="p-3 bg-white/20 rounded-full group-hover:scale-110 transition-transform">
-                        <Sun size={24} />
+                {/* Application Stats (Kanban Dist) */}
+                <div className="card-tech bg-[#13131a] p-6 rounded-xl border border-white/8">
+                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6">Application</h3>
+                    <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center mb-2">
+                                <svg className="transform -rotate-90 w-16 h-16">
+                                    <circle cx="32" cy="32" r="28" stroke="#222" strokeWidth="4" fill="none" />
+                                    <circle cx="32" cy="32" r="28" stroke="#00aeef" strokeWidth="4" fill="none" strokeDasharray={`${(kanbanStats.todo / totalTasks) * 175 || 0} 175`} />
+                                </svg>
+                                <span className="absolute text-sm font-bold text-white">%{totalTasks ? Math.round((kanbanStats.todo / totalTasks) * 100) : 0}</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="p-1.5 bg-[rgba(0,174,239,0.12)] rounded mb-1 inline-block">
+                                    <Target size={14} className="text-cyan-300" />
+                                </div>
+                                <p className="text-xs text-slate-400">Todo</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center mb-2">
+                                <svg className="transform -rotate-90 w-16 h-16">
+                                    <circle cx="32" cy="32" r="28" stroke="#222" strokeWidth="4" fill="none" />
+                                    <circle cx="32" cy="32" r="28" stroke="#29c6cd" strokeWidth="4" fill="none" strokeDasharray={`${(kanbanStats.inProgress / totalTasks) * 175 || 0} 175`} />
+                                </svg>
+                                <span className="absolute text-sm font-bold text-white">%{totalTasks ? Math.round((kanbanStats.inProgress / totalTasks) * 100) : 0}</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="p-1.5 bg-[rgba(0,174,239,0.12)] rounded mb-1 inline-block">
+                                    <Zap size={14} className="text-cyan-300" />
+                                </div>
+                                <p className="text-xs text-slate-400">In Progress</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center mb-2">
+                                <svg className="transform -rotate-90 w-16 h-16">
+                                    <circle cx="32" cy="32" r="28" stroke="#222" strokeWidth="4" fill="none" />
+                                    <circle cx="32" cy="32" r="28" stroke="#ffd200" strokeWidth="4" fill="none" strokeDasharray={`${(kanbanStats.review / totalTasks) * 175 || 0} 175`} />
+                                </svg>
+                                <span className="absolute text-sm font-bold text-white">%{totalTasks ? Math.round((kanbanStats.review / totalTasks) * 100) : 0}</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="p-1.5 bg-[rgba(255,210,0,0.12)] rounded mb-1 inline-block">
+                                    <Star size={14} className="text-[var(--color-accent)]" />
+                                </div>
+                                <p className="text-xs text-slate-400">Review</p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center mb-2">
+                                <svg className="transform -rotate-90 w-16 h-16">
+                                    <circle cx="32" cy="32" r="28" stroke="#222" strokeWidth="4" fill="none" />
+                                    <circle cx="32" cy="32" r="28" stroke="#29c6cd" strokeWidth="4" fill="none" strokeDasharray={`${(completedCount / totalTasks) * 175 || 0} 175`} />
+                                </svg>
+                                <span className="absolute text-sm font-bold text-white">%{totalProgress}</span>
+                            </div>
+                            <div className="text-center">
+                                <div className="p-1.5 bg-[rgba(0,174,239,0.12)] rounded mb-1 inline-block">
+                                    <CheckCircle size={14} className="text-cyan-300" />
+                                </div>
+                                <p className="text-xs text-slate-400">Done</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            {/* Daily Focus Timeline */}
+            <div className="card-tech bg-[#13131a] rounded-xl border border-white/8 p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2.5 bg-[rgba(255,210,0,0.12)] rounded-lg">
+                            <Target size={20} className="text-[var(--color-accent)]" />
+                        </div>
+                        <div>
+                            <h2 className="text-lg font-bold text-white">Daily Focus Plan</h2>
+                            <p className="text-xs text-slate-400">Your priority tasks for today</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={onNavigateDaily}
+                        className="px-4 py-2 bg-gradient-to-r from-[#00aeef] via-[#29c6cd] to-[#ffd200] text-[#0b0b0b] rounded-lg text-sm font-bold hover:brightness-110 transition-all"
+                    >
+                        View All
+                    </button>
+                </div>
+
+                <div className="space-y-3">
+                    {(() => {
+                        const planTasks = courses
+                            .map(course => {
+                                let next: any = null;
+                                for (const unit of course.units) {
+                                    for (const task of unit.tasks) {
+                                        if (completedTasks.has(task.id)) continue;
+                                        if (task.dueDate && new Date(task.dueDate) < new Date()) {
+                                            return { ...task, course, unit: unit.title, isOverdue: true };
+                                        }
+                                        if (!next) {
+                                            next = { ...task, course, unit: unit.title };
+                                        }
+                                    }
+                                }
+                                return next;
+                            })
+                            .filter(Boolean)
+                            .slice(0, 5);
+
+                        return planTasks.length > 0 ? (
+                            planTasks.map((item: any) => (
+                                <div
+                                    key={item.id}
+                                    className="flex items-center gap-3 p-4 bg-[#181c24] rounded-xl border border-white/10 hover:border-cyan-400/30 transition-all group"
+                                >
+                                    <div
+                                        className="w-1 h-12 rounded-full"
+                                        style={{ backgroundColor: item.course.customColor || '#00aeef' }}
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-xs font-bold text-slate-400">{item.course.code}</span>
+                                            <span className="text-slate-600">•</span>
+                                            <span className="text-xs text-slate-500 truncate">{item.unit}</span>
+                                            {item.isOverdue && (
+                                                <span className="text-xs font-bold text-red-400 bg-red-500/20 px-2 py-0.5 rounded">
+                                                    Overdue
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p className="text-sm text-white truncate">{item.text}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            const event = new CustomEvent('toast', {
+                                                detail: { message: 'Task marked as complete!', type: 'success' }
+                                            });
+                                            window.dispatchEvent(event);
+                                        }}
+                                        className="p-2 text-slate-500 hover:text-cyan-400 transition-colors opacity-0 group-hover:opacity-100"
+                                    >
+                                        <CheckCircle size={18} />
+                                    </button>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-center p-8 bg-[#181c24] rounded-xl border border-dashed border-white/10">
+                                <Trophy size={32} className="mx-auto text-[var(--color-accent)] mb-2" />
+                                <p className="text-sm font-bold text-white">All tasks completed!</p>
+                                <p className="text-xs text-slate-500">Great job, time to rest.</p>
+                            </div>
+                        );
+                    })()}
+                </div>
+            </div>
+
             <div>
-                <h2 className="text-xl font-semibold text-slate-800 dark:text-white mb-6">Course Progress</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <h2 className="text-lg font-semibold text-white mb-4">Course Progress</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {courses.map(course => {
                         const progress = getCourseProgress(course, completedTasks);
                         const next = getNextTask(course, completedTasks);
@@ -210,29 +436,29 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                             <div
                                 key={course.id}
                                 onClick={() => onNavigateCourse(course.id)}
-                                className={`bg-white dark:bg-dark-surface rounded-2xl overflow-hidden shadow-sm border ${isUrgent ? 'border-red-400 dark:border-red-600 animate-pulse' : 'border-slate-100 dark:border-slate-700'
-                                    } hover:shadow-md transition-all cursor-pointer group flex flex-col h-full relative`}
+                                className={`card-tech bg-[#13131a] rounded-xl overflow-hidden border ${isUrgent ? 'border-red-500/50' : 'border-white/8'
+                                    } hover:border-cyan-400/40 transition-all cursor-pointer group flex flex-col h-full relative`}
                             >
                                 {daysLeft !== null && daysLeft >= 0 && (
                                     <div
-                                        className={`absolute top-2 left-2 z-20 px-2 py-1 rounded text-xs font-bold shadow-sm ${isUrgent ? 'bg-red-500 text-white' : 'bg-white/90 text-slate-700'
+                                        className={`absolute top-2 left-2 z-20 px-2 py-1 rounded text-xs font-bold shadow-sm ${isUrgent ? 'bg-red-500 text-white' : 'bg-white/10 text-slate-300'
                                             }`}
                                     >
                                         {daysLeft === 0 ? 'EXAM TODAY' : `${daysLeft} days left`}
                                     </div>
                                 )}
 
-                                <div className={`h-24 ${course.bgGradient} relative p-4`}>
+                                <div className={`h-20 ${course.bgGradient} relative p-3`}>
                                     <div className="absolute bottom-0 left-0 w-full h-full bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                                    <span className="absolute top-4 right-4 bg-black/20 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm">
+                                    <span className="absolute top-3 right-3 bg-black/30 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur-sm">
                                         {course.code}
                                     </span>
-                                    <h3 className="text-white font-bold text-lg mt-8 shadow-black drop-shadow-md">{course.title}</h3>
+                                    <h3 className="text-white font-bold text-base mt-6 drop-shadow-md line-clamp-1">{course.title}</h3>
                                 </div>
-                                <div className="p-5 flex-1 flex flex-col">
+                                <div className="p-4 flex-1 flex flex-col">
                                     <div className="flex justify-between items-end mb-2">
-                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Progress</span>
-                                        <span className={`text-lg font-bold ${isComplete ? 'text-green-500' : 'text-slate-800 dark:text-white'}`}>
+                                        <span className="text-xs font-medium text-slate-400">Progress</span>
+                                        <span className={`text-sm font-bold ${isComplete ? 'text-green-400' : 'text-white'}`}>
                                             %{progress}
                                         </span>
                                     </div>
@@ -242,14 +468,14 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                                     />
 
                                     {next ? (
-                                        <div className="mt-6 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700/50 mt-auto">
-                                            <p className="text-xs text-slate-400 uppercase font-bold mb-1">Next Task</p>
-                                            <p className="text-sm text-slate-700 dark:text-slate-300 line-clamp-2">{next.task.text}</p>
+                                        <div className="mt-4 p-3 bg-[#181c24] rounded-lg border border-white/10 mt-auto">
+                                            <p className="text-[10px] text-slate-500 uppercase font-bold mb-1">Next Task</p>
+                                            <p className="text-xs text-slate-300 line-clamp-2">{next.task.text}</p>
                                         </div>
                                     ) : (
-                                        <div className="mt-6 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-900/30 mt-auto flex items-center gap-2">
-                                            <Trophy size={16} className="text-green-500" />
-                                            <p className="text-sm font-bold text-green-600 dark:text-green-400">Completed!</p>
+                                        <div className="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/20 mt-auto flex items-center gap-2">
+                                            <Trophy size={14} className="text-green-400" />
+                                            <p className="text-xs font-bold text-green-400">Completed!</p>
                                         </div>
                                     )}
                                 </div>
@@ -257,6 +483,11 @@ export const Overview = ({ onNavigateCourse, onNavigateDaily }: Props) => {
                         );
                     })}
                 </div>
+            </div>
+
+            {/* Daily Plan Section */}
+            <div id="daily-plan-section" className="pt-8 border-t border-white/10">
+                <DailyPlan />
             </div>
         </div>
     );
