@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useCallback, useContext, useMemo, useState } from 'react';
 
 import { useCompletionSound } from '@/hooks/useCompletionSound';
 import { useCourseData } from '@/hooks/useCourseData';
@@ -26,7 +26,7 @@ interface PlannerContextValue {
 
 const PlannerContext = createContext<PlannerContextValue | null>(null);
 
-export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const PlannerProvider = ({ children }: { children: ReactNode }) => {
     const {
         courses,
         updateCourse,

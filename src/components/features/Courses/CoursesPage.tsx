@@ -46,17 +46,20 @@ const COLUMNS = [
 ];
 
 // Draggable Task Card Component
+type DraggableTaskCardProps = {
+    task: Task & { unitTitle: string };
+    onToggleComplete: (taskId: string) => void;
+    isCompleted: boolean;
+    isDragging?: boolean;
+    key?: React.Key;
+};
+
 const DraggableTaskCard = ({
     task,
     onToggleComplete,
     isCompleted,
     isDragging
-}: {
-    task: Task & { unitTitle: string };
-    onToggleComplete: (taskId: string) => void;
-    isCompleted: boolean;
-    isDragging?: boolean;
-}) => {
+}: DraggableTaskCardProps) => {
     const {
         attributes,
         listeners,
@@ -144,17 +147,20 @@ const TaskCardOverlay = ({ task }: { task: Task & { unitTitle: string } }) => {
 };
 
 // Droppable Column Component
+type DroppableColumnProps = {
+    column: typeof COLUMNS[0];
+    tasks: (Task & { unitTitle: string })[];
+    onToggleTask: (taskId: string) => void;
+    completedTasks: Set<string>;
+    key?: React.Key;
+};
+
 const DroppableColumn = ({
     column,
     tasks,
     onToggleTask,
     completedTasks
-}: {
-    column: typeof COLUMNS[0];
-    tasks: (Task & { unitTitle: string })[];
-    onToggleTask: (taskId: string) => void;
-    completedTasks: Set<string>;
-}) => {
+}: DroppableColumnProps) => {
     const { setNodeRef, isOver } = useDroppable({
         id: column.id,
         data: { type: 'Column', columnId: column.id }

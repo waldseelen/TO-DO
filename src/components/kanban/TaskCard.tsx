@@ -21,6 +21,7 @@ interface TaskCardProps {
     courseName?: string;
     courseColor?: string;
     onOpenDetails?: (task: Task) => void;
+    key?: React.Key;
 }
 
 export const TaskCard = ({ task, courseName = "General", courseColor = "bg-primary", onOpenDetails }: TaskCardProps) => {

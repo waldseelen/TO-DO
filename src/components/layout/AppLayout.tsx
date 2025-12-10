@@ -13,6 +13,8 @@ interface AppLayoutProps {
     onSettingsClick?: () => void;
     onCalendarClick?: () => void;
     showBackupReminder?: boolean;
+    isDarkMode?: boolean;
+    onToggleTheme?: () => void;
 }
 
 const AppLayout = ({
@@ -24,7 +26,9 @@ const AppLayout = ({
     onNewTask,
     onSettingsClick,
     onCalendarClick,
-    showBackupReminder
+    showBackupReminder,
+    isDarkMode,
+    onToggleTheme
 }: AppLayoutProps) => {
     const [rightCollapsed, setRightCollapsed] = useState(false);
 

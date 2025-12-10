@@ -13,8 +13,8 @@ const mockCourse: Course = {
         {
             title: 'Unit 1',
             tasks: [
-                { id: 'task-1', text: 'Task 1', completed: false },
-                { id: 'task-2', text: 'Task 2', completed: false, notes: 'Some notes' }
+                { id: 'task-1', text: 'Task 1', status: 'todo' },
+                { id: 'task-2', text: 'Task 2', status: 'todo', notes: 'Some notes' }
             ]
         }
     ],

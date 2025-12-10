@@ -11,6 +11,7 @@ interface ColumnProps {
     color: string; // Header dot color class
     courses: any[];
     onOpenTask: (task: Task) => void;
+    key?: React.Key;
 }
 
 export const Column = ({ id, title, tasks, color, courses, onOpenTask }: ColumnProps) => {

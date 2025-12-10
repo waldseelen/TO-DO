@@ -50,6 +50,7 @@ const Column = ({
     onOpenTask: (task: Task) => void;
     onAddTask?: (status: Task['status']) => void;
     maxVisible?: number;
+    key?: string;
 }) => {
     const [showAll, setShowAll] = useState(false);
     const { setNodeRef } = useSortable({

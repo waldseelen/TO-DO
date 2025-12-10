@@ -1,4 +1,5 @@
 import { Copy, Download, Keyboard, RotateCcw, Settings as SettingsIcon, Timer, Upload, Volume2, VolumeX, X } from 'lucide-react';
+import type { ChangeEvent } from 'react';
 
 import { usePlannerContext } from '@/context/AppContext';
 import { usePomodoroSettings } from '@/hooks/usePomodoroSettings';
@@ -6,7 +7,7 @@ import { usePomodoroSettings } from '@/hooks/usePomodoroSettings';
 interface Props {
     isOpen: boolean;
     onClose: () => void;
-    onImport: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onImport: (e: ChangeEvent<HTMLInputElement>) => void;
     onExport: () => void;
     onExportToday: () => void;
 }

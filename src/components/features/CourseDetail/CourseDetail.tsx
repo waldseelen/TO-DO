@@ -19,7 +19,7 @@ import {
     Trash2,
     Youtube
 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 
 import { KanbanBoard } from '@/components/kanban/Board';
 import { Checkmark } from '@/components/ui/Checkmark';
@@ -273,7 +273,7 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
         setOpenUnits(prev => new Set([...prev, localUnits.length]));
     };
 
-    const handleDeleteUnit = (unitIdx: number, e: React.MouseEvent) => {
+    const handleDeleteUnit = (unitIdx: number, e: MouseEvent) => {
         e.stopPropagation();
         if (confirm('Are you sure you want to delete this unit and all its tasks?')) {
             const newUnits = [...localUnits];
