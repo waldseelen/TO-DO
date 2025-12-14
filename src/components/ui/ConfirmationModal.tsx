@@ -1,5 +1,7 @@
 import { AlertCircle } from 'lucide-react';
 
+import { ModalWrapper } from './ModalWrapper';
+
 interface Props {
     isOpen: boolean;
     onClose: () => void;
@@ -9,17 +11,20 @@ interface Props {
 }
 
 export const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message }: Props) => {
-    if (!isOpen) return null;
-
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-xl max-w-sm w-full border border-slate-100 dark:border-slate-700">
+        <ModalWrapper
+            isOpen={isOpen}
+            onClose={onClose}
+            ariaLabel={title}
+            ariaDescribedBy="modal-description"
+        >
+            <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-xl max-w-sm w-full border border-slate-100 dark:border-slate-700 mx-4">
                 <div className="flex flex-col items-center text-center mb-6">
                     <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-500 rounded-full mb-4">
                         <AlertCircle size={32} />
                     </div>
                     <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{title}</h3>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm">{message}</p>
+                    <p id="modal-description" className="text-slate-500 dark:text-slate-400 text-sm">{message}</p>
                 </div>
                 <div className="flex gap-3">
                     <button
@@ -36,6 +41,6 @@ export const ConfirmationModal = ({ isOpen, onClose, onConfirm, title, message }
                     </button>
                 </div>
             </div>
-        </div>
+        </ModalWrapper>
     );
 };

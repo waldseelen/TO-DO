@@ -5,10 +5,16 @@ import { useCourseData } from '@/hooks/useCourseData';
 import { useTaskManager } from '@/hooks/useTaskManager';
 import { CompletionHistory, Course, Task } from '@/types';
 
-interface PlannerContextValue {
+// Separate interfaces for state and dispatch
+interface PlannerStateValue {
     courses: Course[];
     completedTasks: Set<string>;
     completionHistory: CompletionHistory;
+    soundEnabled: boolean;
+    showConfetti: boolean;
+}
+
+interface PlannerDispatchValue {
     toggleTask: (taskId: string) => void;
     undo: () => void;
     updateCourse: (courseId: string, units: Course['units']) => void;
@@ -19,11 +25,16 @@ interface PlannerContextValue {
     deleteCourse: (courseId: string) => void;
     setCourses: Dispatch<SetStateAction<Course[]>>;
     hydrateTasks: (taskIds: string[], history: CompletionHistory) => void;
-    soundEnabled: boolean;
     setSoundEnabled: (enabled: boolean) => void;
-    showConfetti: boolean;
 }
 
+// Combined interface for backwards compatibility
+interface PlannerContextValue extends PlannerStateValue, PlannerDispatchValue { }
+
+// Create separate contexts
+const PlannerStateContext = createContext<PlannerStateValue | null>(null);
+const PlannerDispatchContext = createContext<PlannerDispatchValue | null>(null);
+// Keep legacy context for backwards compatibility
 const PlannerContext = createContext<PlannerContextValue | null>(null);
 
 export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -84,7 +95,7 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 }
             }, 100);
         }
-    }, [completedTasks, originalToggleTask, playCompletionSound, playSuccessSound, courses]);
+    }, [completedTasks, originalToggleTask, playCompletionSound, playSuccessSound, courses, updateTaskStatus]);
 
     // Synchronize status update with completedTasks
     const handleUpdateTaskStatus = useCallback((taskId: string, status: Task['status']) => {
@@ -98,11 +109,21 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }, [updateTaskStatus, completedTasks, toggleTask]);
 
-    const value = useMemo(
+    // Memoize state value (changes when state changes)
+    const stateValue = useMemo<PlannerStateValue>(
         () => ({
             courses,
             completedTasks,
             completionHistory,
+            soundEnabled,
+            showConfetti
+        }),
+        [courses, completedTasks, completionHistory, soundEnabled, showConfetti]
+    );
+
+    // Memoize dispatch value (stable reference - rarely changes)
+    const dispatchValue = useMemo<PlannerDispatchValue>(
+        () => ({
             toggleTask,
             undo,
             updateCourse,
@@ -113,14 +134,9 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             deleteCourse,
             setCourses,
             hydrateTasks,
-            soundEnabled,
-            setSoundEnabled,
-            showConfetti
+            setSoundEnabled
         }),
         [
-            courses,
-            completedTasks,
-            completionHistory,
             toggleTask,
             undo,
             updateCourse,
@@ -131,15 +147,49 @@ export const PlannerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             deleteCourse,
             setCourses,
             hydrateTasks,
-            soundEnabled,
-            setSoundEnabled,
-            showConfetti
+            setSoundEnabled
         ]
     );
 
-    return <PlannerContext.Provider value={value}>{children}</PlannerContext.Provider>;
+    // Combined value for legacy hook
+    const combinedValue = useMemo<PlannerContextValue>(
+        () => ({
+            ...stateValue,
+            ...dispatchValue
+        }),
+        [stateValue, dispatchValue]
+    );
+
+    return (
+        <PlannerStateContext.Provider value={stateValue}>
+            <PlannerDispatchContext.Provider value={dispatchValue}>
+                <PlannerContext.Provider value={combinedValue}>
+                    {children}
+                </PlannerContext.Provider>
+            </PlannerDispatchContext.Provider>
+        </PlannerStateContext.Provider>
+    );
 };
 
+// Hook for components that only need state (will re-render when state changes)
+export const usePlannerState = () => {
+    const context = useContext(PlannerStateContext);
+    if (!context) {
+        throw new Error('usePlannerState must be used within PlannerProvider');
+    }
+    return context;
+};
+
+// Hook for components that only need dispatch functions (stable - won't cause re-renders)
+export const usePlannerDispatch = () => {
+    const context = useContext(PlannerDispatchContext);
+    if (!context) {
+        throw new Error('usePlannerDispatch must be used within PlannerProvider');
+    }
+    return context;
+};
+
+// Legacy hook for backwards compatibility (returns everything)
 export const usePlannerContext = () => {
     const context = useContext(PlannerContext);
     if (!context) {

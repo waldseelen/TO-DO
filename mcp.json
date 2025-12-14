@@ -1,0 +1,9 @@
+{
+    "n8n-workflow-server": {
+        "url": "http://localhost:5678/mcp-server/http",
+        "type": "http",
+        "headers": {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwZjNhMzcyZi1jZjQ5LTQyNDItODE0OC1jNWQ5MDA3NTc0ODkiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6IjQzZTNjYmQ5LWU1ZmEtNDk2NS1iMDY1LTFiMmZjZjgxYWI0OSIsImlhdCI6MTc2NTU0ODMwOH0.WKuIZaLJmRauszCq_BCxzO_25VX3f_za3eZqHXyNUkk"
+        }
+    }
+}

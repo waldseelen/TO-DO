@@ -1,28 +1,23 @@
 import {
     BookOpen,
-    Bot,
     Calendar,
     Check,
     CheckCircle,
     ChevronDown,
     Clock as ClockIcon,
     Copy,
-    Globe,
-    GripVertical,
     LayoutDashboard,
     List,
     Loader2,
-    MoreVertical,
     Palette,
     Plus,
     Save,
-    Trash2,
-    Youtube
+    Trash2
 } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Virtuoso } from 'react-virtuoso';
 
 import { KanbanBoard } from '@/components/kanban/Board';
-import { Checkmark } from '@/components/ui/Checkmark';
 import { CircularProgress } from '@/components/ui/CircularProgress';
 import { ConfirmationModal } from '@/components/ui/ConfirmationModal';
 import { usePlannerContext } from '@/context/AppContext';
@@ -31,6 +26,10 @@ import { Task, Unit } from '@/types';
 import { getCourseProgress } from '@/utils/course';
 import { generateMarkdown } from '@/utils/markdown';
 import { LastPDFButton, LectureNotesPopup, PDFManagerButton } from './LectureNotesPopup';
+import { TaskItem } from './TaskItem';
+
+// Virtualization threshold - use virtualization for units with more tasks than this
+const VIRTUALIZATION_THRESHOLD = 20;
 
 // Color presets
 const COLOR_PRESETS = [
@@ -75,7 +74,6 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
     const [isSaving, setIsSaving] = useState(false);
     const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
     const [editingText, setEditingText] = useState('');
-    const editInputRef = useRef<HTMLInputElement>(null);
     const [deleteModalData, setDeleteModalData] = useState<{ unitIdx: number; taskIdx: number } | null>(null);
     const [showExamManager, setShowExamManager] = useState(false);
     const [showColorPicker, setShowColorPicker] = useState(false);
@@ -89,12 +87,6 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
             setLocalUnits(course.units);
         }
     }, [course, isDirty]);
-
-    useEffect(() => {
-        if (editingTaskId && editInputRef.current) {
-            editInputRef.current.focus();
-        }
-    }, [editingTaskId]);
 
     if (!course) {
         return (
@@ -640,145 +632,65 @@ export const CourseDetail = ({ courseId, onOpenTaskDetails }: Props) => {
                                 <div className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
                                     <div className="overflow-hidden">
                                         <div className="border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-black/20">
-                                            {unit.tasks.map((task, taskIdx) => (
-                                                <div
-                                                    key={task.id}
-                                                    draggable={editingTaskId !== task.id}
-                                                    onDragStart={() => handleDragStart(unitIdx, taskIdx)}
-                                                    onDragEnter={() => handleDragEnter(unitIdx, taskIdx)}
-                                                    onDragOver={event => event.preventDefault()}
-                                                    onDrop={event => {
-                                                        event.preventDefault();
-                                                        handleDrop(unitIdx, taskIdx);
-                                                    }}
-                                                    onDragEnd={handleDragEnd}
-                                                    className={`flex items-center gap-3 p-4 pl-6 border-b border-slate-100 dark:border-slate-700 last:border-0 hover:bg-indigo-50/30 dark:hover:bg-indigo-900/10 transition-colors group relative ${dragTarget?.taskIdx === taskIdx && dragTarget.unitIdx === unitIdx ? 'border-t-2 border-t-indigo-500' : ''
-                                                        } ${dragSource?.taskIdx === taskIdx && dragSource.unitIdx === unitIdx ? 'opacity-50 bg-slate-100 dark:bg-slate-800' : ''}`}
-                                                >
-                                                    <div className="text-slate-300 dark:text-slate-600 cursor-grab hover:text-slate-500 active:cursor-grabbing">
-                                                        <GripVertical size={16} />
-                                                    </div>
-                                                    <button
-                                                        onClick={() => toggleTask(task.id)}
-                                                        className="cursor-pointer shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -ml-2"
-                                                        aria-label={completedTasks.has(task.id) ? "Mark as incomplete" : "Mark as complete"}
-                                                    >
-                                                        <Checkmark checked={completedTasks.has(task.id)} />
-                                                    </button>
-
-                                                    <div className="flex-1 min-w-0">
-                                                        {editingTaskId === task.id ? (
-                                                            <input
-                                                                ref={editInputRef}
-                                                                type="text"
-                                                                value={editingText}
-                                                                onChange={e => setEditingText(e.target.value)}
-                                                                onBlur={() => saveEditing(unitIdx, taskIdx)}
-                                                                onKeyDown={e => e.key === 'Enter' && saveEditing(unitIdx, taskIdx)}
-                                                                className="w-full px-2 py-1 bg-white dark:bg-slate-700 border border-indigo-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                                            {/* Use virtualization for large task lists */}
+                                            {unit.tasks.length > VIRTUALIZATION_THRESHOLD ? (
+                                                <Virtuoso
+                                                    style={{ height: Math.min(400, unit.tasks.length * 60) }}
+                                                    totalCount={unit.tasks.length}
+                                                    overscan={5}
+                                                    itemContent={(taskIdx) => {
+                                                        const task = unit.tasks[taskIdx];
+                                                        return (
+                                                            <TaskItem
+                                                                key={task.id}
+                                                                task={task}
+                                                                unitIdx={unitIdx}
+                                                                taskIdx={taskIdx}
+                                                                isCompleted={completedTasks.has(task.id)}
+                                                                isEditing={editingTaskId === task.id}
+                                                                editingText={editingText}
+                                                                isDragSource={dragSource?.taskIdx === taskIdx && dragSource.unitIdx === unitIdx}
+                                                                isDragTarget={dragTarget?.taskIdx === taskIdx && dragTarget.unitIdx === unitIdx}
+                                                                onToggleTask={toggleTask}
+                                                                onStartEditing={startEditing}
+                                                                onEditingTextChange={setEditingText}
+                                                                onSaveEditing={saveEditing}
+                                                                onOpenDetails={onOpenTaskDetails}
+                                                                onDelete={(uIdx, tIdx) => setDeleteModalData({ unitIdx: uIdx, taskIdx: tIdx })}
+                                                                onDragStart={handleDragStart}
+                                                                onDragEnter={handleDragEnter}
+                                                                onDrop={handleDrop}
+                                                                onDragEnd={handleDragEnd}
                                                             />
-                                                        ) : (
-                                                            <div className="flex flex-col">
-                                                                <div className="flex items-center gap-2">
-                                                                    <p
-                                                                        onClick={() => startEditing(task)}
-                                                                        className={`text-sm cursor-text truncate transition-all relative ${completedTasks.has(task.id)
-                                                                            ? 'text-slate-400'
-                                                                            : 'text-slate-700 dark:text-slate-300'
-                                                                            }`}
-                                                                    >
-                                                                        {task.text}
-                                                                        <span
-                                                                            className={`absolute left-0 top-1/2 h-0.5 bg-slate-400 dark:bg-slate-500 transition-all duration-500 ease-in-out ${completedTasks.has(task.id) ? 'w-full opacity-100' : 'w-0 opacity-0'
-                                                                                }`}
-                                                                        ></span>
-                                                                    </p>
-                                                                    <button
-                                                                        onClick={e => {
-                                                                            e.stopPropagation();
-                                                                            window.open(
-                                                                                `https://www.google.com/search?q=${encodeURIComponent(task.text)}`,
-                                                                                '_blank'
-                                                                            );
-                                                                        }}
-                                                                        className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-3 md:p-1 text-slate-300 hover:text-blue-500 transition-all"
-                                                                        title="Quick Search on Google"
-                                                                        aria-label={`Search on Google for ${task.text}`}
-                                                                    >
-                                                                        <Globe size={16} />
-                                                                    </button>
-                                                                    <button
-                                                                        onClick={e => {
-                                                                            e.stopPropagation();
-                                                                            window.open(
-                                                                                `https://www.youtube.com/results?search_query=${encodeURIComponent(task.text)}`,
-                                                                                '_blank'
-                                                                            );
-                                                                        }}
-                                                                        className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-3 md:p-1 text-slate-300 hover:text-red-500 transition-all"
-                                                                        title="Quick Search on YouTube"
-                                                                        aria-label={`Search on YouTube for ${task.text}`}
-                                                                    >
-                                                                        <Youtube size={16} />
-                                                                    </button>
-                                                                    <button
-                                                                        onClick={e => {
-                                                                            e.stopPropagation();
-                                                                            window.open(
-                                                                                `https://chatgpt.com/?q=${encodeURIComponent(task.text)}`,
-                                                                                '_blank'
-                                                                            );
-                                                                        }}
-                                                                        className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-3 md:p-1 text-slate-300 hover:text-emerald-500 transition-all"
-                                                                        title="Ask ChatGPT"
-                                                                        aria-label={`Ask ChatGPT about ${task.text}`}
-                                                                    >
-                                                                        <Bot size={16} />
-                                                                    </button>
-                                                                    {task.tags?.map(tag => (
-                                                                        <span key={tag} className="text-[10px] px-1.5 py-0.5 bg-indigo-50 text-indigo-500 rounded hidden md:inline-block">
-                                                                            {tag}
-                                                                        </span>
-                                                                    ))}
-                                                                </div>
-                                                                {task.subtasks && task.subtasks.length > 0 && (
-                                                                    <div className="flex items-center gap-2 mt-1">
-                                                                        <div className="w-16 h-1 bg-slate-200 rounded-full overflow-hidden">
-                                                                            <div
-                                                                                className="h-full bg-green-400"
-                                                                                style={{
-                                                                                    width: `${(task.subtasks.filter(sub => sub.completed).length / task.subtasks.length) * 100}%`
-                                                                                }}
-                                                                            ></div>
-                                                                        </div>
-                                                                        <span className="text-[10px] text-slate-400">
-                                                                            {task.subtasks.filter(sub => sub.completed).length}/{task.subtasks.length}
-                                                                        </span>
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="flex items-center gap-1">
-                                                        <button
-                                                            onClick={() => onOpenTaskDetails(task)}
-                                                            className="p-2 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all"
-                                                            title="Details & Notes"
-                                                        >
-                                                            <MoreVertical size={16} />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => setDeleteModalData({ unitIdx, taskIdx })}
-                                                            className="opacity-100 md:opacity-0 md:group-hover:opacity-100 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
-                                                            title="Delete Task"
-                                                            aria-label="Delete Task"
-                                                        >
-                                                            <Trash2 size={16} />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                        );
+                                                    }}
+                                                />
+                                            ) : (
+                                                // Regular rendering for smaller lists
+                                                unit.tasks.map((task, taskIdx) => (
+                                                    <TaskItem
+                                                        key={task.id}
+                                                        task={task}
+                                                        unitIdx={unitIdx}
+                                                        taskIdx={taskIdx}
+                                                        isCompleted={completedTasks.has(task.id)}
+                                                        isEditing={editingTaskId === task.id}
+                                                        editingText={editingText}
+                                                        isDragSource={dragSource?.taskIdx === taskIdx && dragSource.unitIdx === unitIdx}
+                                                        isDragTarget={dragTarget?.taskIdx === taskIdx && dragTarget.unitIdx === unitIdx}
+                                                        onToggleTask={toggleTask}
+                                                        onStartEditing={startEditing}
+                                                        onEditingTextChange={setEditingText}
+                                                        onSaveEditing={saveEditing}
+                                                        onOpenDetails={onOpenTaskDetails}
+                                                        onDelete={(uIdx, tIdx) => setDeleteModalData({ unitIdx: uIdx, taskIdx: tIdx })}
+                                                        onDragStart={handleDragStart}
+                                                        onDragEnter={handleDragEnter}
+                                                        onDrop={handleDrop}
+                                                        onDragEnd={handleDragEnd}
+                                                    />
+                                                ))
+                                            )}
                                             {unit.tasks.length === 0 && (
                                                 <p className="p-4 text-center text-sm text-slate-400 italic">No tasks in this unit yet.</p>
                                             )}

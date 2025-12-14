@@ -1,5 +1,5 @@
 import { RotateCcw, Settings, Timer } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePomodoroSettings } from '@/hooks/usePomodoroSettings';
 import { formatTime } from '@/utils/time';
@@ -15,79 +15,124 @@ export const PomodoroTimer = ({ onOpenSettings }: PomodoroTimerProps) => {
     const [mode, setMode] = useState<'work' | 'shortBreak' | 'longBreak'>('work');
     const [sessionCount, setSessionCount] = useState(0);
 
-    // Update timer when settings change (only if not running)
-    useEffect(() => {
-        if (!isActive) {
-            switch (mode) {
-                case 'work':
-                    setTimeLeft(settings.workDuration * 60);
-                    break;
-                case 'shortBreak':
-                    setTimeLeft(settings.shortBreakDuration * 60);
-                    break;
-                case 'longBreak':
-                    setTimeLeft(settings.longBreakDuration * 60);
-                    break;
-            }
+    // Store endTime as a ref to prevent time drift
+    const endTimeRef = useRef<number | null>(null);
+    // Store remaining time when paused
+    const pausedTimeRef = useRef<number>(settings.workDuration * 60);
+
+    // Get duration based on mode
+    const getDurationForMode = useCallback((m: 'work' | 'shortBreak' | 'longBreak') => {
+        switch (m) {
+            case 'work': return settings.workDuration * 60;
+            case 'shortBreak': return settings.shortBreakDuration * 60;
+            case 'longBreak': return settings.longBreakDuration * 60;
         }
-    }, [settings, mode, isActive]);
+    }, [settings]);
 
-    useEffect(() => {
-        let interval: number | null = null;
-        if (isActive && timeLeft > 0) {
-            interval = window.setInterval(() => setTimeLeft(t => t - 1), 1000);
-        } else if (timeLeft === 0) {
-            setIsActive(false);
+    // Handle mode transition when timer ends
+    const handleTimerComplete = useCallback(() => {
+        setIsActive(false);
+        endTimeRef.current = null;
 
-            // Mode transition
-            if (mode === 'work') {
-                const newSessionCount = sessionCount + 1;
-                setSessionCount(newSessionCount);
+        if (mode === 'work') {
+            const newSessionCount = sessionCount + 1;
+            setSessionCount(newSessionCount);
 
-                // Long break or short break?
-                if (newSessionCount >= settings.sessionsBeforeLongBreak) {
-                    setMode('longBreak');
-                    setTimeLeft(settings.longBreakDuration * 60);
-                    setSessionCount(0);
-
-                    // Notification
-                    const event = new CustomEvent('toast', {
-                        detail: { message: `🎉 ${settings.sessionsBeforeLongBreak} pomodoros completed! Time for a long break.`, type: 'success' }
-                    });
-                    window.dispatchEvent(event);
-                } else {
-                    setMode('shortBreak');
-                    setTimeLeft(settings.shortBreakDuration * 60);
-
-                    const event = new CustomEvent('toast', {
-                        detail: { message: '✨ Pomodoro completed! Time for a short break.', type: 'success' }
-                    });
-                    window.dispatchEvent(event);
-                }
-            } else {
-                setMode('work');
-                setTimeLeft(settings.workDuration * 60);
+            if (newSessionCount >= settings.sessionsBeforeLongBreak) {
+                setMode('longBreak');
+                const newDuration = settings.longBreakDuration * 60;
+                setTimeLeft(newDuration);
+                pausedTimeRef.current = newDuration;
+                setSessionCount(0);
 
                 const event = new CustomEvent('toast', {
-                    detail: { message: '💪 Break is over! Back to work.', type: 'info' }
+                    detail: { message: `🎉 ${settings.sessionsBeforeLongBreak} pomodoros completed! Time for a long break.`, type: 'success' }
+                });
+                window.dispatchEvent(event);
+            } else {
+                setMode('shortBreak');
+                const newDuration = settings.shortBreakDuration * 60;
+                setTimeLeft(newDuration);
+                pausedTimeRef.current = newDuration;
+
+                const event = new CustomEvent('toast', {
+                    detail: { message: '✨ Pomodoro completed! Time for a short break.', type: 'success' }
                 });
                 window.dispatchEvent(event);
             }
+        } else {
+            setMode('work');
+            const newDuration = settings.workDuration * 60;
+            setTimeLeft(newDuration);
+            pausedTimeRef.current = newDuration;
+
+            const event = new CustomEvent('toast', {
+                detail: { message: '💪 Break is over! Back to work.', type: 'info' }
+            });
+            window.dispatchEvent(event);
+        }
+    }, [mode, sessionCount, settings]);
+
+    // Update timer when settings change (only if not running)
+    useEffect(() => {
+        if (!isActive) {
+            const newDuration = getDurationForMode(mode);
+            setTimeLeft(newDuration);
+            pausedTimeRef.current = newDuration;
+        }
+    }, [settings, mode, isActive, getDurationForMode]);
+
+    // Main timer effect using Date.now() delta calculation to prevent drift
+    useEffect(() => {
+        if (!isActive) return;
+
+        // Set endTime when starting
+        if (endTimeRef.current === null) {
+            endTimeRef.current = Date.now() + pausedTimeRef.current * 1000;
         }
 
-        return () => {
-            if (interval) {
-                clearInterval(interval);
+        const updateTimer = () => {
+            const now = Date.now();
+            const remaining = Math.max(0, Math.ceil((endTimeRef.current! - now) / 1000));
+
+            setTimeLeft(remaining);
+            pausedTimeRef.current = remaining;
+
+            if (remaining <= 0) {
+                handleTimerComplete();
             }
         };
-    }, [isActive, timeLeft, mode, sessionCount, settings]);
 
-    const toggleTimer = () => setIsActive(prev => !prev);
+        // Update immediately
+        updateTimer();
+
+        // Use requestAnimationFrame-based interval for better accuracy
+        const interval = window.setInterval(updateTimer, 100);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [isActive, handleTimerComplete]);
+
+    const toggleTimer = () => {
+        if (isActive) {
+            // Pausing: store current remaining time
+            pausedTimeRef.current = timeLeft;
+            endTimeRef.current = null;
+        } else {
+            // Starting: endTime will be set in the effect
+            endTimeRef.current = null;
+        }
+        setIsActive(prev => !prev);
+    };
 
     const resetTimer = () => {
         setIsActive(false);
         setMode('work');
-        setTimeLeft(settings.workDuration * 60);
+        const newDuration = settings.workDuration * 60;
+        setTimeLeft(newDuration);
+        pausedTimeRef.current = newDuration;
+        endTimeRef.current = null;
         setSessionCount(0);
     };
 

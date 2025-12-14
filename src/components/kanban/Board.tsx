@@ -16,8 +16,9 @@ import {
     Filter,
     Plus
 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { Virtuoso } from 'react-virtuoso';
 
 import { TaskCard } from './TaskCard';
 
@@ -37,30 +38,44 @@ interface KanbanBoardProps {
     onAddTask?: (status: Task['status']) => void;
 }
 
-// Column Component
+// Virtualization threshold - use virtualization for lists larger than this
+const VIRTUALIZATION_THRESHOLD = 15;
+
+// Column Component with optional virtualization
 const Column = ({
     column,
     tasks,
     onOpenTask,
-    onAddTask,
-    maxVisible = 10
+    onAddTask
 }: {
     column: typeof COLUMNS[0];
     tasks: any[];
     onOpenTask: (task: Task) => void;
     onAddTask?: (status: Task['status']) => void;
-    maxVisible?: number;
 }) => {
-    const [showAll, setShowAll] = useState(false);
     const { setNodeRef } = useSortable({
         id: column.id,
         data: { type: 'Column', id: column.id },
         disabled: true,
     });
 
-    const displayedTasks = showAll ? tasks : tasks.slice(0, maxVisible);
-    const hasMore = tasks.length > maxVisible;
-    const taskIds = useMemo(() => displayedTasks.map(t => t.id), [displayedTasks]);
+    const taskIds = useMemo(() => tasks.map(t => t.id), [tasks]);
+    const useVirtualization = tasks.length > VIRTUALIZATION_THRESHOLD;
+
+    // Render a single task item (used by both virtualized and non-virtualized lists)
+    const renderTaskItem = useCallback((index: number) => {
+        const task = tasks[index];
+        return (
+            <div key={task.id} className="pb-2">
+                <TaskCard
+                    task={task}
+                    onOpenDetails={onOpenTask}
+                    courseName={task['courseCode'] || task['displayLabel']}
+                    courseColor={task['courseColor']}
+                />
+            </div>
+        );
+    }, [tasks, onOpenTask]);
 
     return (
         <div ref={setNodeRef} className="flex flex-col min-w-[260px] max-h-[calc(100vh-280px)]">
@@ -81,44 +96,38 @@ const Column = ({
                 </button>
             </div>
 
-            {/* Tasks */}
-            <div className="flex-1 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-1">
-                <SortableContext items={taskIds}>
-                    {displayedTasks.map(task => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                            onOpenDetails={onOpenTask}
-                            courseName={task['courseCode']}
-                            courseColor={task['courseColor']}
-                        />
-                    ))}
-                </SortableContext>
-
-                {hasMore && !showAll && (
-                    <button
-                        onClick={() => setShowAll(true)}
-                        className="text-xs text-purple-400 hover:text-purple-300 py-2 text-center bg-[#1e1a28] rounded-lg border border-dashed border-purple-500/30 hover:border-purple-500/50 transition-all"
-                    >
-                        Show {tasks.length - maxVisible} more tasks
-                    </button>
-                )}
-
-                {showAll && hasMore && (
-                    <button
-                        onClick={() => setShowAll(false)}
-                        className="text-xs text-slate-400 hover:text-white py-2 text-center"
-                    >
-                        Show less
-                    </button>
-                )}
-
-                {tasks.length === 0 && (
-                    <div className="h-16 border-2 border-dashed border-white/10 rounded-lg flex items-center justify-center text-slate-500 text-xs">
-                        Drop tasks here
+            {/* Tasks - Virtualized or Regular */}
+            <SortableContext items={taskIds}>
+                {useVirtualization ? (
+                    // Virtualized list for large task counts
+                    <Virtuoso
+                        className="flex-1 overflow-y-auto custom-scrollbar pr-1"
+                        totalCount={tasks.length}
+                        itemContent={renderTaskItem}
+                        overscan={5}
+                        style={{ height: 'calc(100vh - 340px)' }}
+                    />
+                ) : (
+                    // Regular list for smaller task counts (preserves dnd-kit full compatibility)
+                    <div className="flex-1 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-1">
+                        {tasks.map((task, index) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                onOpenDetails={onOpenTask}
+                                courseName={task['courseCode'] || task['displayLabel']}
+                                courseColor={task['courseColor']}
+                            />
+                        ))}
                     </div>
                 )}
-            </div>
+            </SortableContext>
+
+            {tasks.length === 0 && (
+                <div className="h-16 border-2 border-dashed border-white/10 rounded-lg flex items-center justify-center text-slate-500 text-xs">
+                    Drop tasks here
+                </div>
+            )}
         </div>
     );
 };
@@ -260,7 +269,6 @@ export const KanbanBoard = ({ courses, onTaskUpdate, onOpenTask, hideFilter = fa
                         tasks={tasksByStatus[column.id]}
                         onOpenTask={onOpenTask}
                         onAddTask={onAddTask}
-                        maxVisible={8}
                     />
                 ))}
             </div>
@@ -268,9 +276,12 @@ export const KanbanBoard = ({ courses, onTaskUpdate, onOpenTask, hideFilter = fa
             {createPortal(
                 <DragOverlay dropAnimation={dropAnimation}>
                     {activeTask && (
-                        <div className="bg-[#2a2438] rounded-lg p-3 shadow-2xl border border-purple-500/50">
-                            <h4 className="font-medium text-sm text-white">{activeTask.title || activeTask.text}</h4>
-                        </div>
+                        <TaskCard
+                            task={activeTask}
+                            courseName={(activeTask as any).courseCode || (activeTask as any).displayLabel}
+                            courseColor={(activeTask as any).courseColor}
+                            isOverlay={true}
+                        />
                     )}
                 </DragOverlay>,
                 document.body

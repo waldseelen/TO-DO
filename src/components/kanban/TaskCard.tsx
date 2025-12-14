@@ -21,9 +21,10 @@ interface TaskCardProps {
     courseName?: string;
     courseColor?: string;
     onOpenDetails?: (task: Task) => void;
+    isOverlay?: boolean; // For DragOverlay - disables interactions
 }
 
-export const TaskCard = ({ task, courseName = "General", courseColor = "bg-primary", onOpenDetails }: TaskCardProps) => {
+export const TaskCard = ({ task, courseName = "General", courseColor = "bg-primary", onOpenDetails, isOverlay = false }: TaskCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const {
@@ -39,6 +40,7 @@ export const TaskCard = ({ task, courseName = "General", courseColor = "bg-prima
             type: 'Task',
             task,
         },
+        disabled: isOverlay, // Disable sortable for overlay
     });
 
     const style = {
@@ -78,19 +80,24 @@ export const TaskCard = ({ task, courseName = "General", courseColor = "bg-prima
         );
     }
 
+    // Overlay style - enhanced visual feedback for dragging
+    const overlayClassName = isOverlay
+        ? "bg-surface p-5 rounded-2xl shadow-2xl ring-2 ring-primary/50 scale-105 rotate-2 cursor-grabbing pointer-events-none"
+        : "bg-surface p-5 rounded-2xl shadow-card hover:bg-surfaceLight hover:-translate-y-1 transition-all duration-200 cursor-grab group text-left relative";
+
     return (
         <div
-            ref={setNodeRef}
-            style={style}
-            {...attributes}
-            {...listeners}
-            onClick={() => onOpenDetails?.(task)}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            className="bg-surface p-5 rounded-2xl shadow-card hover:bg-surfaceLight hover:-translate-y-1 transition-all duration-200 cursor-grab group text-left relative"
+            ref={isOverlay ? undefined : setNodeRef}
+            style={isOverlay ? undefined : style}
+            {...(isOverlay ? {} : attributes)}
+            {...(isOverlay ? {} : listeners)}
+            onClick={isOverlay ? undefined : () => onOpenDetails?.(task)}
+            onMouseEnter={isOverlay ? undefined : () => setIsHovered(true)}
+            onMouseLeave={isOverlay ? undefined : () => setIsHovered(false)}
+            className={overlayClassName}
         >
-            {/* Hover Action Buttons */}
-            {isHovered && (
+            {/* Hover Action Buttons - Hidden in overlay */}
+            {isHovered && !isOverlay && (
                 <div className="absolute -top-3 right-4 flex gap-2 z-10 animate-fade-in">
                     <button
                         onClick={handleGoogleSearch}
